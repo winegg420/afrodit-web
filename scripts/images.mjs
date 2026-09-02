@@ -24,6 +24,13 @@ const WIDTHS = [640, 1024, 1920]
 /** Bu genişliğin altındaki görseller için ek boyut üretilmez. */
 const MIN_FOR_VARIANTS = 900
 
+/**
+ * Bu betiğin kendi ürettiği dosyalar (foo-640.jpg gibi). Kaynak olarak
+ * yeniden işlenmemeleri gerekir; yoksa her derlemede "foo-1024-640.jpg"
+ * gibi sürümün sürümü dosyalar birikir.
+ */
+const URETILEN = new RegExp(`-(${WIDTHS.join('|')})\\.(jpe?g|png)$`, 'i')
+
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir)) {
     const p = join(dir, entry)
@@ -49,8 +56,8 @@ async function main() {
     throw new Error('public/img bulunamadı.')
   }
 
-  const files = walk(imgDir).filter((p) =>
-    ['.jpg', '.jpeg', '.png'].includes(extname(p).toLowerCase()),
+  const files = walk(imgDir).filter(
+    (p) => ['.jpg', '.jpeg', '.png'].includes(extname(p).toLowerCase()) && !URETILEN.test(p),
   )
 
   /** @type {Record<string, {w:number,h:number,webp:string|null,variants:Array<{w:number,jpg:string,webp:string}>}>} */

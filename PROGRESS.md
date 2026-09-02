@@ -630,3 +630,25 @@ indirme, ama `<picture>` içinde değildi; her zaman JPEG iniyordu.
 
 ### Doğrulama
 `npm run check` → TAMAM (altı ölçüt).
+
+## 2026-09-02 — Görsel betiğinde birikme hatası
+
+`git status --ignored` bakarken fark edildi: `public/img/banner-1024-640.jpg`
+gibi "sürümün sürümü" dosyalar vardı.
+
+**Sebep:** `scripts/images.mjs` `public/img` altındaki tüm JPEG/PNG'leri
+kaynak sayıyordu — kendi ürettiği `foo-1024.jpg` dosyalarını da. Her
+derlemede onlardan da 640'lık sürüm üretiliyordu.
+
+**Etki:** 34 çöp dosya, manifestte 102 sahte kayıt (73 gerçek kaynağın
+yanında `/img/banner-1024.jpg` gibi girdiler). Site bozulmuyordu —
+uygulama yalnızca özgün yolları (`/img/banner.jpg`) sorguluyor — ama
+klasör ve derleme süresi boşuna büyüyordu.
+
+**Düzeltme:** `URETILEN` düzenli ifadesi eklendi; `-640/-1024/-1920`
+ekiyle biten dosyalar kaynak listesinden çıkarılıyor. Üretilmiş tüm
+dosyalar ve manifest silinip sıfırdan üretildi.
+
+Doğrulandı: ikinci kez çalıştırıldığında "0 yeni dosya", sürümün sürümü
+dosya sayısı 0, manifest tam 73 kayıt (sahte kayıt yok).
+`npm run check` → TAMAM.
