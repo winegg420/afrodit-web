@@ -119,6 +119,13 @@ yok ya da "teyit bekliyor" notuyla duruyor. Cevap geldikçe işaretle.
 
 ## E — Cloudflare Pages
 
+> Bu bölümdeki yönlendirme, 404 ve adres davranışları
+> `npx wrangler pages dev dist` ile **yerelde birebir taklit edilip
+> doğrulandı** (2026-09-02): 13 yönlendirme kuralı okundu, 21 adres 200
+> verdi, eski adresler 301 ile yenilerine gitti, bilinmeyen adres 404 ile
+> "Sayfa bulunamadı" sayfasını gösterdi. Yine de gerçek dağıtımdan sonra
+> tekrar bakılmalı.
+
 - [ ] **E1. Depoyu Cloudflare Pages'e bağla.**
       Derleme komutu: `npm run build` · Çıktı klasörü: `dist`
       Node sürümü: `NODE_VERSION=24.18.0` ortam değişkeni olarak gir

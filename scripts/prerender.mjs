@@ -134,7 +134,14 @@ async function main() {
         // okunur ama araçlarla aranabilsin diye çıktıda küçültülüyor.
         .replaceAll('fetchPriority="high"', 'fetchpriority="high"')
 
-      const outFile = join(distDir, page.path, 'index.html')
+      // Düz dosya olarak yazılıyor: /tr/odalar -> dist/tr/odalar.html
+      //
+      // Klasör + index.html biçiminde yazılsaydı Cloudflare Pages asıl adres
+      // olarak eğik çizgili hâli (/tr/odalar/) kabul eder, çizgisizi 308 ile
+      // ona yönlendirirdi. Bizim canonical, hreflang, sitemap ve iç
+      // bağlantılarımız çizgisiz olduğu için her adres yönlenen bir adrese
+      // dönüşürdü. Düz dosyada çizgisiz hâli 200 veriyor.
+      const outFile = join(distDir, `${page.path}.html`)
       await mkdir(dirname(outFile), { recursive: true })
       await writeFile(outFile, html, 'utf8')
       written += 1

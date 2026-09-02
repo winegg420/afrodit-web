@@ -34,7 +34,8 @@ aynı sürümü şart koşuyor.
 | `npm run dev` | Geliştirme sunucusu. Önce görselleri hazırlar, sonra Vite'ı açar. Dosyayı kaydettiğinde tarayıcı kendiliğinden yenilenir. |
 | `npm run build` | Yayına hazır çıktıyı `dist/` klasörüne üretir. Görseller → TypeScript denetimi → Vite derlemesi → sunucu derlemesi → prerender. Sonunda 21 HTML sayfası, `404.html`, `sitemap.xml`, `robots.txt` ve `_redirects` oluşur. |
 | `npm run build:images` | Yalnız görsel adımı. Her fotoğrafın WebP karşılığını ve küçük boylarını üretir, ölçülerini `src/generated/images.ts` dosyasına yazar. Yeni fotoğraf eklediğinde bunu çalıştır. |
-| `npm run preview` | `dist/` klasörünü yerel sunucuda açar — yayındaki hâlini görmek için. `npm run build`'den sonra çalıştır. |
+| `npm run preview` | `dist/` klasörünü yerel sunucuda açar. Sayfalar çalışır ama `_redirects` ve `404.html` işlenmez (bunlar Cloudflare'e özgü); kök adres `/` de 404 verir. |
+| `npx wrangler pages dev dist` | **Cloudflare Pages'i yerelde birebir taklit eder.** Yönlendirmeleri, 404 sayfasını ve eğik çizgi davranışını test etmek için bunu kullan. `npm run build`'den sonra çalıştır. |
 | `npm run lint` | Kod denetimi (oxlint). |
 | `npm run check` | **Tek komutluk sağlık kontrolü.** Derler ve altı ölçütü sınar; hepsi geçerse `TAMAM` yazar. Aylar sonra "hâlâ çalışıyor mu" diye bakmak için bu komutu çalıştır. |
 
@@ -173,7 +174,12 @@ diye her sayfanın hazır HTML'i derleme sırasında üretiliyor.
 3. **`vite build`** — tarayıcı paketi + `dist/index.html` şablonu.
 4. **`vite build --ssr`** — aynı uygulamayı Node'da çalışacak şekilde derler
    (`dist-ssr/entry-server.js`).
-5. **`scripts/prerender.mjs`** — `seo.ts` içindeki 21 sayfanın her biri için
+5. **`scripts/prerender.mjs`** — çıktıyı **düz dosya** olarak yazar
+   (`dist/tr/odalar.html`), klasör + `index.html` olarak değil. Klasör
+   biçiminde Cloudflare Pages eğik çizgili adresi (`/tr/odalar/`) asıl kabul
+   edip çizgisizi 308 ile ona yönlendiriyor; bu da canonical, hreflang ve
+   sitemap adreslerimizin hepsini "yönlenen adres" hâline getiriyordu.
+   `seo.ts` içindeki 21 sayfanın her biri için
    uygulamayı Node'da çalıştırıp HTML'e çevirir, şablonun `<head>` bölümüne
    o sayfanın başlığını, açıklamasını, canonical adresini, üç dil
    `hreflang` bağlantısını, Open Graph etiketlerini (anasayfalarda ayrıca

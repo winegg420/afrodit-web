@@ -714,3 +714,48 @@ duruyordu; alt piksel yuvarlamasıyla 43,98 ölçülebilir. Bu yüzden taban
 `_redirects` dosyasının gerçekten yönlendirme yapması ancak Cloudflare
 Pages'e dağıtımdan sonra doğrulanabilir; `vite preview` bu dosyayı
 işlemiyor. Dosyanın içeriği ve 12 kuralın doğruluğu kontrol edildi.
+
+## 2026-09-02 — Cloudflare Pages taklidiyle test
+
+Kullanıcı "canlıda test et" dedi. **Site hiçbir yerde yayında değil**:
+clubafrodit.com hâlâ eski siteyi sunuyor, /tr ve /en/rooms 404 veriyor,
+depoda dağıtım yapılandırması yok. Yayına alma kullanıcının Cloudflare
+hesabıyla yapılacak bir iş.
+
+Bunun yerine `npx wrangler pages dev dist` ile Cloudflare Pages yerelde
+birebir taklit edildi — `_redirects` ve `404.html` işleniyor, yani
+"ölçemedim" diye bıraktığım iki madde kapandı.
+
+### Bulunan gerçek sorun: eğik çizgi
+Prerender çıktıyı `dist/tr/odalar/index.html` olarak yazıyordu. Cloudflare
+Pages bu biçimde **eğik çizgili adresi asıl kabul ediyor**:
+`/tr/odalar` → 308 → `/tr/odalar/`.
+
+Oysa canonical, hreflang, sitemap ve bütün iç bağlantılarımız çizgisiz.
+Yani her canonical adresi yönlenen bir adresti; Search Console bunu
+"Page with redirect" diye işaretler ve canonical zayıflar.
+
+**Düzeltme:** prerender artık düz dosya yazıyor — `dist/tr/odalar.html`.
+Bu biçimde çizgisiz hâl 200 veriyor, çizgili hâl 308 ile çizgisize
+yönleniyor; yani bizim ilan ettiğimiz adres asıl adres oluyor.
+
+Yan fayda: `npm run preview` de artık `/tr` ve `/tr/odalar` adreslerini
+doğrudan açıyor (önceden eğik çizgi gerekiyordu).
+
+### Taklitle doğrulananlar
+- 13 yönlendirme kuralı okundu
+- Kök `/` → 302 → `/tr`
+- 21 adres → hepsi **200** (yönlendirme sıçraması yok)
+- 12 eski Türkçe adres → **301** ile yenilerine
+  (/de/odalar → /de/zimmer, /en/haberler → /en/news …)
+- Eğik çizgili hâl → 308 ile çizgisize (doğru yön)
+- Bilinmeyen adres → **404** + "Sayfa bulunamadı" sayfası + noindex
+- sitemap.xml, robots.txt, görseller → 200
+- Tarayıcıda: /de/odalar açılınca /de/zimmer'e düşüyor ve Almanca menü
+  geliyor; dil değiştirici çapayı koruyor
+  (/de/zimmer#grand-suite → /tr/odalar#grand-suit-oda, doğru bölüme iniyor)
+- Konsolda hata yok
+
+### Ölçemediğim
+Gerçek dağıtım: alan adı, HTTPS, Cloudflare önbelleği, gerçek ağ hızı.
+Bunlar ancak yayına alındıktan sonra test edilebilir (LAUNCH.md E ve F).
