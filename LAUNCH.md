@@ -90,12 +90,13 @@ yok ya da "teyit bekliyor" notuyla duruyor. Cevap geldikçe işaretle.
       `npm run build:images` çalıştır, alt metnini `src/i18n/photoAlts.ts`
       içine üç dilde yaz. Yer tutucuları gerçek fotoğrafla değiştir.
       → **Sen**
-- [ ] **C3. Renk paletini seç.** `design/palet-a-toprak.css` ve
-      `design/palet-b-ege.css` hazır bekliyor. Seçileni
-      `src/styles/tokens.css` üzerine kopyala, dosyanın başındaki
-      `.tone-calm` notunu `src/styles/motion.css` içine uygula.
-      Sonra `tokens.css` başındaki "GEÇİCİ" TODO notunu sil.
-      *Dosya:* `src/styles/tokens.css` (TODO) → **Sen uygular, sen seçersin**
+- [x] **C3. Renk paletini seç.** ~~Yapıldı (2026-09-02):~~ **Palet A —
+      "Toprak Kort"** seçildi ve uygulandı. `src/styles/tokens.css` artık
+      kalıcı paleti içeriyor, "GEÇİCİ" notu kalktı;
+      `src/styles/layout.css` içindeki `.tone-calm` da sıcak paletle
+      uyumlu hale getirildi. Seçilmeyen öneri `design/palet-b-ege.css`
+      içinde duruyor.
+      *Dosya:* `src/styles/tokens.css`, `src/styles/layout.css` → **bitti**
 
 ---
 
@@ -191,8 +192,8 @@ Bu bölüm bilgisayarda yapılamaz, gerçek telefon gerekir.
 
 ## Koddaki TODO notlarıyla eşleşme
 
-Kodda 13 satır `TODO` geçiyor (çeviri işaretleri hariç). Aşağıda hepsinin
-bu listedeki karşılığı var:
+Kodda 12 satır `TODO` geçiyor (çeviri işaretleri hariç). Aşağıda hepsinin
+bu listedeki karşılığı var. Palet TODO'su 2026-09-02'de kapandı.
 
 | # | Dosya | Konu | Madde |
 |---|---|---|---|
@@ -207,8 +208,7 @@ bu listedeki karşılığı var:
 | 9 | `src/pages/Rooms.tsx` | Başlık bandı için oda fotoğrafı | B12 |
 | 10 | `src/pages/Tennis.tsx` | Kort fotoğrafı | B12 |
 | 11 | `src/seo.ts` | Fiyat, yıldız, puan, giriş/çıkış saati | B2, B3 |
-| 12 | `src/styles/tokens.css` | Palet geçici | C3 |
-| 13 | `src/styles/global.css` | *(gerçek bir iş değil — `.todo-note` CSS sınıfının başlık yorumu)* | — |
+| 12 | `src/styles/global.css` | *(gerçek bir iş değil — `.todo-note` CSS sınıfının başlık yorumu)* | — |
 
-Yani **12 gerçek iş maddesi + 1 yanlış eşleşme**. Hepsi yukarıdaki listede
+Yani **11 gerçek iş maddesi + 1 yanlış eşleşme**. Hepsi yukarıdaki listede
 karşılanıyor.

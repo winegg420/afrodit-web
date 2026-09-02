@@ -14,7 +14,7 @@
  * Başka hiçbir dosyaya dokunmak gerekmiyor — tüm bileşenler renkleri
  * buradan okuyor.
  *
- * Huzurevi bölümünün kendi sakin tonu src/styles/motion.css içindeki
+ * Huzurevi bölümünün kendi sakin tonu src/styles/layout.css içindeki
  * .tone-calm kuralında. Bu palet seçilirse orası şöyle olmalı:
  * .tone-calm {
   --color-accent: #8a9a86; --color-accent-strong: #6c7d69; --color-accent-soft: #e8ede6;
@@ -32,7 +32,7 @@
   --color-text-faint: #8f817a; /* etiket, dipnot */
   --color-text-invert: #f7f2ec; /* koyu zemin üstü metin */
   --color-accent: #c0764a; /* kiremit — toprak kortun kili */
-  --color-accent-strong: #a25c34; /* buton zemini (beyaz metinle 5,1:1) */
+  --color-accent-strong: #a25c34; /* buton zemini — üstündeki metinle ölçülen kontrast 4,58:1 (AA geçer) */
   --color-accent-soft: #f3e4da; /* etiket zemini */
   --color-line: #e6ddd3; /* ince çizgi */
   --color-line-strong: #cfc2b5; /* belirgin çizgi */

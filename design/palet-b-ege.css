@@ -14,7 +14,7 @@
  * Başka hiçbir dosyaya dokunmak gerekmiyor — tüm bileşenler renkleri
  * buradan okuyor.
  *
- * Huzurevi bölümünün kendi sakin tonu src/styles/motion.css içindeki
+ * Huzurevi bölümünün kendi sakin tonu src/styles/layout.css içindeki
  * .tone-calm kuralında. Bu palet seçilirse orası şöyle olmalı:
  * .tone-calm {
   --color-accent: #7f9aa8; --color-accent-strong: #5d7b8a; --color-accent-soft: #e4ebef;
@@ -32,7 +32,7 @@
   --color-text-faint: #7d8a91; /* etiket, dipnot */
   --color-text-invert: #f2f6f8; /* koyu zemin üstü metin */
   --color-accent: #2b8fb5; /* Ege mavisi — havuz suyu */
-  --color-accent-strong: #14647f; /* buton zemini (beyaz metinle 6,7:1) */
+  --color-accent-strong: #14647f; /* buton zemini — üstündeki metinle hesaplanan kontrast 6,13:1 (AA geçer) */
   --color-accent-soft: #ddeef4; /* etiket zemini */
   --color-line: #dde3e7; /* ince çizgi */
   --color-line-strong: #c2ccd2; /* belirgin çizgi */

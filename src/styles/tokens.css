@@ -1,35 +1,38 @@
 /*
  * Club Afrodit — tasarım değişkenleri
+ *
  * ÖNEMLİ: Renkler SADECE bu dosyada tanımlanır.
  * Bileşenlerin içine sabit hex kodu yazma, her yerde var(--...) kullan.
  *
- * TODO: Bu palet GEÇİCİDİR. Fotoğraflar toplandıktan sonra kalıcı palet
- * seçilecek ve yalnızca bu dosya değiştirilecek.
+ * PALET: "Toprak Kort" — 2026-09-02'de seçildi, kalıcıdır.
+ * Fotoğraflardaki baskın renklere bakılarak hazırlandı; en ayırt edici
+ * renk toprak kortun kili (#d69c6e, tenis fotoğrafının %21'i). Taş
+ * zeminler, zeytin gövdeleri ve akşam ışığı da aynı sıcak aralıkta
+ * (hsl 20-40°). Vurgu o aralıktan alınan kiremit tonu.
+ *
+ * Huzurevi bölümünün kendi sakin tonu ayrı: src/styles/layout.css
+ * içindeki .tone-calm kuralı. Palet değişirse orası da güncellenmeli.
+ *
+ * Diğer palet önerisi design/palet-b-ege.css içinde duruyor.
  */
 
 :root {
-  /* --- Renk: zemin --- */
-  --color-bg: #fbfaf7;          /* kırık beyaz ana zemin */
-  --color-bg-alt: #f2f0eb;      /* ikinci düzey zemin, bölüm ayrımı */
-  --color-bg-deep: #26262a;     /* koyu zemin (footer vb.) */
-  --color-surface: #ffffff;     /* kart / yüzey */
-
-  /* --- Renk: metin --- */
-  --color-text: #26262a;        /* koyu gri ana metin */
-  --color-text-soft: #5c5c63;   /* ikincil metin */
-  --color-text-faint: #8a8a90;  /* etiket, dipnot */
-  --color-text-invert: #f4f3ef; /* koyu zemin üstü metin */
-
-  /* --- Renk: vurgu (tek, sakin) --- */
-  --color-accent: #7a8a7f;
-  --color-accent-strong: #5f6d64;
-  --color-accent-soft: #e6eae6;
-
-  /* --- Renk: çizgi ve durum --- */
-  --color-line: #e0ddd6;
-  --color-line-strong: #c9c5bb;
-  --color-focus: #2f6f8f;
-  --color-error: #9b3d34;
+  /* --- Renkler --- */
+  --color-bg: #faf7f3; /* sıcak kırık beyaz */
+  --color-bg-alt: #f1ebe3; /* ikinci düzey zemin */
+  --color-bg-deep: #2b2320; /* koyu zemin (footer, alıntılar) */
+  --color-surface: #ffffff; /* kart yüzeyi */
+  --color-text: #2b2320; /* sıcak koyu kahve */
+  --color-text-soft: #63554e; /* ikincil metin */
+  --color-text-faint: #8f817a; /* etiket, dipnot */
+  --color-text-invert: #f7f2ec; /* koyu zemin üstü metin */
+  --color-accent: #c0764a; /* kiremit — toprak kortun kili */
+  --color-accent-strong: #a25c34; /* buton zemini — üstündeki metinle ölçülen kontrast 4,58:1 (AA geçer) */
+  --color-accent-soft: #f3e4da; /* etiket zemini */
+  --color-line: #e6ddd3; /* ince çizgi */
+  --color-line-strong: #cfc2b5; /* belirgin çizgi */
+  --color-focus: #1f6f8b; /* odak halkası — sıcak paletten ayrışsın diye mavi */
+  --color-error: #9b3d34; /* hata */
 
   /* --- Tipografi --- */
   --font-display: "Georgia", "Times New Roman", serif;

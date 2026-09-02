@@ -521,3 +521,36 @@ Ekran görüntüsü almak için paletler geçici olarak uygulandı, sonra
 - `npm run check` → TAMAM, altı ölçüt de geçti
 - Koddaki TODO sayısı 13, LAUNCH.md tablosundaki satır sayısı 13 — uyuşuyor
 - Temiz klasöre klonlanıp `npm ci` + `npm run check` denendi
+
+## 2026-09-02 — Palet A uygulandı
+
+Kullanıcı "Toprak Kort" paletini seçti. Uygulanan değişiklikler:
+
+- `src/styles/tokens.css` → Palet A renkleri. Dosya başındaki "GEÇİCİ palet"
+  TODO notu kaldırıldı, yerine paletin neden bu olduğunu anlatan kalıcı not
+  yazıldı (fotoğraflardaki baskın renk ölçümü).
+- `src/styles/layout.css` → `.tone-calm` (huzurevi bölümünün kendi tonu)
+  soğuk mavi-griden sıcak paletle uyumlu adaçayı yeşiline çevrildi:
+  `#8a9a86 / #6c7d69 / #e8ede6`.
+- Palet dosyalarındaki yanlış yol düzeltildi: `.tone-calm` kuralı
+  `motion.css` değil `layout.css` içinde.
+- `LAUNCH.md` → C3 maddesi tamamlandı olarak işaretlendi; TODO tablosu
+  13 satırdan 12'ye indi (palet TODO'su kapandı).
+
+### Ölçülen kontrastlar (tarayıcıda, gerçek renklerle)
+- gövde metni / zemin: 14,42:1
+- ikincil metin / zemin: 6,69:1
+- buton yazısı / buton zemini: 4,58:1
+- bağlantı / zemin: 4,78:1
+
+Hepsi WCAG AA eşiğinin (4,5:1) üstünde.
+
+**Düzeltme:** palet dosyalarında buton kontrastını 5,1:1 (A) ve 6,7:1 (B)
+diye yazmıştım; o hesap saf beyaza göreydi. Gerçek metin rengi saf beyaz
+değil (`--color-text-invert`), ölçülen değer A için 4,58:1, B için 6,13:1.
+Her iki dosyadaki not düzeltildi. İkisi de AA'yı geçiyor.
+
+### Doğrulama
+- `npm run check` → TAMAM
+- 360 ve 390 px, üç sayfa: yatay kaydırma yok
+- Koddaki TODO 12, LAUNCH.md tablosu 12 — uyuşuyor
