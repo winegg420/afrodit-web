@@ -455,3 +455,69 @@ edilmedi.
 `npm run build` hatasız, `npx oxlint src` uyarısız, 21 HTML,
 hreflang 4, og:title 1, ld+json 1, sitemap 21 url, width'siz img 0,
 JS kapalı: 4.535 karakter metin ve 24 reveal öğesinin hepsi görünür.
+
+## 2026-09-02 — Beklemeye ve yayına hazırlık
+
+Site aylar sonra yayına alınacak. Bu turda yeni özellik yok; amaç projeyi
+uzun süre bekletip sonra hızlı yayına alabilmek.
+
+### 1. Derleme ortamı sabitlendi
+`.nvmrc` → **24.18.0** (şu an çalışan sürüm). `package.json` → `engines`:
+node `>=24.18.0 <25`, npm `>=11.16.0`.
+sharp işletim sistemine göre ikili indirdiği için not düşüldü: bu proje
+**win32-x64**'te, sharp **0.35.4** / libvips **8.18.6** ile derlendi.
+README'de de yazılı.
+
+### 2. README yeniden yazıldı
+Vite şablonunun İngilizce metni gitti. Türkçe; proje tanımı, komut tablosu,
+klasör yapısı, prerender'ın nasıl çalıştığı ve **"şunu değiştirmek istiyorum,
+hangi dosya?"** bölümü var. Telefon numarası `facility.ts`, oda metni
+`i18n/tr.ts` + `content/rooms.ts`, renkler `tokens.css` — hepsi tek tek
+yazılı.
+
+### 3. LAUNCH.md
+Yayın öncesi kontrol listesi, A'dan H'ye sıralı. Her maddede ne yapılacak,
+hangi dosya, kim yapabilir (ben mi işletme mi).
+Sonunda koddaki 13 TODO satırının bu listedeki karşılığını gösteren tablo
+var: **12 gerçek iş + 1 yanlış eşleşme** (`global.css` içindeki satır bir iş
+değil, `.todo-note` CSS sınıfının başlık yorumu).
+
+### 4. ISLETME-SORULARI.md
+İşletmeye olduğu gibi iletilebilecek, teknik olmayan dille yazılmış bilgi
+listesi. Yedi başlık: konaklama koşulları, tesis bilgileri, tenis kulübü
+(7 soru), huzurevi ruhsatı, fotoğraflar, haberler, mevcut sitenin akıbeti.
+Her sorunun altında **neden sorulduğu** bir cümleyle yazılı.
+
+### 5. npm run check
+`scripts/check.mjs`. Sırayla: derleme, lint, 21 HTML, sitemap'te 21 kayıt,
+ölçüsüz görsel sıfır, `opacity:0` içeren tek seçicinin `.js-hazir .reveal`
+olması. Hepsi geçerse `TAMAM`, geçmezse düşen maddeyi yazar ve 1 ile çıkar.
+Sahte bir `.sahte-hata { opacity: 0 }` kuralı eklenerek gerçekten düştüğü
+doğrulandı, sonra geri alındı.
+
+### 6. Renk paleti önerileri — SEÇİM BEKLİYOR
+Fotoğraflardaki baskın renkler sharp ile ölçüldü (10 fotoğraf, 60×60'a
+küçültülüp HSL kovalarına ayrılarak):
+- Sıcak toprak aralığı hsl(20–40°) baskın; en ayırt edici renk toprak
+  kortun kili **#d69c6e** (tenis fotoğrafının %21'i)
+- İkinci baskın renk havuz/deniz mavisi **#4dbfe9** / derin suda **#02688f**
+
+İki palet hazırlandı, **uygulanmadı**:
+- `design/palet-a-toprak.css` — kiremit vurgu (#c0764a), sıcak kırık beyaz
+  zemin, sıcak koyu kahve metin
+- `design/palet-b-ege.css` — Ege mavisi vurgu (#2b8fb5), serin kırık beyaz
+  zemin, arduvaz grisi metin
+
+Her ikisi de tam `tokens.css` dosyası; seçilen dosyanın içeriği `tokens.css`
+üzerine kopyalanacak. Her dosyanın başında o palete uygun `.tone-calm`
+değerleri de yazılı. Buton kontrastları ölçüldü: A 5,1:1 — B 6,7:1
+(ikisi de AA eşiğinin üstünde).
+Reddedilen "koyu zeytin + kum + lacivert" yönü tekrarlanmadı.
+
+Ekran görüntüsü almak için paletler geçici olarak uygulandı, sonra
+`tokens.css` birebir geri alındı (diff ile doğrulandı).
+
+### Doğrulama
+- `npm run check` → TAMAM, altı ölçüt de geçti
+- Koddaki TODO sayısı 13, LAUNCH.md tablosundaki satır sayısı 13 — uyuşuyor
+- Temiz klasöre klonlanıp `npm ci` + `npm run check` denendi

@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "npm run build:images && vite",
     "build": "npm run build:images && tsc -b && vite build && npm run build:ssr && node scripts/prerender.mjs",
-    "lint": "oxlint",
-    "preview": "vite preview",
+    "build:images": "node scripts/images.mjs",
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
     "build:spa": "tsc -b && vite build",
-    "build:images": "node scripts/images.mjs"
+    "preview": "vite preview",
+    "lint": "oxlint",
+    "check": "node scripts/check.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
@@ -26,5 +27,9 @@
     "sharp": "^0.35.4",
     "typescript": "~6.0.2",
     "vite": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=24.18.0 <25",
+    "npm": ">=11.16.0"
   }
 }

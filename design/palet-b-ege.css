@@ -1,0 +1,82 @@
+/*
+ * PALET B — Ege Mavisi
+ *
+ * Sıcak tonlardan sonra fotoğraflarda en çok geçen renk havuz ve
+ * denizin mavisi: #4dbfe9 açık suda, #02688f derin suda. Bu palet
+ * o maviyi vurgu olarak alıyor: serin kırık beyaz zemin, arduvaz
+ * grisi metin, tek Ege mavisi vurgu.
+ *
+ * Karakter: serin, ferah, denize dönük. Havuz ve plaj fotoğraflarıyla
+ * aynı dili konuşur; toprak tonlu iç mekân fotoğrafları ısıtır.
+ * NOT: bu bir lacivert değil — daha açık, turkuaza çalan bir mavi.
+ *
+ * KULLANIM: bu dosyanın içeriğini src/styles/tokens.css üzerine kopyala.
+ * Başka hiçbir dosyaya dokunmak gerekmiyor — tüm bileşenler renkleri
+ * buradan okuyor.
+ *
+ * Huzurevi bölümünün kendi sakin tonu src/styles/motion.css içindeki
+ * .tone-calm kuralında. Bu palet seçilirse orası şöyle olmalı:
+ * .tone-calm {
+  --color-accent: #7f9aa8; --color-accent-strong: #5d7b8a; --color-accent-soft: #e4ebef;
+ * }
+ */
+
+:root {
+  /* --- Renkler --- */
+  --color-bg: #f7f8f9; /* serin kırık beyaz */
+  --color-bg-alt: #eceff2; /* ikinci düzey zemin */
+  --color-bg-deep: #1c2529; /* koyu arduvaz (footer, alıntılar) */
+  --color-surface: #ffffff; /* kart yüzeyi */
+  --color-text: #1c2529; /* koyu arduvaz */
+  --color-text-soft: #4d5a61; /* ikincil metin */
+  --color-text-faint: #7d8a91; /* etiket, dipnot */
+  --color-text-invert: #f2f6f8; /* koyu zemin üstü metin */
+  --color-accent: #2b8fb5; /* Ege mavisi — havuz suyu */
+  --color-accent-strong: #14647f; /* buton zemini (beyaz metinle 6,7:1) */
+  --color-accent-soft: #ddeef4; /* etiket zemini */
+  --color-line: #dde3e7; /* ince çizgi */
+  --color-line-strong: #c2ccd2; /* belirgin çizgi */
+  --color-focus: #b4512c; /* odak halkası — serin paletten ayrışsın diye kiremit */
+  --color-error: #9b3d34; /* hata */
+
+  /* --- Tipografi --- */
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: clamp(1.6rem, 1.2rem + 1.6vw, 2.3rem);
+  --text-3xl: clamp(2rem, 1.4rem + 3vw, 3.4rem);
+
+  --leading-tight: 1.18;
+  --leading-normal: 1.62;
+
+  /* --- Ölçü / boşluk --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --content-width: 68rem;
+  --content-narrow: 42rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  --border-thin: 1px solid var(--color-line);
+
+  --shadow-soft: 0 1px 2px rgba(38, 38, 42, 0.06),
+                 0 8px 24px rgba(38, 38, 42, 0.05);
+
+  --header-height: 4.5rem;
+  --transition: 160ms ease;
+}

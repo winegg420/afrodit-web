@@ -1,0 +1,82 @@
+/*
+ * PALET A — Toprak Kort
+ *
+ * Fotoğraflardaki en ayırt edici renk toprak kortun kili: #d69c6e
+ * (tenis fotoğrafının %21i). Taş zeminler, zeytin gövdeleri ve akşam
+ * ışığı da aynı sıcak aralıkta (hsl 20-40°). Bu palet o sıcaklığı
+ * merkeze alıyor: kırık beyaz zemin, sıcak koyu kahve metin,
+ * kiremit tonunda tek vurgu.
+ *
+ * Karakter: sıcak, karasal, sakin. Tenis ve zeytinliği öne çıkarır;
+ * deniz fotoğraflarının mavisi kontrast olarak parlar.
+ *
+ * KULLANIM: bu dosyanın içeriğini src/styles/tokens.css üzerine kopyala.
+ * Başka hiçbir dosyaya dokunmak gerekmiyor — tüm bileşenler renkleri
+ * buradan okuyor.
+ *
+ * Huzurevi bölümünün kendi sakin tonu src/styles/motion.css içindeki
+ * .tone-calm kuralında. Bu palet seçilirse orası şöyle olmalı:
+ * .tone-calm {
+  --color-accent: #8a9a86; --color-accent-strong: #6c7d69; --color-accent-soft: #e8ede6;
+ * }
+ */
+
+:root {
+  /* --- Renkler --- */
+  --color-bg: #faf7f3; /* sıcak kırık beyaz */
+  --color-bg-alt: #f1ebe3; /* ikinci düzey zemin */
+  --color-bg-deep: #2b2320; /* koyu zemin (footer, alıntılar) */
+  --color-surface: #ffffff; /* kart yüzeyi */
+  --color-text: #2b2320; /* sıcak koyu kahve */
+  --color-text-soft: #63554e; /* ikincil metin */
+  --color-text-faint: #8f817a; /* etiket, dipnot */
+  --color-text-invert: #f7f2ec; /* koyu zemin üstü metin */
+  --color-accent: #c0764a; /* kiremit — toprak kortun kili */
+  --color-accent-strong: #a25c34; /* buton zemini (beyaz metinle 5,1:1) */
+  --color-accent-soft: #f3e4da; /* etiket zemini */
+  --color-line: #e6ddd3; /* ince çizgi */
+  --color-line-strong: #cfc2b5; /* belirgin çizgi */
+  --color-focus: #1f6f8b; /* odak halkası — sıcak paletten ayrışsın diye mavi */
+  --color-error: #9b3d34; /* hata */
+
+  /* --- Tipografi --- */
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: clamp(1.6rem, 1.2rem + 1.6vw, 2.3rem);
+  --text-3xl: clamp(2rem, 1.4rem + 3vw, 3.4rem);
+
+  --leading-tight: 1.18;
+  --leading-normal: 1.62;
+
+  /* --- Ölçü / boşluk --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --content-width: 68rem;
+  --content-narrow: 42rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  --border-thin: 1px solid var(--color-line);
+
+  --shadow-soft: 0 1px 2px rgba(38, 38, 42, 0.06),
+                 0 8px 24px rgba(38, 38, 42, 0.05);
+
+  --header-height: 4.5rem;
+  --transition: 160ms ease;
+}
