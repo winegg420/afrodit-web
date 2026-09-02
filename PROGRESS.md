@@ -342,3 +342,54 @@ koyuyor. `seo.ts` içine sayfa başına `preloadImage` alanı eklendi; yalnızca
    butonları görünür, `js-hazir` sınıfı eklenmemiş.
 4. 360 ve 390 px × 3 sayfa: `scrollWidth > innerWidth` **false**.
 5. Derlenmiş CSS'te `opacity:0` içeren tek seçici `.js-hazir .reveal`.
+
+## 2026-09-02 — Kalan iki düzeltme
+
+Kullanıcı ölçtü: reveal mekanizması doğruydu, diğer ikisi eksikti.
+İlk ölçüm `npm run dev` üzerinde yapılmış olmalı — prerender edilmiş
+`dist` çıktısında preload zaten vardı ama dev sunucusunda yoktu.
+
+### Açılış görselinin önceliği
+- `index.html` `<head>` içine statik `<link rel="preload" as="image"
+  href="/img/slayt-1.jpg">` kondu. Böylece **dev sunucusunda da** var.
+- Prerender bu satırı sayfaya göre ayarlıyor: `preloadImage` alanı olan
+  sayfalarda (üç anasayfa) kalıyor, diğer 18 sayfada tamamen siliniyor.
+- Hero `<img>`: `fetchpriority="high"` + `loading="eager"`.
+  React `fetchPriority` (büyük P) yazıyordu; HTML'de öznitelik adları
+  küçük harf okunduğu için tarayıcı zaten uyguluyordu ama `grep` ile
+  bulunamıyordu. Prerender çıktıyı küçük harfe çeviriyor.
+
+### Görsel çözünürlüğü
+Kaynak klasörde aynı fotoğrafın büyük sürümü yoktu, ama **aynı yerin**
+1493–1920 px sürümleri vardı. Değiştirilenler:
+- Anasayfa girişi: hakkimizda.jpg (375) → **banner.jpg (1920)**
+- Haber kapakları: haber1/2/3.jpg (479) → **haber1a/2a/3a.jpg (1493)**
+- Havuzlar bloğu: haber2.jpg (479) → **haber2a.jpg (1493)**
+- Olanaklar başlık bandı: club-afrodit.jpg (600) → **yorum.jpg (1920)**
+- İletişim başlık bandı: hakkimizda2.jpg (375) → **video.jpg (1920)**
+
+Yüksek çözünürlüklü karşılığı olmayanlar gerdirilmek yerine kaldırıldı:
+- Mutfak bloğu: hakkimizda2.jpg hem 375 px'ti hem de bir apart binası
+  fotoğrafıydı (konu dışı) → `image: null`, yer tutucu + TODO.
+- Odalar başlık bandı: en büyük oda görseli 800 px → görselsiz düz bant.
+- Tenis başlık bandı: tek kort fotoğrafı 600 px → görselsiz düz bant.
+  Fotoğraf sayfa gövdesinde 634 px'te kalıyor (1,06×, fark edilmiyor).
+
+Hiçbir görsel yapay olarak büyütülmedi.
+
+### Kalan tek gerdirme
+`yasli-bakim/1.jpg` 1200 px → Sağlıklı Yaşam başlık bandında 1425 px
+(1,19×). Elimizdeki en büyük huzurevi fotoğrafı bu; %55 koyu örtü altında
+olduğu için gözle güçlükle seçiliyor. TODO olarak bırakıldı.
+
+### Doğrulama
+- `npm run build` hatasız, `npx oxlint src` uyarısız
+- `grep -c 'fetchpriority="high"' dist/tr/index.html` → **1**
+- `grep -c 'rel="preload"' dist/tr/index.html` → **2**
+- `find dist -name "*.html" | wc -l` → **21**
+- Diğer 18 sayfanın `<head>`inde preload yok (0)
+- JS kapalı: 4.535 karakter metin, 24 reveal öğesinin hepsi opacity 1
+- 360 ve 390 px × 4 sayfa: `scrollWidth > innerWidth` **false**
+- 1440 ve 1920 px'te tüm sayfalar tarandı: `yasli-bakim/1.jpg` dışında
+  doğal genişliğinden büyük gösterilen görsel yok
+- Tam ekran görüntüleyicide görseller 1:1 (800 px doğal → 800 px ekranda)

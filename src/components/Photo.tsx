@@ -2,19 +2,20 @@ import { useState } from 'react'
 import Placeholder from './Placeholder'
 
 /*
- * TODO: yüksek çözünürlüklü görseller gerekiyor.
+ * Görsel çözünürlüğü notu.
  *
- * Aşağıdaki dosyalar sayfada kapladıkları alandan küçük; gerilerek
- * bulanıklaşıyorlar. clubafrodit.com'da daha büyük sürümleri YOK,
- * işletmeden orijinalleri istenmeli (en az 1200 piksel genişlik).
+ * Hiçbir görsel doğal genişliğinin üstünde gösterilmiyor; tek istisna
+ * aşağıda. Düşük çözünürlüklü dosyalar ya klasördeki yüksek çözünürlüklü
+ * karşılıklarıyla değiştirildi ya da o alan görselsiz bırakıldı.
  *
- *   hakkimizda2.jpg    375 px → 634 px  (1,69×)  Olanaklar/Mutfak, İletişim
- *   hakkimizda.jpg     375 px → 582 px  (1,55×)  Anasayfa girişi
- *   haber1.jpg         479 px → 582 px  (1,22×)  Haberler
- *   haber2.jpg         479 px → 582 px  (1,22×)  Anasayfa, Haberler
- *   haber3.jpg         479 px → 582 px  (1,22×)  Haberler
- *   club-afrodit.jpg   600 px → 634 px  (1,06×)  Olanaklar/Plaj
- *   aftek.jpg          600 px → 634 px  (1,06×)  Tenis
+ * TODO: işletmeden istenecek görseller (en az 1400 px genişlik)
+ *   - Mutfak / taş fırın / manzaralı teras: hiç yok, yer tutucu duruyor.
+ *   - Oda ve apart: en büyüğü 800 px. Odalar sayfası başlık bandı
+ *     bu yüzden görselsiz.
+ *   - Tenis kortu: tek fotoğraf 600 px. Tenis sayfası başlık bandı
+ *     bu yüzden görselsiz; fotoğraf gövdede doğal boyutunda kullanılıyor.
+ *   - Huzurevi: en büyüğü 1200 px. Sağlıklı Yaşam başlık bandında
+ *     1425 px'e geriliyor (1,19× — koyu örtü altında güçlükle fark edilir).
  */
 
 type PhotoProps = {

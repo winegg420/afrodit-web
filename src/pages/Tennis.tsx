@@ -11,7 +11,10 @@ export default function Tennis() {
 
   return (
     <>
-      <PageHead title={t.tennis.pageTitle} lead={t.tennis.pageLead} image="/img/aftek.jpg" />
+      {/* TODO: yüksek çözünürlüklü kort fotoğrafı gerekiyor. Elimizdeki
+          aftek.jpg 600 px; tam genişlik bantta gerilip bulanıklaşıyordu.
+          Fotoğraf sayfa gövdesinde doğal boyutuna yakın kullanılıyor. */}
+      <PageHead title={t.tennis.pageTitle} lead={t.tennis.pageLead} />
 
       <Section>
         <div className="split">

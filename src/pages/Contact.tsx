@@ -13,7 +13,7 @@ export default function Contact() {
       <PageHead
         title={t.contact.pageTitle}
         lead={t.contact.pageLead}
-        image="/img/hakkimizda2.jpg"
+        image="/img/video.jpg"
       />
 
       <Section>

@@ -30,7 +30,7 @@ export const amenityGroups: AmenityGroup[] = [
   },
   {
     id: 'pools',
-    image: '/img/haber2.jpg',
+    image: '/img/haber2a.jpg',
     items: ['semiOlympic', 'indoor', 'kids', 'slide', 'womenOnly'],
   },
   {
@@ -40,8 +40,10 @@ export const amenityGroups: AmenityGroup[] = [
   },
   {
     id: 'kitchen',
-    // TODO: hakkimizda2.jpg 375 px; sayfada 634 px yer kaplıyor, yüksek çözünürlüklü sürüm gerekiyor.
-    image: '/img/hakkimizda2.jpg',
+    // TODO: mutfak fotoğrafı yok. Buradaki hakkimizda2.jpg hem 375 px'ti
+    // (gerilip bulanıklaşıyordu) hem de bir apart binası fotoğrafıydı, konuyla
+    // ilgisizdi. İşletmeden mutfak/taş fırın/teras fotoğrafı istenmeli.
+    image: null,
     items: ['openBuffet', 'organicGarden', 'oliveOil', 'stoneOven', 'herbs', 'terraceDinner'],
   },
   {

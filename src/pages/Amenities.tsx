@@ -17,7 +17,7 @@ export default function Amenities() {
       <PageHead
         title={t.amenities.pageTitle}
         lead={t.amenities.pageLead}
-        image="/img/club-afrodit.jpg"
+        image="/img/yorum.jpg"
       />
 
       {amenityGroups.map((group, index) => {

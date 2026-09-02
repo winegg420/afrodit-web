@@ -16,11 +16,10 @@ export default function Rooms() {
 
   return (
     <>
-      <PageHead
-        title={t.rooms.pageTitle}
-        lead={t.rooms.pageLead}
-        image="/img/apart-daireler.jpg"
-      />
+      {/* TODO: sayfa başlığı bandı için en az 1400 px genişliğinde oda/apart
+          fotoğrafı gerekiyor. Elimizdeki en büyük oda görseli 800 px olduğu için
+          şimdilik görselsiz düz bant kullanılıyor (gerilip bulanıklaşmasın diye). */}
+      <PageHead title={t.rooms.pageTitle} lead={t.rooms.pageLead} />
 
       {rooms.map((room, index) => {
         const copy = t.rooms[room.id as keyof Dict['rooms']] as RoomCopy

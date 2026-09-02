@@ -47,19 +47,24 @@ async function main() {
     try {
       const body = render(page.path)
 
-      // İlk ekran görseli varsa <head> içinden öncelikli olarak yüklensin.
+      // Şablondaki preload satırı sayfaya göre ayarlanır: ilk ekran görseli
+      // olan sayfalarda kalır (href güncellenir), diğerlerinde silinir.
       const preload = page.preloadImage
-        ? `  <link rel="preload" as="image" href="${escapeHtml(page.preloadImage)}" fetchpriority="high" />\n`
+        ? `<link rel="preload" as="image" href="${escapeHtml(page.preloadImage)}" />`
         : ''
 
       const html = template
         .replace('<html lang="tr">', `<html lang="${page.lang}">`)
         .replace(/<title>.*?<\/title>/s, `<title>${escapeHtml(page.title)}</title>`)
+        .replace(/^\s*<link rel="preload" as="image"[^>]*>\n/m, preload ? `    ${preload}\n` : '')
         .replace(
           '</head>',
-          `  <meta name="description" content="${escapeHtml(page.description)}" />\n${preload}  </head>`,
+          `  <meta name="description" content="${escapeHtml(page.description)}" />\n  </head>`,
         )
         .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
+        // React `fetchPriority` yazıyor; HTML'de öznitelik adları küçük harf
+        // okunur ama araçlarla aranabilsin diye çıktıda küçültülüyor.
+        .replaceAll('fetchPriority="high"', 'fetchpriority="high"')
 
       const outFile = join(distDir, page.path, 'index.html')
       await mkdir(dirname(outFile), { recursive: true })
