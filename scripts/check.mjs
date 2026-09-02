@@ -61,11 +61,14 @@ adim('lint (oxlint)', () => {
   return 'uyarısız'
 })
 
-// 3) 21 HTML sayfası
-adim('21 HTML sayfası', () => {
-  const sayfalar = walk(dist, (p) => extname(p) === '.html')
-  beklenen(sayfalar.length === 21, `${sayfalar.length} sayfa bulundu, 21 bekleniyordu`)
-  return '21 sayfa'
+// 3) 21 rota sayfası + 404.html
+adim('21 sayfa ve 404.html', () => {
+  const hepsi = walk(dist, (p) => extname(p) === '.html')
+  const dortYuzDort = hepsi.filter((p) => p.endsWith('404.html'))
+  const rotalar = hepsi.filter((p) => !p.endsWith('404.html'))
+  beklenen(rotalar.length === 21, `${rotalar.length} rota sayfası bulundu, 21 bekleniyordu`)
+  beklenen(dortYuzDort.length === 1, 'dist/404.html yok')
+  return '21 sayfa + 404.html'
 })
 
 // 4) sitemap.xml 21 kayıt

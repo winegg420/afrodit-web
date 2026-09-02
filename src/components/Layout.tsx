@@ -9,7 +9,7 @@ export default function Layout() {
   const { lang: raw } = useParams()
   const lang = isLang(raw) ? raw : DEFAULT_LANG
   const t = dictionaries[lang]
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
 
   useEffect(() => {
     document.documentElement.lang = t.meta.htmlLang
@@ -18,10 +18,26 @@ export default function Layout() {
 
   useRevealOnScroll(pathname)
 
-  // Sayfa değişince başa dön
+  // Sayfa değişince başa dön — ama adreste çapa varsa (örn.
+  // /tr/odalar#suit-oda) o bölüme in. Bölümlerin scroll-margin-top değeri
+  // olduğu için yapışkan başlık içeriği örtmez.
+  //
+  // 'instant' bilerek: CSS'te `scroll-behavior: smooth` olduğu için
+  // varsayılan davranış yumuşak kaydırma olurdu. Sayfalar arası geçişte
+  // binlerce piksel yumuşak kaymak hem yavaş hem kafa karıştırıcı; ayrıca
+  // yumuşak kaydırma kısıtlanmış sekmede hiç çalışmıyor ve kullanıcı
+  // yanlış yerde kalıyor. Sayfa içi çapalar (açılıştaki aşağı oku) kendi
+  // yumuşak kaydırmasını kullanmaya devam ediyor.
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
+    if (hash) {
+      const hedef = document.getElementById(decodeURIComponent(hash.slice(1)))
+      if (hedef) {
+        hedef.scrollIntoView({ behavior: 'instant', block: 'start' })
+        return
+      }
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [pathname, hash])
 
   return (
     <I18nContext.Provider value={{ lang, t }}>

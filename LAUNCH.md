@@ -129,7 +129,9 @@ yok ya da "teyit bekliyor" notuyla duruyor. Cevap geldikçe işaretle.
       bu yönlendirme onun yerine geçiyor.
       *Dosya:* `public/_redirects` → **Sen**
 - [ ] **E4. Olmayan bir adres dene** (örn. `/tr/yok-boyle-sayfa`) —
-      404 sayfası görünmeli, boş ekran değil. → **Sen**
+      "Sayfa bulunamadı" sayfası görünmeli, boş ekran değil. Derleme
+      `dist/404.html` üretiyor; Cloudflare Pages eşleşmeyen her yolda onu
+      404 durumuyla sunar. → **Sen**
 - [ ] **E5. Üç dilin de açıldığını doğrula:** `/tr`, `/en`, `/de` ve
       alt sayfaları. → **Sen**
 - [ ] **E6. Alan adını bağla** ve HTTPS'in çalıştığını gör. → **Sen**

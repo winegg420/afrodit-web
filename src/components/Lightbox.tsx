@@ -111,16 +111,26 @@ export default function Lightbox({
       )}
 
       <figure className="lightbox__figure">
-        {/* Tam ekranda görsel gecikmesiz yüklenir; şeritteki küçük hâlleri lazy. */}
-        <img
-          src={images[index]}
-          srcSet={current?.jpgSrcSet}
-          sizes="(max-width: 76rem) 100vw, 76rem"
-          width={current?.width}
-          height={current?.height}
-          alt={alts?.[index] ?? `${altPrefix} — ${index + 1}`}
-          decoding="async"
-        />
+        {/* Tam ekranda görsel gecikmesiz yüklenir; şeritteki küçük hâlleri lazy.
+            Sitedeki en büyük indirme burası olduğu için WebP önce denenir. */}
+        <picture className="photo-picture">
+          {current && (
+            <source
+              type="image/webp"
+              srcSet={current.webpSrcSet}
+              sizes="(max-width: 76rem) 100vw, 76rem"
+            />
+          )}
+          <img
+            src={images[index]}
+            srcSet={current?.jpgSrcSet}
+            sizes="(max-width: 76rem) 100vw, 76rem"
+            width={current?.width}
+            height={current?.height}
+            alt={alts?.[index] ?? `${altPrefix} — ${index + 1}`}
+            decoding="async"
+          />
+        </picture>
         <figcaption className="lightbox__caption">
           {altPrefix} · {index + 1}/{images.length}
         </figcaption>

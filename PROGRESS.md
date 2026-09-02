@@ -554,3 +554,79 @@ Her iki dosyadaki not düzeltildi. İkisi de AA'yı geçiyor.
 - `npm run check` → TAMAM
 - 360 ve 390 px, üç sayfa: yatay kaydırma yok
 - Koddaki TODO 12, LAUNCH.md tablosu 12 — uyuşuyor
+
+## 2026-09-02 — Baştan sona denetim
+
+Site 21 sayfa × 6 genişlik + statik çıktı taranarak denetlendi.
+Üç gerçek sorun bulundu ve düzeltildi; üç şey de yanlış alarm çıktı.
+
+### Düzeltilen 1 — Çapa bağlantıları kaydırmıyordu
+Anasayfadaki oda ve haber kartları `/tr/odalar#grand-suit-oda` gibi
+adreslere gidiyor ama sayfa o bölüme inmiyordu (`scrollY: 0`).
+Sebep: `Layout` her rota değişiminde koşulsuz `window.scrollTo(0, 0)`
+çağırıyordu, çapa yok sayılıyordu.
+
+Düzeltme: `Layout` artık adreste çapa varsa o bölüme iniyor.
+
+**Ayrıca bulunan yan sorun:** CSS'te `html { scroll-behavior: smooth }`
+olduğu için `scrollTo`/`scrollIntoView` çağrılarının varsayılanı da
+yumuşak kaydırma oluyordu. Bu iki soruna yol açıyordu:
+- Her sayfa geçişinde başa dönerken binlerce piksel yavaş yavaş kayıyordu.
+- Yumuşak kaydırma kısıtlanmış/arka plandaki sekmede hiç çalışmıyor;
+  kullanıcı yanlış yerde kalıyordu (test sırasında bizzat yaşandı).
+Rota değişimindeki her iki kaydırma da `behavior: 'instant'` yapıldı.
+Sayfa içi aşağı oku kendi yumuşak kaydırmasını koruyor; hareket azaltma
+açıkken o da `instant`.
+
+Doğrulandı: kart tıklaması → `scrollY 2580`, hedef bölüm yapışkan
+başlığın 88 px altında, ekranda. Haber çapaları da aynı şekilde çalışıyor.
+
+### Düzeltilen 2 — Statik barındırmada 404 sayfası yoktu
+`dist/` içinde 404 sayfası üretilmiyordu. `_redirects` dosyasındaki
+`/tr/* -> /tr/ 404` kuralı bilinmeyen adreste **anasayfa içeriğini**
+404 durumuyla sunuyordu; tarayıcıda React sonradan doğru sayfayı
+gösterse de arama motoru anasayfa içeriği görüyordu.
+
+Düzeltme: prerender artık `dist/404.html` üretiyor —
+"Sayfa bulunamadı" içeriği, `noindex`, canonical/hreflang/OG yok,
+site haritasına girmiyor. `_redirects` sadeleşti (yalnız kök yönlendirme).
+`npm run check` artık 21 rota sayfası **ve** 404.html arıyor.
+
+Yan detay: 404 sayfasındaki dil değiştirici `/en/404` gibi var olmayan
+adreslere işaret ediyordu; prerender bunları dil anasayfalarına çeviriyor.
+
+### Düzeltilen 3 — Tam ekran görüntüleyici WebP kullanmıyordu
+Galeri fotoğrafına tıklayınca açılan tam ekran görsel sitedeki en büyük
+indirme, ama `<picture>` içinde değildi; her zaman JPEG iniyordu.
+`<picture>` + WebP kaynağı eklendi. Doğrulandı: `currentSrc` artık
+`.webp`, boyut ve alt metin doğru.
+
+### Yanlış alarmlar (kod sorunu değil, ölçüm ortamı)
+- **"Görseller yüklenmiyor"**: gizli belgede tarayıcı görseli indiriyor
+  ama çözmüyor; `currentSrc` dolu, `naturalWidth` 0 kalıyor.
+  Dosyaların varlığı statik denetimle ayrıca doğrulandı.
+- **"Skip link odakta görünmüyor"**: `transition: top` yüzünden değer
+  geçişin ilk anında okunmuştu. 500 ms sonra `top: 12px`, görünür.
+- **"`:focus` eşleşmiyor"**: sekme odakta değilken Chrome `:focus`
+  stilini uygulamıyor.
+
+### Sorun bulunmayanlar
+- Statik denetim (22 sayfa): kırık iç bağlantı, kayıp görsel/srcset,
+  yinelenen id, başlık atlaması, eksik alt/width/title/description/
+  canonical/hreflang/og:title, `target=_blank` rel eksiği, çapa hedefi
+  eksiği, sitemap tutarsızlığı — hiçbiri yok.
+- Konsol: TR/EN/DE, altı sayfa — tek hata veya uyarı yok.
+- Düzen: 360/390/768/1024/1200/1440 px × TR-EN-DE — yatay kaydırma yok,
+  taşan öğe yok, 44 px altı dokunma hedefi yok, hamburger eşiği doğru,
+  menü tek satır, kırpılan metin yok.
+- Mobil menü: açılıyor, `aria-expanded` ve etiket değişiyor, bağlantıya
+  basınca kapanıyor.
+- Galeri: açılıyor, ok tuşları geziniyor, ESC kapatıyor, odak geri
+  dönüyor, arka plan kaydırması kilitleniyor.
+- Dil değiştirici: sayfayı ve çapayı koruyor, `html lang` ve başlık
+  güncelleniyor.
+- JavaScript kapalı: 4.535 karakter metin, 24 reveal öğesinin hepsi
+  görünür.
+
+### Doğrulama
+`npm run check` → TAMAM (altı ölçüt).

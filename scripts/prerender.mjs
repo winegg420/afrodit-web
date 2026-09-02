@@ -38,6 +38,15 @@ function escapeJsonLd(value) {
 
 /** Sayfaya özel <head> etiketleri. */
 function headTags(page) {
+  // Arama motoruna kapalı sayfada (404) canonical, hreflang ve paylaşım
+  // etiketleri anlamsız; yalnızca açıklama ve robots yazılır.
+  if (page.noindex) {
+    return [
+      `    <meta name="description" content="${escapeHtml(page.description)}" />`,
+      '    <meta name="robots" content="noindex" />',
+    ].join('\n')
+  }
+
   const lines = [
     `<meta name="description" content="${escapeHtml(page.description)}" />`,
     `<link rel="canonical" href="${escapeHtml(page.canonical)}" />`,
@@ -91,7 +100,9 @@ async function main() {
   }
 
   const template = await readFile(templatePath, 'utf8')
-  const { render, allPages, sitemapXml, robotsTxt } = await import(pathToFileURL(ssrEntry).href)
+  const { render, allPages, notFoundPage, sitemapXml, robotsTxt } = await import(
+    pathToFileURL(ssrEntry).href
+  )
   const pages = allPages()
 
   let written = 0
@@ -139,6 +150,22 @@ async function main() {
     return
   }
 
+  // Statik barındırmada bilinmeyen adresler için tek bir 404 sayfası.
+  // Cloudflare Pages eşleşmeyen her yolda bunu sunar. Site haritasına
+  // girmez ve robots ile aramaya kapatılır.
+  const bulunamadi = notFoundPage()
+  const html404 = template
+    .replace(/<title>.*?<\/title>/s, `<title>${escapeHtml(bulunamadi.title)}</title>`)
+    .replace(/^\s*<link rel="preload" as="image"[^>]*>\n/m, '')
+    .replace('</head>', `${headTags(bulunamadi)}\n  </head>`)
+    .replace('<div id="root"></div>', `<div id="root">${render('/tr/404')}</div>`)
+    .replaceAll('fetchPriority="high"', 'fetchpriority="high"')
+    // Dil değiştirici bu sayfada /en/404 gibi var olmayan adreslere işaret
+    // ederdi; o dilin anasayfasına çeviriyoruz.
+    .replace(/href="\/(tr|en|de)\/404"/g, 'href="/$1"')
+
+  await writeFile(join(distDir, '404.html'), html404, 'utf8')
+
   await writeFile(join(distDir, 'sitemap.xml'), sitemapXml(pages), 'utf8')
   await writeFile(join(distDir, 'robots.txt'), robotsTxt(), 'utf8')
 
@@ -147,7 +174,7 @@ async function main() {
   await rm(templatePath)
   await rm(join(root, 'dist-ssr'), { recursive: true, force: true })
 
-  console.log(`Prerender tamam: ${written} sayfa, sitemap.xml ve robots.txt yazıldı.`)
+  console.log(`Prerender tamam: ${written} sayfa + 404.html, sitemap.xml ve robots.txt yazıldı.`)
 }
 
 main().catch((error) => {

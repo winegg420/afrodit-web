@@ -259,6 +259,7 @@
   margin: 0;
 }
 
+.lightbox__figure picture,
 .lightbox__figure img {
   max-width: 100%;
   max-height: 78vh;

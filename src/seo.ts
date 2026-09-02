@@ -1,4 +1,4 @@
-import { dictionaries, LANGS } from './i18n'
+import { dictionaries, DEFAULT_LANG, LANGS } from './i18n'
 import type { Lang } from './i18n'
 import { SLUGS } from './routes'
 import { absoluteUrl } from './config'
@@ -27,6 +27,8 @@ export type PageMeta = {
   preloadSizes?: string
   /** Yapılandırılmış veri (JSON-LD) — yalnızca anasayfalarda */
   jsonLd?: string
+  /** Arama motoruna kapalı (yalnızca 404 sayfası) */
+  noindex?: boolean
 }
 
 /** Sayfa başına paylaşım görseli. Sayfanın kendi ana fotoğrafı, yoksa açılış görseli. */
@@ -153,6 +155,27 @@ export function allPages(): PageMeta[] {
   }
 
   return pages
+}
+
+/**
+ * Statik barındırmada bilinmeyen adresler için 404 sayfası.
+ * Cloudflare Pages, eşleşmeyen her yol için dist/404.html'i sunar.
+ * Site haritasına ve 21 sayfalık listeye GİRMEZ; arama motoruna kapalıdır.
+ */
+export function notFoundPage(): PageMeta {
+  const t = dictionaries[DEFAULT_LANG]
+  return {
+    path: '/404',
+    lang: DEFAULT_LANG,
+    title: `${t.notFound.title} — ${t.brand.name}`,
+    description: t.notFound.body,
+    canonical: '',
+    alternates: [],
+    ogImage: '',
+    ogImageWidth: 0,
+    ogImageHeight: 0,
+    noindex: true,
+  }
 }
 
 /** Site haritası. Her girdi kendi dil karşılıklarını da bildirir. */
