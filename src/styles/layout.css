@@ -51,16 +51,39 @@
   margin-top: var(--space-4);
 }
 
-@media (min-width: 75rem) {
+/* Başlıktaki sosyal simgeler. Ayrı bir medya sorgusu yok: menünün
+   hamburger eşiği zaten 84rem, yani dar ekranda bunlar menünün içinde
+   kalıyor, geniş ekranda üst çubukta görünüyor. */
+.site-nav__social { display: flex; align-items: center; gap: var(--space-2); }
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--color-text-soft);
+}
+.social-icon:hover { color: var(--color-accent-strong); }
+
+/* Yatay menü eşiği 84rem (1344 px).
+   Sekizinci madde (Hakkımızda) eklenince 8 bağlantı + 2 sosyal simge +
+   3 dil + rezervasyon butonu 1200 px'e sığmıyordu: menü 88 px taşıyor ve
+   yatay kaydırma açıyordu. Eşik 75rem’den 84rem’e çıkarıldı ve menü
+   boşlukları sıkılaştırıldı. Menüden madde çıkarılmadı. */
+@media (min-width: 84rem) {
   .site-header__toggle { display: none; }
   .site-nav {
     display: flex;
     align-items: center;
-    gap: var(--space-6);
+    gap: var(--space-4);
     margin-left: auto;
   }
-  .site-nav__list { flex-direction: row; gap: var(--space-5); }
-  .site-nav__aside { margin-top: 0; }
+  .site-nav__list { flex-direction: row; gap: var(--space-3); }
+  .site-nav__aside { margin-top: 0; gap: var(--space-3); }
+  /* Dokunma hedefi genişliği yalnızca dokunmatik düzen için; bu eşikten
+     sonra fare kullanılıyor ve kısa bağlantılarda boşa genişlik yapıyordu. */
+  .site-nav__link { min-width: 0; }
 }
 
 /* ---------- Dil değiştirici ---------- */
@@ -301,8 +324,43 @@
 
 .contact-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 
-.map { border: var(--border-thin); border-radius: var(--radius-md); overflow: hidden; }
-.map iframe { display: block; width: 100%; height: clamp(18rem, 50vh, 28rem); border: 0; }
+/* ---------- Harita ----------
+   Yer tutucu ile gerçek çerçeve aynı yüksekliği paylaşır ki tıklandığında
+   düzen zıplamasın. Yükseklik --map-height ile bölgeye göre ayarlanır. */
+.map {
+  --map-height: clamp(18rem, 50vh, 28rem);
+  max-width: 100%;
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.map iframe { display: block; width: 100%; height: var(--map-height); border: 0; }
+
+.map--closed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  height: var(--map-height);
+  padding: var(--space-4);
+  color: var(--color-text-soft);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-align: center;
+  cursor: pointer;
+  /* Haritayı çağrıştıran ızgara; tamamen CSS, tek dış istek yok. */
+  background-image:
+    linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  transition: border-color var(--transition), color var(--transition);
+}
+.map--closed:hover { border-color: var(--color-accent); color: var(--color-text); }
+.map__pin { color: var(--color-accent-strong); }
+.map__pin .icon { width: 2rem; height: 2rem; }
+.map__label { font-weight: 600; }
 
 /* ---------- Bağlantı ---------- */
 .link-more {
@@ -341,6 +399,20 @@
   letter-spacing: 0.04em;
 }
 
+/* Sosyal bağlantı: simge + hesap adı birlikte. Simge tek başına
+   bırakılmadı — hangi hesap olduğu yazıyla da okunsun.
+   Seçici alt bilgi bağlamını da taşıyor: aşağıdaki dokunma hedefi kuralı
+   (.site-footer__links a) display'i inline-block'a çeviriyor ve simgeyi
+   kendi satırına düşürüyordu. */
+.social-link,
+.site-footer__links a.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.social-link .icon { flex: none; width: 1.15rem; height: 1.15rem; }
+.social-link__ad { min-width: 0; overflow-wrap: anywhere; }
+
 .site-footer__address { font-style: normal; font-size: var(--text-sm); line-height: 2; }
 .site-footer__links { font-size: var(--text-sm); line-height: 2; }
 .site-footer__map { display: inline-block; margin-top: var(--space-3); font-size: var(--text-sm); }
@@ -358,7 +430,25 @@
 /* Yapışkan başlığın altında kalmasın diye çapa boşluğu */
 .section, .page-head { scroll-margin-top: calc(var(--header-height) + var(--space-4)); }
 
-.map { background: var(--color-bg-alt); }
+.map { background-color: var(--color-bg-alt); }
+
+/* Alt bilgideki harita koyu zeminde durur; kendi kontrastını alır.
+   background-color kullanılıyor — background kısayolu .map--closed
+   ızgarasını silerdi. */
+.site-footer__location { margin-top: var(--space-7); }
+.map--footer { --map-height: 15rem; }
+.site-footer .map {
+  border-color: rgba(255, 255, 255, 0.18);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+.site-footer .map--closed {
+  color: var(--color-text-invert);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+}
+.site-footer .map--closed:hover { border-color: var(--color-accent); }
+.site-footer .map__pin { color: var(--color-accent); }
 
 /* ---------- Dokunma hedefleri ----------
    Parmakla basılan her öğe en az 44×44 piksel olmalı. */
@@ -399,7 +489,7 @@
 .checklist a { display: inline-block; padding-block: var(--space-1); }
 
 /* Mobilde menü açıkken bağlantılar daha rahat aralıklı dursun */
-@media (max-width: 74.99rem) {
+@media (max-width: 83.99rem) {
   .site-nav--open .site-nav__list { gap: var(--space-2); }
   .site-nav__aside { flex-wrap: wrap; }
 }
@@ -429,7 +519,7 @@
 .site-header__brand img { flex: none; }
 .site-header__toggle { flex: 0 0 auto; }
 
-@media (max-width: 74.99rem) {
+@media (max-width: 83.99rem) {
   .site-nav--open {
     flex-basis: 100%;
     border-top: var(--border-thin);
@@ -441,6 +531,92 @@
 /* Dokunmatik tabletlerde de menü bağlantıları 44 pikselden dar olmasın */
 .site-nav__link { min-width: 48px; }
 
-@media (min-width: 75rem) {
+@media (min-width: 84rem) {
   .site-nav__link { justify-content: center; }
 }
+
+/* ---------- Sağ alttaki sabit düğmeler ----------
+   Yapışkan başlık z-index 20, tam ekran görüntüleyici 100; bunlar aradadır
+   ki içerik üstünde dursunlar ama görüntüleyici açılınca altta kalsınlar. */
+.floating-actions {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  /* Kapsayıcı tıklamayı yutmasın; yalnızca düğmelerin kendisi tıklanabilir. */
+  pointer-events: none;
+}
+
+.floating-actions__button {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition), background-color var(--transition);
+}
+.floating-actions__button .icon { width: 1.6rem; height: 1.6rem; }
+.floating-actions__button:hover { transform: translateY(-2px); }
+
+.floating-actions__button--whatsapp {
+  color: var(--color-text-invert);
+  background-color: var(--color-whatsapp);
+}
+.floating-actions__button--whatsapp:hover { background-color: var(--color-whatsapp-strong); }
+
+/* Alt bilgideki son satır sabit düğmenin altında kalmasın. Düğme 3,25rem
+   çapında ve kenardan 1rem içeride; pay bırakarak 5,5rem.
+   Seçici .container'ı da içeriyor: .container'ın padding-inline kuralı
+   aynı özgüllükte ve sonra yüklendiği için tek sınıfla ezilemiyordu. */
+.container.site-footer__base { padding-right: 5.5rem; }
+
+/* Küçük ekranda düğme biraz daha içeri çekilsin, başparmak alanına düşsün */
+@media (max-width: 30rem) {
+  .floating-actions { right: var(--space-3); bottom: var(--space-3); }
+}
+
+/* "Yukarı çık" — WhatsApp'ın üstünde, orijinal sitedeki sırayla. */
+.floating-actions__button--top {
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: var(--border-thin);
+  cursor: pointer;
+}
+.floating-actions__button--top:hover {
+  color: var(--color-text-invert);
+  background-color: var(--color-accent-strong);
+  border-color: var(--color-accent-strong);
+}
+
+/* ---------- Video kartı ---------- */
+.video-card { display: block; color: inherit; text-decoration: none; }
+.video-card__media {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.video-card__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-invert);
+  background: rgba(38, 38, 42, 0.3);
+  transition: background-color var(--transition);
+}
+.video-card__play .icon { width: 3.5rem; height: 3.5rem; }
+.video-card:hover .video-card__play { background: rgba(38, 38, 42, 0.15); }
+.video-card__title {
+  display: block;
+  margin-top: var(--space-3);
+  font-size: var(--text-lg);
+}
+.video-card:hover .video-card__title { text-decoration: underline; }

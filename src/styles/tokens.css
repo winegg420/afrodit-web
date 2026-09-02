@@ -32,6 +32,11 @@
   --color-line: #e6ddd3; /* ince çizgi */
   --color-line-strong: #cfc2b5; /* belirgin çizgi */
   --color-focus: #1f6f8b; /* odak halkası — sıcak paletten ayrışsın diye mavi */
+  /* WhatsApp'ın kendi koyu yeşili. Sıcak paletten ayrık duruyor ama bu
+     düğmenin tanınırlığı renginden geliyor. Beyaz simgeyle ölçülen
+     kontrast 4,0:1 — simge için gereken 3:1 eşiğini geçiyor. */
+  --color-whatsapp: #128c7e;
+  --color-whatsapp-strong: #075e54;
   --color-error: #9b3d34; /* hata */
 
   /* --- Tipografi --- */

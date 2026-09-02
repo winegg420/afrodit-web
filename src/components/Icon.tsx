@@ -23,6 +23,18 @@ const PATHS: Record<string, string> = {
   bathroom: 'M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM7 12V6a2 2 0 0 1 4 0M7 19l-1 2M17 19l1 2',
   wardrobe: 'M4 3h16v18H4zM12 3v18M10 11v2M14 11v2',
   careBed: 'M3 18V9M3 13h13a4 4 0 0 1 4 4v1M21 18H3M8 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z',
+  pin: 'M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11ZM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
+  // Sosyal ağlar — markaların dolu logoları yerine sitenin ince çizgi
+  // diline uyan hatları; dolu logolar bu ikon setinde yabancı duruyordu.
+  instagram:
+    'M7.6 3.5h8.8a4.1 4.1 0 0 1 4.1 4.1v8.8a4.1 4.1 0 0 1-4.1 4.1H7.6a4.1 4.1 0 0 1-4.1-4.1V7.6a4.1 4.1 0 0 1 4.1-4.1ZM16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM16.9 7.1h.01',
+  facebook:
+    'M7.6 3.5h8.8a4.1 4.1 0 0 1 4.1 4.1v8.8a4.1 4.1 0 0 1-4.1 4.1H7.6a4.1 4.1 0 0 1-4.1-4.1V7.6a4.1 4.1 0 0 1 4.1-4.1ZM15.4 7.8h-1.2a2 2 0 0 0-2 2v10.6M10.2 12.4h4.3',
+  youtube:
+    'M3.5 8.4a3.1 3.1 0 0 1 3.1-3.1h10.8a3.1 3.1 0 0 1 3.1 3.1v7.2a3.1 3.1 0 0 1-3.1 3.1H6.6a3.1 3.1 0 0 1-3.1-3.1ZM10.4 9.4 15 12l-4.6 2.6Z',
+  whatsapp:
+    'M3.4 20.6l1.3-4.2A8.1 8.1 0 1 1 7.7 19.3L3.4 20.6ZM9.2 8.6c0 3.4 2.8 6.2 6.2 6.2a1 1 0 0 0 1-1v-.8l-2-1-1 1a5.3 5.3 0 0 1-2.4-2.4l1-1-1-2h-.8a1 1 0 0 0-1 1Z',
+  arrowUp: 'M12 19V5M6 11l6-6 6 6',
 }
 
 const FALLBACK = 'M5 12.5 9.5 17 19 7'

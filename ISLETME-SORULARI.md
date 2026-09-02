@@ -75,7 +75,10 @@ Aynı işletmenin ikinci tesisi mi, ortaklık mı, yoksa ilgisiz mi?
 Siteye eklenmesini istiyor musunuz?
 
 > *Neden soruyoruz:* Mevcut sitede Aeneas'a bir bağlantı var ama ilişkisi
-> anlaşılmıyor. Yanlış anlaşılmasın diye yeni siteye hiç almadık.
+> anlaşılmıyor. Şu an yeni sitede yalnızca alt bilgideki sosyal medya
+> listesinde `@aeneashotel` olarak duruyor — diğer hesaplarla aynı
+> biçimde, tanıtım metni veya ayrı sayfa yok. İlişki netleşince
+> büyütülecek; ilgisizse listeden çıkarılacak.
 
 ---
 

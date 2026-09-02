@@ -1,13 +1,22 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Logo from './Logo'
+import MapEmbed from './MapEmbed'
+import Icon from './Icon'
 import { useI18n } from '../i18n'
+import type { Dict } from '../i18n'
 import { useSectionPath } from '../hooks/useSectionPath'
+import { sectionFromSlug } from '../lib/paths'
 import { facility } from '../content/facility'
 
 export default function Footer() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const path = useSectionPath()
+  const { pathname } = useLocation()
   const { address } = facility
+
+  // İletişim sayfasının kendi büyük haritası var; alt bilgide ikinci bir
+  // harita çıkmasın diye orada bu bölüm atlanıyor.
+  const iletisimSayfasi = sectionFromSlug(lang, pathname.split('/').filter(Boolean)[1] ?? '') === 'contact'
 
   return (
     <footer className="site-footer">
@@ -44,6 +53,7 @@ export default function Footer() {
           <h2 className="site-footer__title">{t.footer.linksTitle}</h2>
           <ul className="site-footer__links">
             <li><Link to={path()}>{t.nav.home}</Link></li>
+            <li><Link to={path('about')}>{t.nav.about}</Link></li>
             <li><Link to={path('rooms')}>{t.nav.rooms}</Link></li>
             <li><Link to={path('amenities')}>{t.nav.amenities}</Link></li>
             <li><Link to={path('tennis')}>{t.nav.tennis}</Link></li>
@@ -58,14 +68,28 @@ export default function Footer() {
           <ul className="site-footer__links">
             {facility.social.map((item) => (
               <li key={item.key}>
-                <a href={item.href} target="_blank" rel="noreferrer">
-                  {item.label}
+                <a
+                  className="social-link"
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${item.label} — ${t.social[item.key as keyof Dict['social']]}`}
+                >
+                  <Icon name={item.icon} />
+                  <span className="social-link__ad">{item.label}</span>
                 </a>
               </li>
             ))}
           </ul>
         </div>
       </div>
+
+      {!iletisimSayfasi && (
+        <div className="container site-footer__location">
+          <h2 className="site-footer__title">{t.contact.mapTitle}</h2>
+          <MapEmbed className="map--footer" />
+        </div>
+      )}
 
       <div className="container site-footer__base">
         <small>

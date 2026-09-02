@@ -20,6 +20,7 @@ export const de: Dict = {
     rooms: 'Zimmer',
     amenities: 'Anlage',
     tennis: 'Tennis',
+    about: 'Über uns',
     nursing: 'Gesundes Leben',
     news: 'Aktuelles',
     contact: 'Kontakt',
@@ -41,9 +42,11 @@ export const de: Dict = {
     allAmenities: 'Alle Einrichtungen',
     allNews: 'Alle Meldungen',
     viewMap: 'Auf der Karte ansehen',
+    openMap: 'Karte öffnen',
     watchVideo: 'Unseren YouTube-Kanal ansehen',
     backHome: 'Zurück zur Startseite',
     scrollDown: 'Nach unten scrollen',
+    backToTop: 'Zurück nach oben',
     openPhoto: 'Foto vergrößern',
     closePhoto: 'Schließen',
     prevPhoto: 'Vorheriges Foto',
@@ -57,7 +60,12 @@ export const de: Dict = {
       'Weitläufige Gärten zwischen Oliven- und Obstbäumen, Spazierwege und eine flache Bauweise — Club Afrodit ist das ganze Jahr über geöffnet.',
     introTitle: 'Urlaub mitten in der Natur im Ida-Gebirge',
     introBody:
-      'Am Fuß des Kazdağları (Ida-Gebirges) gelegen, bietet unser Dorf mit 21 % Sauerstoff und 50 % Luftfeuchtigkeit ideale Bedingungen für das menschliche Wohlbefinden. Direkt am Meer, im Herzen der Natur, mit weitläufigen Gärten zwischen Oliven- und Obstbäumen, Spazierwegen und flacher Bauweise empfängt es seine Gäste das ganze Jahr über. Weil beim Bau konsequent auf einen behutsamen Umgang mit der Natur geachtet wurde — nach dem Grundsatz „nutzen und zugleich bewahren“ —, gilt es als vorbildliches Feriendorf.',
+      'Am Fuß des Ida-Gebirges, mit 21 % Sauerstoff und 50 % Luftfeuchtigkeit, ein Dorf direkt am Meer im Herzen der Natur. Gebaut nach dem Grundsatz „nutzen und zugleich bewahren“: Alle Gebäude haben zwei Geschosse, und man geht überall zu Fuß hin, zwischen Oliven- und Obstbäumen.',
+    videosTitle: 'Videos',
+    videos: {
+      tanitim: 'Club Afrodit Vorstellungsvideo',
+      sehir: 'Fern vom Lärm der Stadt, im Club Afrodit',
+    },
     roomsTitle: 'Zimmer und Apartments',
     roomsLead:
       'Komfortable Zimmer und geräumige Apartments in zweigeschossigen Gebäuden, mit Fenstern zum Garten und zum Meer.',
@@ -73,6 +81,33 @@ export const de: Dict = {
     newsTitle: 'Aktuelles',
     contactTitle: 'Kontakt aufnehmen',
     contactLead: 'Rufen Sie uns an, um Verfügbarkeit und Unterkunftsmöglichkeiten zu erfragen.',
+  },
+
+  about: {
+    pageTitle: 'Über uns',
+    pageLead:
+      'Ein Feriendorf direkt am Meer am Fuß des Ida-Gebirges, gebaut nach dem Grundsatz, die Natur zu nutzen und zugleich zu bewahren.',
+
+    storyTitle: 'Ein Feriendorf im Herzen der Natur',
+    storyBody1:
+      'Am Fuß des Kazdağları (Ida-Gebirges) gelegen, bietet unser Dorf mit 21 % Sauerstoff und 50 % Luftfeuchtigkeit ideale Bedingungen für das menschliche Wohlbefinden. Direkt am Meer, im Herzen der Natur, mit weitläufigen Gärten zwischen Oliven- und Obstbäumen, Spazierwegen und flacher Bauweise empfängt es seine Gäste das ganze Jahr über. Weil beim Bau konsequent auf einen behutsamen Umgang mit der Natur geachtet wurde — nach dem Grundsatz „nutzen und zugleich bewahren“ —, gilt es als vorbildliches Feriendorf.',
+    storyBody2:
+      'Alle Gebäude der Anlage haben zwei Geschosse. Statt hoher Blöcke verteilen sich niedrige Häuser über den Garten und bilden eine Siedlung, durch die man zwischen den Bäumen spaziert. Vom Zimmer zum Pool, vom Strand zu den Tennisplätzen ist alles fußläufig erreichbar; die Fenster der Apartments gehen auf grüne Spaziergärten und das Meer hinaus.',
+
+    gardenTitle: 'Eigener Garten, eigenes Olivenöl',
+    gardenBody:
+      'Ein Teil des Gemüses und Obstes in unserer Küche stammt aus dem eigenen Garten der Anlage; auch Oliven und Olivenöl sind eigene Erzeugung. Die endemischen Kräuter des Ida-Gebirges und der Steinofen ergänzen die schlichten Aromen der ägäischen und mediterranen Küche.',
+
+    locationTitle: 'Lage und Entfernungen',
+    locationLead:
+      'An der Küste von Altınoluk, an der Nordseite des Golfs von Edremit. Entfernungen zu Orten und Naturzielen in der Umgebung:',
+
+    mythTitle: 'Woher unser Name kommt',
+    mythBody:
+      'Der Sage nach fand der erste Schönheitswettbewerb der Welt auf dem Ida-Gebirge statt — dort, wo heute die Kazdağları liegen — und der goldene Apfel ging an Aphrodite. Von dieser Geschichte hat die Anlage ihren Namen.',
+    mythLink: 'Die ganze Geschichte lesen',
+
+    photosTitle: 'Aus der Anlage',
   },
 
   rooms: {
@@ -410,6 +445,15 @@ export const de: Dict = {
     linksTitle: 'Seiten',
     followTitle: 'Folgen Sie uns',
     rights: 'Alle Rechte vorbehalten.',
+  },
+
+  social: {
+    instagram: 'Club Afrodit auf Instagram',
+    instagramMono: 'Mono Afrodit auf Instagram',
+    instagramTenis: 'Afrodit Tennisclub auf Instagram',
+    instagramKoy: 'Afrodit Dorf für gesundes Leben auf Instagram',
+    aeneas: 'Aeneas auf Instagram',
+    facebook: 'Club Afrodit auf Facebook',
   },
 
   common: {

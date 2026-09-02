@@ -35,6 +35,7 @@ export type PageMeta = {
 /** Sayfa başına paylaşım görseli. Sayfanın kendi ana fotoğrafı, yoksa açılış görseli. */
 const OG_IMAGES: Record<string, { src: string; w: number; h: number }> = {
   home: { src: '/img/slayt-1.jpg', w: 1920, h: 1080 },
+  about: { src: '/img/slayt-1.jpg', w: 1920, h: 1080 },
   rooms: { src: '/img/slayt-1.jpg', w: 1920, h: 1080 },
   amenities: { src: '/img/yorum.jpg', w: 1920, h: 1080 },
   tennis: { src: '/img/slayt-1.jpg', w: 1920, h: 1080 },
@@ -105,7 +106,7 @@ function lodgingBusiness(lang: Lang): string {
   return JSON.stringify(data)
 }
 
-/** Prerender edilecek sayfalar: 7 sayfa × 3 dil. */
+/** Prerender edilecek sayfalar: 8 sayfa × 3 dil. */
 export function allPages(): PageMeta[] {
   const pages: PageMeta[] = []
 
@@ -114,6 +115,7 @@ export function allPages(): PageMeta[] {
   const bolumler = (lang: Lang) => {
     const t = dictionaries[lang]
     const metin: Record<SectionKey, { title: string; description: string }> = {
+      about: { title: t.about.pageTitle, description: t.about.pageLead },
       rooms: { title: t.rooms.pageTitle, description: t.rooms.pageLead },
       amenities: { title: t.amenities.pageTitle, description: t.amenities.pageLead },
       tennis: { title: t.tennis.pageTitle, description: t.tennis.pageLead },

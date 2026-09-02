@@ -10,9 +10,10 @@ import type { Lang } from '../i18n'
  * Eski Türkçe adresler kırılmasın diye public/_redirects içinde
  * /en/odalar -> /en/rooms gibi kalıcı (301) yönlendirmeler var.
  */
-export type SectionKey = 'rooms' | 'amenities' | 'tennis' | 'nursing' | 'news' | 'contact'
+export type SectionKey = 'about' | 'rooms' | 'amenities' | 'tennis' | 'nursing' | 'news' | 'contact'
 
 export const SECTION_KEYS: SectionKey[] = [
+  'about',
   'rooms',
   'amenities',
   'tennis',
@@ -23,6 +24,7 @@ export const SECTION_KEYS: SectionKey[] = [
 
 export const SLUGS: Record<Lang, Record<SectionKey, string>> = {
   tr: {
+    about: 'hakkimizda',
     rooms: 'odalar',
     amenities: 'olanaklar',
     tennis: 'tenis',
@@ -31,6 +33,7 @@ export const SLUGS: Record<Lang, Record<SectionKey, string>> = {
     contact: 'iletisim',
   },
   en: {
+    about: 'about',
     rooms: 'rooms',
     amenities: 'facilities',
     tennis: 'tennis',
@@ -39,6 +42,7 @@ export const SLUGS: Record<Lang, Record<SectionKey, string>> = {
     contact: 'contact',
   },
   de: {
+    about: 'ueber-uns',
     rooms: 'zimmer',
     amenities: 'anlage',
     tennis: 'tennis',

@@ -759,3 +759,272 @@ doğrudan açıyor (önceden eğik çizgi gerekiyordu).
 ### Ölçemediğim
 Gerçek dağıtım: alan adı, HTTPS, Cloudflare önbelleği, gerçek ağ hızı.
 Bunlar ancak yayına alındıktan sonra test edilebilir (LAUNCH.md E ve F).
+
+## 2026-09-02 — Cloudflare Pages geçici yayın (telefon testi)
+
+**Yapılanlar**
+- `npm run check` — altı ölçüt de geçti (derleme, lint, 21 sayfa + 404,
+  sitemap 21 kayıt, img ölçüleri, opacity kuralı).
+- `wrangler login` (OAuth, tarayıcıdan onaylandı).
+- `wrangler pages project create afrodit-web --production-branch=main`
+- `wrangler pages deploy dist --project-name=afrodit-web --branch=main`
+- Adres: https://afrodit-web.pages.dev (dağıtım kopyası: 151df6a2.afrodit-web.pages.dev)
+
+**Karar: Git bağlanmadı.** Her push'un derleme hakkı harcamaması için elle
+(`wrangler pages deploy`) dağıtım yapılıyor. Yeni sürüm için: `npm run check`
+sonra aynı deploy komutu.
+
+**Karar: wrangler.toml eklenmedi.** `dist/_redirects` zaten build'de
+üretiliyor ve Pages onu kendiliğinden okuyor; ek ayar dosyasına gerek yok.
+
+**Canlıda doğrulananlar (hepsi geçti)**
+- 21 sayfanın hepsi 200.
+- 12 eski Türkçe adres (/en/odalar, /de/odalar …) → 301, doğru hedeflere.
+- `/` → `/tr` 302 (kural `_redirects` içinde 302 olarak tanımlı).
+- Eğik çizgi: `/tr/odalar/` → 308 → `/tr/odalar` 200. Pages'in kendi
+  normalleştirmesi; her iki yazım da açılıyor.
+- sitemap.xml 200 (application/xml), robots.txt 200 (text/plain).
+- Bilinmeyen adres → 404.html, 404 durumuyla.
+- 21 sayfadaki 200 tekil görselin hepsi 200. Chrome ağ kaydı: tarayıcı
+  yalnızca .webp indiriyor, .jpg hiç istenmiyor. WebP ~1/3 boyut
+  (banner 577 KB → 212 KB, aftek 86 KB → 13 KB).
+- Konsol hatası yok (TR ve DE sayfalarında ölçüldü).
+
+**Gözlem (hata değil):** canonical, hreflang ve robots.txt içindeki sitemap
+adresi `www.clubafrodit.com`'u gösteriyor. Üretim domaini için doğru; geçici
+pages.dev adresinin indekslenmemesi de bu sayede.
+
+## 2026-09-02 — Footer'a gömülü harita (tıklayınca yüklenen)
+
+**Yapılanlar**
+- Yeni bileşen `src/components/MapEmbed.tsx`. Harita tek yerden yönetiliyor;
+  hem alt bilgi hem İletişim sayfası aynı bileşeni kullanıyor.
+- `Footer.tsx`: grid'in altına tam genişlik "Konum" şeridi eklendi.
+- `Contact.tsx`: sayfadaki doğrudan iframe aynı bileşene geçirildi.
+- `Icon.tsx`: `pin` (konum) yolu eklendi.
+- `i18n/tr|en|de`: tek yeni anahtar `actions.openMap`
+  (Haritayı açın / Open the map / Karte öffnen).
+- `layout.css`: yer tutucu stilleri, `--map-height` değişkeni, koyu zemin
+  varyantı.
+
+**Karar: iframe tıklamaya kadar kurulmuyor.** Google haritası 21 sayfanın
+altında duruyor; doğrudan iframe her açılışta yüz kilobaytlarca dış kaynak
+indirirdi. Yerinde durağan bir yer tutucu var, gerçek çerçeve tıklanınca
+kuruluyor.
+
+**Karar: yer tutucu `<button>`.** div + tabindex + keydown yerine gerçek
+buton — klavye odağı ve Enter/Boşluk kendiliğinden çalışıyor, bakımı yok.
+Açıldığında odak iframe'e taşınıyor ki klavye kullanıcısı boşta kalmasın.
+
+**Karar: yer tutucu deseni saf CSS.** Statik harita görseli indirmek yerine
+iki linear-gradient ile ızgara — sıfır ek istek.
+
+**Not:** `.site-footer .map` kuralında `background` kısayolu yerine
+`background-color` kullanıldı; kısayol daha yüksek özgüllükte olduğu için
+yer tutucunun ızgara `background-image`'ini siliyordu.
+
+**Doğrulananlar (canlı: afrodit-web.pages.dev)**
+- `npm run check` — altı ölçüt de geçti.
+- 21 sayfanın hepsi 200; hepsinde alt bilgi yer tutucusu var, hiçbirinin
+  HTML'inde iframe yok (üretilen dosyalarda `google.com/maps/embed` sayısı 0).
+- Üç dilde alt bilgi: başlık Konum/Location/Lage, buton
+  Haritayı açın/Open the map/Karte öffnen.
+- Ağ kaydı: sayfa tam yüklendiğinde 6 istek, hepsi kendi alan adımızdan —
+  Google'a **sıfır** istek. Tıklamadan sonra tam 1 istek (maps/embed).
+- Fare tıklaması: harita açılıyor (ekran görüntüsüyle görüldü).
+- Klavye: Tab ile butona odaklanılıyor, odak halkası görünür
+  (solid 1.6px #1f6f8b), Enter ile açılıyor, odak çerçeveye geçiyor.
+- 360 px görüş alanı (/tr/olanaklar, /tr/iletisim, /de/kontakt): yatay
+  kaydırma yok, taşan öğe yok.
+- iframe başlığı üç dilde çevrili (`contact.mapAlt` yeniden kullanıldı).
+
+**Ölçülemedi:** Chrome eklentisinin `resize_window` çağrısı bu ortamda
+pencereyi küçültmüyor (`outerWidth: 0` dönüyor). 360 px ölçümü bunun yerine
+aynı-köken bir çerçeve içinde 360 px'lik gerçek görüş alanı kurularak
+yapıldı; medya sorguları çerçeve genişliğine göre çalışır.
+
+### Düzeltme — İletişim sayfasında çift harita
+
+Kullanıcı canlıda fark etti: İletişim sayfasında sayfanın kendi "Konum"
+bölümü ile alt bilgideki harita alt alta düşüyor, iki harita görünüyordu.
+
+**Karar: İletişim sayfasında alt bilgi haritası gizleniyor**, sayfanın kendi
+büyük haritası kalıyor. Tersi de mümkündü (sayfadaki bölümü kaldırmak) ama
+İletişim haritanın asıl yeri — adres bilgisinin yanında ve büyük olmalı;
+alt bilgideki 15rem'lik sürüm o sayfa için küçük kalırdı. Böylece her
+sayfada harita var, hiçbirinde iki tane yok.
+
+`Footer.tsx` içinde `useLocation` + `sectionFromSlug` ile bulunulan sayfanın
+`contact` olup olmadığına bakılıyor. `useLocation` SSR'de StaticRouter ile
+zaten çalışıyor (LanguageSwitcher ve Layout da kullanıyor).
+
+**Doğrulananlar (canlı)**
+- `npm run check` yine altı ölçütten geçti.
+- 22 üretilen sayfanın (21 + 404) her birinde tam 1 harita; İletişim
+  sayfalarında `site-footer__location` yok, diğerlerinde var.
+- Canlıda 21 adresin her birinde 1 harita.
+- Site içi gezinme (sayfa yenilenmeden): İletişim → Odalar → İletişim
+  boyunca harita sayısı hep 1, alt bilgi bölümü doğru açılıp kapanıyor.
+- Konsol hatası yok. Ekran görüntüsüyle görüldü: İletişim sayfasında tek
+  harita "Konum" bölümünde, alt bilgide harita yok.
+
+## 2026-09-02 — Sosyal medya simgeleri ve Aeneas
+
+**Yapılanlar**
+- `Icon.tsx`: `instagram`, `facebook`, `youtube` yolları eklendi.
+- `facility.ts`: her sosyal girdiye `icon` alanı; listeye `@aeneashotel`
+  eklendi.
+- `Footer.tsx`: sosyal liste artık simge + hesap adı.
+- `Header.tsx`: üst menüye iki simge (Instagram, Facebook).
+- `i18n/tr|en|de`: yeni `social` bölümü — her hesabın erişilebilir adı.
+- `layout.css`: `.social-link`, `.social-icon`, `.site-nav__social`.
+- `ISLETME-SORULARI.md` 2.3: Aeneas'ın sitedeki mevcut durumu yazıldı.
+
+**Karar: simge markaların dolu logoları değil, ince çizgi hatları.** Dolu
+marka logoları mevcut ikon setinin (stroke tabanlı) yanında yabancı
+duruyordu.
+
+**Karar: başlık simgeleri için ayrı medya sorgusu yazılmadı.** Simgeler
+`site-nav__aside` içine kondu; menünün hamburger eşiği zaten 75rem = 1200px,
+yani dar ekranda kendiliğinden hamburger menünün içinde kalıyor, geniş
+ekranda üst çubukta görünüyor. İstenen davranış ek CSS olmadan çıktı.
+
+**Karar: alt bilgi aria-label'ı görünür metni de içeriyor.** Önce yalnızca
+"Club Afrodit Instagram'da" yazılmıştı; görünen metin "@clubafrodit" adın
+içinde geçmediği için WCAG 2.5.3 (Label in Name) ihlaliydi — ses komutuyla
+gezen biri "@clubafrodit" diyerek bağlantıyı tetikleyemezdi. Ad artık
+"@clubafrodit — Club Afrodit Instagram'da". Başlıktaki simgelerde görünür
+metin olmadığı için orada sade ad yeterli.
+
+**Not: SVG'lerde `aria-hidden="true"` bilinçli olarak korundu.** Erişilebilir
+adı bağlantı taşıyor (`aria-label`); simge dekoratif katman. Bu WAI'nin
+standart deseni. `aria-hidden` kaldırılsaydı ad değişmezdi ama bazı ekran
+okuyucular fazladan "grafik" duyurusu yapardı.
+
+**Düzeltilen hata:** `.social-link { display: inline-flex }` kuralı, dosyanın
+ilerisindeki dokunma hedefi kuralı (`.site-footer__links a { display:
+inline-block }`) tarafından eziliyordu; simge hesap adının üstüne düşüyordu.
+Seçici `.site-footer__links a.social-link` ile güçlendirildi.
+
+**Doğrulananlar (canlı)**
+- `npm run check` — altı ölçüt de geçti.
+- Üç dilde alt bilgide **6** sosyal bağlantı (5 mevcut + Aeneas), hepsinde
+  simge; başlıkta 2 simge.
+- 8 bağlantının hepsinin erişilebilir adı dolu, Label in Name ihlali 0.
+- Genişlikler — 360 / 768 / 1200, menü açık ve kapalı: yatay kaydırma yok,
+  taşan öğe yok, 7 menü bağlantısı duruyor. 1200'ün altında başlık
+  simgeleri hamburger menüde (44×44 dokunma hedefi), 1200 ve üstünde üst
+  çubukta.
+- Alt bilgide simge ve hesap adı altı bağlantının hepsinde aynı satırda.
+
+**Sayfa ağırlığı artışı (gzip, gerçek aktarım)**
+- JS +415 B, CSS +84 B, sayfa başına HTML +396 B.
+- İlk ziyaret toplam **+895 bayt**; sonraki sayfalarda (JS/CSS önbellekte)
+  **+396 bayt**. Simgeler HTML içinde satır içi SVG — ek ağ isteği yok.
+
+## 2026-09-03 — Orijinal siteden dört eksik kapatıldı
+
+Kullanıcı orijinal siteyi öğe bazlı tarayıp dört eksik bildirdi; dördü de
+onaylı olarak sırayla yapıldı.
+
+### 1 — Sabit WhatsApp düğmesi
+Yeni `src/components/FloatingActions.tsx`, `Layout` içinde her sayfada.
+`facility.whatsappHref` kullanıyor, erişilebilir adı `t.actions.whatsapp`
+(üç dilde zaten vardı).
+
+**Karar: WhatsApp'ın kendi koyu yeşili tokens.css'e eklendi**
+(`--color-whatsapp: #128c7e`). Sitenin sıcak paletinden ayrık ama bu
+düğmenin tanınırlığı renginden geliyor; beyaz simgeyle kontrast 4,0:1,
+simge için gereken 3:1 eşiğini geçiyor. Bileşene sabit hex yazılmadı.
+
+**Düzeltilen:** `.site-footer__base { padding-right }` kuralı `.container`
+tarafından eziliyordu (aynı özgüllük, sonra yükleniyor) ve telif satırı
+düğmenin altında kalıyordu. Seçici `.container.site-footer__base` yapıldı.
+
+### 2 — "Yukarı çık" düğmesi
+Aynı bileşende, WhatsApp'ın üstünde. Bir ekran boyu sonra beliriyor.
+
+**Karar: opacity ile gizlenmiyor, DOM'dan çıkıyor.** Görünmez ama
+odaklanabilir bir düğme klavye kullanıcısını tuzağa düşürürdü. (Ayrıca
+check.mjs'in "opacity:0 yalnızca .reveal" kuralı da buna izin vermezdi.)
+
+**Üç kusur bulundu ve düzeltildi:**
+1. `focus()` çağrısı süren yumuşak kaydırmayı iptal ediyordu — sayfa başa
+   dönmüyordu. Odak taşıma `scrollTo`'dan önceye alındı.
+2. `behavior: 'smooth'` kısıtlanmış sekmelerde hiç çalışmıyor (Layout.tsx'te
+   sayfa geçişleri için aynı gözlem zaten notlanmış). Düğme hiçbir şey
+   yapmamış gibi görünüyordu; 700 ms sonra hâlâ tepede değilse doğrudan
+   atlayan bir güvenlik ağı eklendi.
+3. Programatik kaydırma her tarayıcıda scroll olayı üretmiyor; düğme sayfa
+   başına dönüldükten sonra da ekranda kalıyordu. Durum elle kapatılıyor.
+
+### 3 — İkinci video
+`facility.youtube` (tek adres) → `facility.videos` dizisi. İkinci video
+MNAmSmcoNN0 eklendi. Yeni `VideoCard` bileşeni anasayfada.
+
+**Karar: gömülü oynatıcı yok, yerel kapak görseli var.** YouTube iframe'i de
+kendi thumbnail adresi (i.ytimg.com) de dış istek demek. Kapak yerel bir
+fotoğraf; tıklayınca video YouTube'da yeni sekmede açılıyor.
+
+**TODO:** ilk videonun (gUP1Dh9Wafs) işletmedeki resmî başlığı teyit
+edilmedi; şimdilik tanımlayıcı bir etiket kullanılıyor.
+
+### 4 — Hakkımızda sayfası (21 → 24 sayfa)
+`/tr/hakkimizda`, `/en/about`, `/de/ueber-uns`. `SECTION_KEYS`'e `about`
+eklemek rota, sitemap, hreflang ve canonical'ı kendiliğinden hallediyor —
+mimari bunun için doğru kurulmuş.
+
+Anasayfadaki uzun giriş metni buraya taşındı; anasayfada iki cümlelik özet
+ve "Devamını okuyun" bağlantısı kaldı. Aynı paragraf iki sayfada durmuyor.
+
+İçerik: tesis hikâyesi, yatay mimari, kendi bahçe/zeytinyağı üretimi,
+konum ve mesafeler (`facility.distances`), İda Dağı–Afrodit mitolojisine
+kısa gönderme (tam hikâye haberde, oraya bağlanıyor), tesis fotoğrafları.
+Kuruluş yılı yazılmadı — hâlâ bilinmiyor.
+
+**Karar: başlık bandı görselsiz, küçük fotoğraflar yalnızca kart
+ızgarasında.** hakkimizda.jpg ve hakkimizda2.jpg 375 px, club-afrodit.jpg ve
+mono-afrodit.jpg 600 px; yarım genişlikte gerilirlerdi. Photo.tsx'teki
+"hiçbir görsel doğal genişliğinin üstünde gösterilmez" kuralına uyuldu.
+
+### Menü: 8 madde sığmadı, eşik yükseltildi
+Ölçüm: 1200 px'te menü 88 px taşıyor ve yatay kaydırma açıyordu.
+**Menüden madde çıkarılmadı** (kullanıcı bunun için sorulmasını istemişti).
+Bunun yerine yatay menü eşiği 75rem → **84rem (1344 px)** yapıldı ve menü
+boşlukları sıkılaştırıldı; 84rem üstünde `min-width: 48px` dokunma hedefi
+kuralı kaldırıldı (o eşikte fare kullanılıyor).
+80rem (1280 px) denendi ama Türkçe menü tam kenara dayanıyordu, gutter
+kalmıyordu. 84rem'de Türkçe 55 px, Almanca 72 px boşluk kalıyor.
+1366 px laptoplar hâlâ yatay menü görüyor.
+
+`scripts/check.mjs` beklenen sayfa sayısı 21 → 24 güncellendi.
+
+### Doğrulananlar (canlı: afrodit-web.pages.dev)
+- `npm run check` — altı ölçüt de geçti, 24 sayfa + 404.
+- 24 adresin hepsi 200; sitemap 24 kayıt.
+- Üç dilde Hakkımızda açılıyor; canonical, dört hreflang (tr/en/de/
+  x-default), kendi başlığı ve açıklaması doğru.
+- Anasayfadaki uzun paragraf artık yalnızca Hakkımızda'da (imza cümlesi
+  anasayfada 0, Hakkımızda'da 1 kez).
+- Üç dilde WhatsApp düğmesi görünüyor, adı doğru, hedefi wa.me.
+- "Yukarı çık": sayfa başında ve 300 px'te gizli, bir ekran boyu sonra
+  beliriyor; tıklayınca başa dönüyor, düğme kayboluyor, odak `main`'e
+  geçiyor. Hareket azaltma taklit edilerek ölçüldü: 60 ms içinde scrollY 0
+  — doğrudan atlıyor, yumuşak kaydırma yapmıyor.
+- İki video da üç dilde anasayfada, başlıkları ve hedefleri doğru.
+  Sayfa açılışında ağ kaydında **YouTube'a sıfır istek** (6 istek, hepsi
+  kendi alan adımızdan); üretilen HTML'de iframe ve ytimg izi yok.
+- 360 / 768 / 1200 / 1344 / 1440 px: yatay kaydırma yok, taşan öğe yok,
+  8 menü maddesi korunuyor. 1200 ve altı hamburger.
+- Sabit düğmelerin metin örtmesi 360 px'te satır bazında ölçüldü: telif
+  satırı artık örtülmüyor.
+- Klavye: WhatsApp, "yukarı çık" ve Hakkımızda menü bağlantısı sekme
+  sırasında ve odaklanabiliyor.
+- JavaScript kapalı: statik HTML'de Hakkımızda'nın 9 başlığı, 6 paragrafı
+  ve 6 mesafe satırı var — sunucuda önceden üretiliyor.
+
+### Ölçülemedi
+Chrome eklentisinin tuş gönderimi bu oturumda sayfaya ulaşmadı (birkaç
+denemede odak yerinde kaldı). Klavye erişimi DOM düzeyinde doğrulandı
+(öğeler sekme sırasında, odaklanabiliyor, gerçek `<a>`/`<button>`), ama
+Tab tuşuyla sırayla gezinme elle test edilmeli.

@@ -6,6 +6,7 @@ import { LANGS } from './i18n'
 import { SECTION_KEYS, SLUGS } from './lib/paths'
 import type { SectionKey } from './lib/paths'
 import Home from './pages/Home'
+import About from './pages/About'
 import Rooms from './pages/Rooms'
 import Amenities from './pages/Amenities'
 import Tennis from './pages/Tennis'
@@ -15,6 +16,7 @@ import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 
 const SAYFALAR: Record<SectionKey, ReactElement> = {
+  about: <About />,
   rooms: <Rooms />,
   amenities: <Amenities />,
   tennis: <Tennis />,

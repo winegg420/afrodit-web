@@ -61,23 +61,23 @@ adim('lint (oxlint)', () => {
   return 'uyarısız'
 })
 
-// 3) 21 rota sayfası + 404.html
-adim('21 sayfa ve 404.html', () => {
+// 3) 24 rota sayfası + 404.html
+adim('24 sayfa ve 404.html', () => {
   const hepsi = walk(dist, (p) => extname(p) === '.html')
   const dortYuzDort = hepsi.filter((p) => p.endsWith('404.html'))
   const rotalar = hepsi.filter((p) => !p.endsWith('404.html'))
-  beklenen(rotalar.length === 21, `${rotalar.length} rota sayfası bulundu, 21 bekleniyordu`)
+  beklenen(rotalar.length === 24, `${rotalar.length} rota sayfası bulundu, 24 bekleniyordu`)
   beklenen(dortYuzDort.length === 1, 'dist/404.html yok')
-  return '21 sayfa + 404.html'
+  return '24 sayfa + 404.html'
 })
 
-// 4) sitemap.xml 21 kayıt
-adim('sitemap.xml 21 kayıt', () => {
+// 4) sitemap.xml 24 kayıt
+adim('sitemap.xml 24 kayıt', () => {
   const yol = join(dist, 'sitemap.xml')
   beklenen(existsSync(yol), 'dist/sitemap.xml yok')
   const kayit = (readFileSync(yol, 'utf8').match(/<url>/g) ?? []).length
-  beklenen(kayit === 21, `${kayit} kayıt bulundu, 21 bekleniyordu`)
-  return '21 url'
+  beklenen(kayit === 24, `${kayit} kayıt bulundu, 24 bekleniyordu`)
+  return '24 url'
 })
 
 // 5) Ölçüsüz görsel yok

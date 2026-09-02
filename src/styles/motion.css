@@ -368,7 +368,7 @@
 
 /* ---------- Başlık çubuğu düzeltmeleri ----------
    Menü mobilde alt satıra iner, masaüstünde tek satırda kalır. */
-@media (min-width: 75rem) {
+@media (min-width: 84rem) {
   .site-header__bar { flex-wrap: nowrap; }
   .site-header .container { max-width: 82rem; }
   .site-nav { gap: var(--space-5); }

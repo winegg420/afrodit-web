@@ -18,6 +18,7 @@ export const tr = {
     rooms: 'Odalar',
     amenities: 'Olanaklar',
     tennis: 'Tenis',
+    about: 'Hakkımızda',
     nursing: 'Sağlıklı Yaşam',
     news: 'Haberler',
     contact: 'İletişim',
@@ -39,9 +40,11 @@ export const tr = {
     allAmenities: 'Tüm olanaklar',
     allNews: 'Tüm haberler',
     viewMap: 'Haritada görün',
+    openMap: 'Haritayı açın',
     watchVideo: 'YouTube kanalını izleyin',
     backHome: 'Anasayfaya dönün',
     scrollDown: 'Aşağı kaydırın',
+    backToTop: 'Sayfa başına dönün',
     openPhoto: 'Fotoğrafı büyüt',
     closePhoto: 'Kapatın',
     prevPhoto: 'Önceki fotoğraf',
@@ -54,8 +57,15 @@ export const tr = {
     heroLead:
       'Zeytin ve meyve ağaçlarıyla bütünleşmiş geniş bahçeleri, yürüyüş yolları ve yatay mimarisiyle Club Afrodit yıl boyu açık.',
     introTitle: 'Kazdağları’nda doğayla iç içe bir tatil',
+    // Tam metin Hakkımızda sayfasına taşındı (about.storyBody1); burada
+    // yalnızca özeti duruyor, aynı paragraf iki sayfada birden görünmesin.
     introBody:
-      'Kazdağları eteklerinde %21 oksijen ve %50 nem oranıyla insan yaşamı için ideal bir ortam sunan köyümüz; doğanın kalbinde denize sıfır konumu, zeytin ve meyve ağaçlarıyla bütünleşmiş geniş bahçeleri ve yürüyüş yollarına sahip yatay mimarisiyle misafirlerine yıl boyu benzersiz bir konaklama sunuyor. Kurulumunda doğayı doğru kullanma, “koruyarak kullanma” ilkesine bağlı kalınmış örnek bir tatil köyüdür.',
+      'Kazdağları eteklerinde, %21 oksijen ve %50 nem oranıyla doğanın kalbinde denize sıfır bir köy. Kuruluşunda “koruyarak kullanma” ilkesine bağlı kalındı; bütün yapılar iki katlı, zeytin ve meyve ağaçlarının arasından her yere yürüyerek gidiliyor.',
+    videosTitle: 'Videolar',
+    videos: {
+      tanitim: 'Club Afrodit tanıtım videosu',
+      sehir: 'Şehrin gürültüsünden uzak, Club Afrodit’te',
+    },
     roomsTitle: 'Odalar ve apart daireler',
     roomsLead:
       'Konforlu odalar ve geniş apart daireler; iki katlı yapılarda, bahçeye ve denize bakan pencerelerle.',
@@ -71,6 +81,33 @@ export const tr = {
     newsTitle: 'Haberler',
     contactTitle: 'Bize ulaşın',
     contactLead: 'Müsaitlik ve konaklama seçenekleri için telefonla ulaşabilirsiniz.',
+  },
+
+  about: {
+    pageTitle: 'Hakkımızda',
+    pageLead:
+      'Kazdağları eteğinde, denize sıfır; “koruyarak kullanma” ilkesiyle kurulmuş bir tatil köyü.',
+
+    storyTitle: 'Doğanın kalbinde bir tatil köyü',
+    storyBody1:
+      'Kazdağları eteklerinde %21 oksijen ve %50 nem oranıyla insan yaşamı için ideal bir ortam sunan köyümüz; doğanın kalbinde denize sıfır konumu, zeytin ve meyve ağaçlarıyla bütünleşmiş geniş bahçeleri ve yürüyüş yollarına sahip yatay mimarisiyle misafirlerine yıl boyu benzersiz bir konaklama sunuyor. Kurulumunda doğayı doğru kullanma, “koruyarak kullanma” ilkesine bağlı kalınmış örnek bir tatil köyüdür.',
+    storyBody2:
+      'Tesisteki bütün yapılar iki katlı. Yüksek bloklar yerine bahçenin içine dağılmış alçak binalar, ağaçların arasında yürüyerek dolaşılan bir yerleşim kuruyor. Odadan havuza, plajdan tenis kortlarına kadar her yere yürüyerek gidiliyor; apart dairelerin pencereleri yemyeşil yürüyüş bahçelerine ve denize bakıyor.',
+
+    gardenTitle: 'Kendi bahçemiz, kendi zeytinyağımız',
+    gardenBody:
+      'Mutfağımızda kullanılan sebze ve meyvenin bir bölümü tesisin kendi bahçesinden geliyor; zeytin ve zeytinyağı da kendi üretimimiz. Kazdağları’nın endemik otları ve taş fırın, Ege ile Akdeniz mutfağının sade lezzetlerini tamamlıyor.',
+
+    locationTitle: 'Konum ve mesafeler',
+    locationLead:
+      'Altınoluk sahilinde, Edremit Körfezi’nin kuzey kıyısında. Çevredeki merkezlere ve doğal alanlara uzaklıklar:',
+
+    mythTitle: 'Adımız nereden geliyor',
+    mythBody:
+      'Efsaneye göre dünyanın ilk güzellik yarışması İda Dağı’nda — bugün Kazdağları dediğimiz yerde — yapıldı ve altın elma Afrodit’e verildi. Tesisin adı bu hikâyeden geliyor.',
+    mythLink: 'Hikâyenin tamamını okuyun',
+
+    photosTitle: 'Tesisten',
   },
 
   rooms: {
@@ -409,6 +446,17 @@ export const tr = {
     linksTitle: 'Sayfalar',
     followTitle: 'Takip edin',
     rights: 'Tüm hakları saklıdır.',
+  },
+
+  // Sosyal bağlantıların erişilebilir adları. Ekran okuyucu "@monoafrodit"
+  // yerine hesabın ne olduğunu okusun diye. Anahtarlar facility.social ile eş.
+  social: {
+    instagram: 'Club Afrodit Instagram’da',
+    instagramMono: 'Mono Afrodit Instagram’da',
+    instagramTenis: 'Afrodit Tenis Kulübü Instagram’da',
+    instagramKoy: 'Afrodit Sağlıklı Yaşam Köyü Instagram’da',
+    aeneas: 'Aeneas Instagram’da',
+    facebook: 'Club Afrodit Facebook’ta',
   },
 
   common: {

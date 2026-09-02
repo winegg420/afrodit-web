@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
+import FloatingActions from './FloatingActions'
 import { I18nContext, dictionaries, rememberLang } from '../i18n'
 import type { Lang } from '../i18n'
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
@@ -49,6 +50,7 @@ export default function Layout({ lang }: { lang: Lang }) {
           <Outlet />
         </main>
         <Footer />
+        <FloatingActions />
       </div>
     </I18nContext.Provider>
   )

@@ -1,5 +1,6 @@
 import Section from '../components/Section'
 import PageHead from '../components/PageHead'
+import MapEmbed from '../components/MapEmbed'
 import { useI18n } from '../i18n'
 import type { Dict } from '../i18n'
 import { facility } from '../content/facility'
@@ -88,15 +89,7 @@ export default function Contact() {
       </Section>
 
       <Section title={t.contact.mapTitle}>
-        <div className="map">
-          <iframe
-            src={facility.mapEmbed}
-            title={t.contact.mapAlt}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
-        </div>
+        <MapEmbed />
       </Section>
 
       <Section narrow>

@@ -20,6 +20,7 @@ export const en: Dict = {
     rooms: 'Rooms',
     amenities: 'Facilities',
     tennis: 'Tennis',
+    about: 'About',
     nursing: 'Assisted Living',
     news: 'News',
     contact: 'Contact',
@@ -41,9 +42,11 @@ export const en: Dict = {
     allAmenities: 'All facilities',
     allNews: 'All news',
     viewMap: 'View on the map',
+    openMap: 'Open the map',
     watchVideo: 'Watch our YouTube channel',
     backHome: 'Back to home',
     scrollDown: 'Scroll down',
+    backToTop: 'Back to top',
     openPhoto: 'Enlarge photograph',
     closePhoto: 'Close',
     prevPhoto: 'Previous photograph',
@@ -57,7 +60,12 @@ export const en: Dict = {
       'Wide gardens set among olive and fruit trees, walking paths and low-rise architecture — Club Afrodit is open all year round.',
     introTitle: 'A holiday surrounded by nature on Mount Ida',
     introBody:
-      'At the foot of the Kazdağları (Mount Ida) range, with 21% oxygen and 50% humidity, our village offers conditions that are ideal for human wellbeing. Right on the shore in the heart of nature, with wide gardens set among olive and fruit trees, walking paths and low-rise architecture, it welcomes guests all year round. Because it was built with a firm commitment to using nature wisely — the principle of “use it while protecting it” — it stands as an exemplary holiday village.',
+      'At the foot of Mount Ida, with 21% oxygen and 50% humidity, a village right on the shore in the heart of nature. It was built on the principle of “use it while protecting it”; every building has two storeys and you walk everywhere, among olive and fruit trees.',
+    videosTitle: 'Videos',
+    videos: {
+      tanitim: 'Club Afrodit introduction video',
+      sehir: 'Away from the noise of the city, at Club Afrodit',
+    },
     roomsTitle: 'Rooms and apartments',
     roomsLead:
       'Comfortable rooms and spacious apartments in two-storey buildings, with windows facing the garden and the sea.',
@@ -73,6 +81,33 @@ export const en: Dict = {
     newsTitle: 'News',
     contactTitle: 'Get in touch',
     contactLead: 'Call us for availability and accommodation options.',
+  },
+
+  about: {
+    pageTitle: 'About us',
+    pageLead:
+      'A beachfront holiday village at the foot of Mount Ida, built on the principle of using nature while protecting it.',
+
+    storyTitle: 'A holiday village in the heart of nature',
+    storyBody1:
+      'At the foot of the Kazdağları (Mount Ida) range, with 21% oxygen and 50% humidity, our village offers conditions that are ideal for human wellbeing. Right on the shore in the heart of nature, with wide gardens set among olive and fruit trees, walking paths and low-rise architecture, it welcomes guests all year round. Because it was built with a firm commitment to using nature wisely — the principle of “use it while protecting it” — it stands as an exemplary holiday village.',
+    storyBody2:
+      'Every building on the property has two storeys. Instead of tall blocks, low buildings are spread through the garden, making a settlement you walk through among the trees. From your room to the pool, from the beach to the tennis courts, everything is within walking distance; the apartment windows look out over green walking gardens and the sea.',
+
+    gardenTitle: 'Our own garden, our own olive oil',
+    gardenBody:
+      'Some of the vegetables and fruit used in our kitchen comes from the property’s own garden, and the olives and olive oil are our own production too. The endemic herbs of Mount Ida and the stone oven round out the plain flavours of Aegean and Mediterranean cooking.',
+
+    locationTitle: 'Location and distances',
+    locationLead:
+      'On the shore at Altınoluk, on the northern side of the Gulf of Edremit. Distances to nearby towns and natural sites:',
+
+    mythTitle: 'Where our name comes from',
+    mythBody:
+      'Legend has it that the world’s first beauty contest took place on Mount Ida — the range known today as Kazdağları — and that the golden apple was given to Aphrodite. The property takes its name from that story.',
+    mythLink: 'Read the whole story',
+
+    photosTitle: 'From the property',
   },
 
   rooms: {
@@ -410,6 +445,15 @@ export const en: Dict = {
     linksTitle: 'Pages',
     followTitle: 'Follow us',
     rights: 'All rights reserved.',
+  },
+
+  social: {
+    instagram: 'Club Afrodit on Instagram',
+    instagramMono: 'Mono Afrodit on Instagram',
+    instagramTenis: 'Afrodit Tennis Club on Instagram',
+    instagramKoy: 'Afrodit Healthy Living Village on Instagram',
+    aeneas: 'Aeneas on Instagram',
+    facebook: 'Club Afrodit on Facebook',
   },
 
   common: {

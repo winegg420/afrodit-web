@@ -4,6 +4,7 @@ import Photo from '../components/Photo'
 import Hero from '../components/Hero'
 import Reveal from '../components/Reveal'
 import RoomCard from '../components/RoomCard'
+import VideoCard from '../components/VideoCard'
 import { useI18n } from '../i18n'
 import { useSectionPath } from '../hooks/useSectionPath'
 import type { Dict } from '../i18n'
@@ -35,8 +36,9 @@ export default function Home() {
               <h2 className="section__title">{t.home.introTitle}</h2>
             </Reveal>
             <p>{t.home.introBody}</p>
-            <Link className="link-more" to={path('amenities')}>
-              {t.actions.allAmenities}
+            {/* Tam metin Hakkımızda sayfasında; burada özet duruyor. */}
+            <Link className="link-more" to={path('about')}>
+              {t.actions.more}
             </Link>
           </div>
           <Reveal className="split__media">
@@ -128,6 +130,20 @@ export default function Home() {
             <Photo src="/img/yasli-bakim/2.jpg" alt={t.home.nursingTitle} ratio="4/3" />
           </Reveal>
         </div>
+      </Section>
+
+      <Section title={t.home.videosTitle}>
+        <ul className="cards">
+          {facility.videos.map((video, i) => (
+            <Reveal as="li" key={video.key} index={i}>
+              <VideoCard
+                title={t.home.videos[video.key as keyof Dict['home']['videos']]}
+                cover={video.cover}
+                href={video.href}
+              />
+            </Reveal>
+          ))}
+        </ul>
       </Section>
 
       <Section tone="deep" title={t.home.reviewsTitle} lead={t.reviews.lead}>
