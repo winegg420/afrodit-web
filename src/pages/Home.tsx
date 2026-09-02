@@ -40,6 +40,7 @@ export default function Home() {
             </Link>
           </div>
           <Reveal className="split__media">
+            {/* TODO: hakkimizda.jpg 375 px genişliğinde, burada 582 px yer kaplıyor — yüksek çözünürlüklü sürüm gerekiyor. */}
             <Photo src="/img/hakkimizda.jpg" alt={t.home.introTitle} ratio="4/3" />
           </Reveal>
         </div>

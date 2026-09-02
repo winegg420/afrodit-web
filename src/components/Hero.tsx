@@ -43,6 +43,7 @@ export default function Hero({ nextSectionId }: HeroProps) {
           src="/img/slayt-1.jpg"
           alt={t.brand.name}
           fetchPriority="high"
+          loading="eager"
           decoding="async"
         />
       </div>

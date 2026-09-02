@@ -6,8 +6,15 @@
  * main.tsx ekler. Prerender edilmiş HTML'de içerik olduğu gibi görünür.
  */
 
-/* ---------- Kaydırınca belirme ---------- */
-.js .reveal {
+/* ---------- Kaydırınca belirme ----------
+   Varsayılan GÖRÜNÜR. Gizleme yalnızca .js-hazir varken uygulanır;
+   bu sınıfı index.html içindeki satır içi betik ekler. */
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.js-hazir .reveal {
   opacity: 0;
   transform: translateY(16px);
   transition:
@@ -17,7 +24,7 @@
   will-change: opacity, transform;
 }
 
-.js .reveal.is-visible {
+.js-hazir .reveal.gorunur {
   opacity: 1;
   transform: none;
   will-change: auto;
@@ -36,7 +43,7 @@
 }
 
 /* Fark edilmeyecek kadar yavaş: 20 saniyede %100 -> %108, sonsuz döngü */
-.js .hero__image {
+.js-hazir .hero__image {
   animation: heroZoom 20s ease-in-out infinite alternate;
 }
 
@@ -86,17 +93,17 @@
 }
 
 /* Kademeli giriş — yalnızca ilk açılışta, toplam 480 ms */
-.js .hero--intro .hero__kicker,
-.js .hero--intro .hero__title,
-.js .hero--intro .hero__lead,
-.js .hero--intro .hero__actions {
+.js-hazir .hero--intro .hero__kicker,
+.js-hazir .hero--intro .hero__title,
+.js-hazir .hero--intro .hero__lead,
+.js-hazir .hero--intro .hero__actions {
   animation: heroIn 460ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
-.js .hero--intro .hero__kicker { animation-delay: 0ms; }
-.js .hero--intro .hero__title { animation-delay: 120ms; }
-.js .hero--intro .hero__lead { animation-delay: 240ms; }
-.js .hero--intro .hero__actions { animation-delay: 360ms; }
+.js-hazir .hero--intro .hero__kicker { animation-delay: 0ms; }
+.js-hazir .hero--intro .hero__title { animation-delay: 120ms; }
+.js-hazir .hero--intro .hero__lead { animation-delay: 240ms; }
+.js-hazir .hero--intro .hero__actions { animation-delay: 360ms; }
 
 @keyframes heroIn {
   from { opacity: 0; transform: translateY(14px); }
@@ -129,7 +136,7 @@
 }
 
 .hero__scroll svg { width: 22px; height: 22px; }
-.js .hero__scroll svg { animation: nudge 2.4s ease-in-out infinite; }
+.js-hazir .hero__scroll svg { animation: nudge 2.4s ease-in-out infinite; }
 
 @keyframes nudge {
   0%, 100% { transform: translateY(-2px); }
@@ -331,19 +338,19 @@
 /* ---------- Hareket azaltma ----------
    Kullanıcı sistemde hareketi kapattıysa hepsi tek yerden durur. */
 @media (prefers-reduced-motion: reduce) {
-  .js .reveal,
-  .js .reveal.is-visible {
+  .js-hazir .reveal,
+  .js-hazir .reveal.gorunur {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
   }
 
-  .js .hero__image,
-  .js .hero__scroll svg,
-  .js .hero--intro .hero__kicker,
-  .js .hero--intro .hero__title,
-  .js .hero--intro .hero__lead,
-  .js .hero--intro .hero__actions {
+  .js-hazir .hero__image,
+  .js-hazir .hero__scroll svg,
+  .js-hazir .hero--intro .hero__kicker,
+  .js-hazir .hero--intro .hero__title,
+  .js-hazir .hero--intro .hero__lead,
+  .js-hazir .hero--intro .hero__actions {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

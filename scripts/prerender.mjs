@@ -47,12 +47,17 @@ async function main() {
     try {
       const body = render(page.path)
 
+      // İlk ekran görseli varsa <head> içinden öncelikli olarak yüklensin.
+      const preload = page.preloadImage
+        ? `  <link rel="preload" as="image" href="${escapeHtml(page.preloadImage)}" fetchpriority="high" />\n`
+        : ''
+
       const html = template
         .replace('<html lang="tr">', `<html lang="${page.lang}">`)
         .replace(/<title>.*?<\/title>/s, `<title>${escapeHtml(page.title)}</title>`)
         .replace(
           '</head>',
-          `  <meta name="description" content="${escapeHtml(page.description)}" />\n  </head>`,
+          `  <meta name="description" content="${escapeHtml(page.description)}" />\n${preload}  </head>`,
         )
         .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
 

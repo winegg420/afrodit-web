@@ -5,6 +5,23 @@
     <link rel="icon" href="/img/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Club Afrodit — Altınoluk</title>
+    <script>
+      // JavaScript hazır işareti. Animasyon stilleri YALNIZCA bu sınıf
+      // varken uygulanır; betik çalışmazsa içerik varsayılan olarak görünür
+      // kalır. React'ten önce, <head> içinde çalışır ki gizle-göster
+      // titremesi olmasın.
+      (function () {
+        var el = document.documentElement
+        if (!('IntersectionObserver' in window)) return
+        el.classList.add('js-hazir')
+        // Güvenlik ağı: uygulama paketi hiç yüklenmezse (ağ hatası, engelleme)
+        // 4 saniye sonra gizleme kuralları kalksın. Uygulama açıldığında
+        // kendisi 'js-app' sınıfını ekler, o zaman bu ağ devreye girmez.
+        setTimeout(function () {
+          if (!el.classList.contains('js-app')) el.classList.remove('js-hazir')
+        }, 4000)
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

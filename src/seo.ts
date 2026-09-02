@@ -8,6 +8,8 @@ export type PageMeta = {
   lang: Lang
   title: string
   description: string
+  /** <head> icine preload edilecek ilk ekran gorseli */
+  preloadImage?: string
 }
 
 /** Prerender edilecek sayfalar: 7 sayfa × 3 dil. */
@@ -22,6 +24,8 @@ export function allPages(): PageMeta[] {
       lang,
       title: `${t.brand.name} — ${t.brand.tagline}`,
       description: t.home.heroLead,
+      // Anasayfanin en ustundeki gorsel; gec gelmesin diye onden yuklenir.
+      preloadImage: '/img/slayt-1.jpg',
     })
 
     const sections: Array<[string, string, string]> = [

@@ -292,3 +292,53 @@ boşluğa sahip.
 - Görsellerin ayrı küçük/büyük sürümleri (şu an tek çözünürlük)
 - Önceki paketlerden gelen içerik TODO'ları (tenis bilinmeyenleri, ruhsat
   teyidi, pansiyon konsepti, fiyatlar, kalıcı renk paleti)
+
+## 2026-09-02 — Üç hata düzeltmesi
+
+### 1. Reveal varsayılanı görünür yapıldı
+Önceki kurulumda gizleme kuralı `.js .reveal` idi ve `js` sınıfını React
+paketi (`main.tsx`) ekliyordu. JS'siz durumda içerik görünüyordu ama
+paket yüklendiği anda gizle-göster titremesi oluyordu.
+
+Yeni kurulum:
+- `.reveal` varsayılanı **opacity: 1** (görünür).
+- Gizleme yalnızca `.js-hazir .reveal` altında.
+- `js-hazir` sınıfını `index.html` içindeki **satır içi betik** ekliyor,
+  React'ten önce, `<head>` içinde. Böylece titreme yok.
+- Görünür sınıfının adı `is-visible` → `gorunur`.
+- Betik `IntersectionObserver` yoksa sınıfı hiç eklemiyor.
+
+İki güvenlik ağının koşulu kesinleştirildi (önceki hâlleri animasyonu
+erken iptal ediyordu):
+- Satır içi betik, uygulama paketi 4 sn içinde `js-app` sınıfını
+  eklemediyse `js-hazir`ı kaldırıyor (paket hiç yüklenmediyse).
+- Hook, IntersectionObserver hiç geri bildirim vermediyse (2,5 sn)
+  her şeyi açıyor; normalde devreye girmiyor.
+
+### 2. Düşük çözünürlüklü görseller
+clubafrodit.com'da bu görsellerin daha büyük sürümü YOK (denendi, 404).
+`Photo.tsx` başına konsolide TODO listesi, ayrıca `Home.tsx` ve
+`content/amenities.ts` içine yerinde TODO notları kondu.
+
+Gerilen görseller (doğal genişlik → ekranda kapladığı genişlik):
+- hakkimizda2.jpg   375 → 634 px (1,69×)  Olanaklar/Mutfak, İletişim
+- hakkimizda.jpg    375 → 582 px (1,55×)  Anasayfa girişi
+- haber1/2/3.jpg    479 → 582 px (1,22×)  Haberler, anasayfa
+- club-afrodit.jpg  600 → 634 px (1,06×)  Olanaklar/Plaj
+- aftek.jpg         600 → 634 px (1,06×)  Tenis
+İşletmeden en az 1200 px genişlikte orijinaller istenmeli.
+
+### 3. Açılış fotoğrafı önceliklendirildi
+`slayt-1.jpg`: `fetchpriority="high"` + `loading="eager"` (açık yazıldı) ve
+prerender adımı artık `<head>` içine `<link rel="preload" as="image">`
+koyuyor. `seo.ts` içine sayfa başına `preloadImage` alanı eklendi; yalnızca
+üç anasayfa (`/tr`, `/en`, `/de`) bu preload'u alıyor, diğer görseller lazy.
+
+### Doğrulama
+1. `npm run build` hatasız, `npx oxlint src` uyarısız.
+2. `find dist -name "*.html" | wc -l` → **21**
+3. JavaScript kapalı (sandbox'ta allow-scripts olmadan): 4.528 karakter
+   görünür metin, 24 reveal öğesinin **hepsi opacity 1**, hero başlık ve
+   butonları görünür, `js-hazir` sınıfı eklenmemiş.
+4. 360 ve 390 px × 3 sayfa: `scrollWidth > innerWidth` **false**.
+5. Derlenmiş CSS'te `opacity:0` içeren tek seçici `.js-hazir .reveal`.
