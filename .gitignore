@@ -32,3 +32,6 @@ public/img/**/*-640.jpg
 public/img/**/*-1024.jpg
 public/img/**/*-1920.jpg
 src/generated
+
+# wrangler pages dev gecici dosyalari
+.wrangler
