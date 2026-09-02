@@ -1,370 +1,367 @@
 import type { Dict } from './tr'
 
-/** İngilizce metinler.
- *  TODO: Bu dosyanın tamamı Türkçe kopyasıdır, çeviri yapılmadı.
- *  Çeviri geldikçe "// TODO: çeviri" işaretlerini kaldır.
- */
+/** English texts. Translated from tr.ts. */
 
 export const en: Dict = {
   meta: {
-    langName: 'English', // TODO: çeviri
-    langShort: 'EN', // TODO: çeviri
-    htmlLang: 'en', // TODO: çeviri
+    langName: 'English',
+    langShort: 'EN',
+    htmlLang: 'en',
   },
 
   brand: {
-    name: 'Club Afrodit', // TODO: çeviri
-    tagline: 'Tatil Köyü — Altınoluk, Kazdağları', // TODO: çeviri
-    claim: 'Doğal çevrede çağdaş yaşam.', // TODO: çeviri
+    name: 'Club Afrodit',
+    tagline: 'Holiday Village — Altınoluk, Mount Ida',
+    claim: 'Contemporary living in natural surroundings.',
   },
 
   nav: {
-    home: 'Anasayfa', // TODO: çeviri
-    rooms: 'Odalar', // TODO: çeviri
-    amenities: 'Olanaklar', // TODO: çeviri
-    tennis: 'Tenis', // TODO: çeviri
-    nursing: 'Sağlıklı Yaşam', // TODO: çeviri
-    news: 'Haberler', // TODO: çeviri
-    contact: 'İletişim', // TODO: çeviri
-    menu: 'Menü', // TODO: çeviri
-    openMenu: 'Menüyü aç', // TODO: çeviri
-    closeMenu: 'Menüyü kapat', // TODO: çeviri
-    skipToContent: 'İçeriğe geç', // TODO: çeviri
-    languageLabel: 'Dil', // TODO: çeviri
+    home: 'Home',
+    rooms: 'Rooms',
+    amenities: 'Facilities',
+    tennis: 'Tennis',
+    nursing: 'Assisted Living',
+    news: 'News',
+    contact: 'Contact',
+    menu: 'Menu',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    skipToContent: 'Skip to content',
+    languageLabel: 'Language',
   },
 
   actions: {
-    reserve: 'Rezervasyon', // TODO: çeviri
-    reserveLong: 'Rezervasyon yapın', // TODO: çeviri
-    call: 'Telefonla arayın', // TODO: çeviri
-    whatsapp: 'WhatsApp’tan yazın', // TODO: çeviri
-    email: 'E-posta gönderin', // TODO: çeviri
-    more: 'Devamını okuyun', // TODO: çeviri
-    allRooms: 'Tüm odalar', // TODO: çeviri
-    allAmenities: 'Tüm olanaklar', // TODO: çeviri
-    allNews: 'Tüm haberler', // TODO: çeviri
-    viewMap: 'Haritada görün', // TODO: çeviri
-    watchVideo: 'YouTube kanalını izleyin', // TODO: çeviri
-    backHome: 'Anasayfaya dönün', // TODO: çeviri
+    reserve: 'Book now',
+    reserveLong: 'Make a reservation',
+    call: 'Call us',
+    whatsapp: 'Message us on WhatsApp',
+    email: 'Send an email',
+    more: 'Read more',
+    allRooms: 'All rooms',
+    allAmenities: 'All facilities',
+    allNews: 'All news',
+    viewMap: 'View on the map',
+    watchVideo: 'Watch our YouTube channel',
+    backHome: 'Back to home',
   },
 
   home: {
-    heroTitle: 'Kazdağları eteğinde, denize sıfır bir tatil köyü', // TODO: çeviri
+    heroTitle: 'A beachfront holiday village at the foot of Mount Ida',
     heroLead:
-      'Zeytin ve meyve ağaçlarıyla bütünleşmiş geniş bahçeleri, yürüyüş yolları ve yatay mimarisiyle Club Afrodit yıl boyu açık.', // TODO: çeviri
-    introTitle: 'Kazdağları’nda doğayla iç içe bir tatil', // TODO: çeviri
+      'Wide gardens set among olive and fruit trees, walking paths and low-rise architecture — Club Afrodit is open all year round.',
+    introTitle: 'A holiday surrounded by nature on Mount Ida',
     introBody:
-      'Kazdağları eteklerinde %21 oksijen ve %50 nem oranıyla insan yaşamı için ideal bir ortam sunan köyümüz; doğanın kalbinde denize sıfır konumu, zeytin ve meyve ağaçlarıyla bütünleşmiş geniş bahçeleri ve yürüyüş yollarına sahip yatay mimarisiyle misafirlerine yıl boyu benzersiz bir konaklama sunuyor. Kurulumunda doğayı doğru kullanma, “koruyarak kullanma” ilkesine bağlı kalınmış örnek bir tatil köyüdür.', // TODO: çeviri
-    roomsTitle: 'Odalar ve apart daireler', // TODO: çeviri
+      'At the foot of the Kazdağları (Mount Ida) range, with 21% oxygen and 50% humidity, our village offers conditions that are ideal for human wellbeing. Right on the shore in the heart of nature, with wide gardens set among olive and fruit trees, walking paths and low-rise architecture, it welcomes guests all year round. Because it was built with a firm commitment to using nature wisely — the principle of “use it while protecting it” — it stands as an exemplary holiday village.',
+    roomsTitle: 'Rooms and apartments',
     roomsLead:
-      'Konforlu odalar ve geniş apart daireler; iki katlı yapılarda, bahçeye ve denize bakan pencerelerle.', // TODO: çeviri
-    amenitiesTitle: 'Club Afrodit’te hayat', // TODO: çeviri
+      'Comfortable rooms and spacious apartments in two-storey buildings, with windows facing the garden and the sea.',
+    amenitiesTitle: 'Life at Club Afrodit',
     amenitiesLead:
-      'Plaj, havuzlar, tenis kortları, açık büfe ve havuz başı eğlence — hepsi yürüme mesafesinde.', // TODO: çeviri
-    tennisTitle: 'Aftek Tenis Kulübü', // TODO: çeviri
-    tennisLead: '4 toprak kort, bölgenin tek federe kulübü.', // TODO: çeviri
-    nursingTitle: 'Sağlıklı Yaşam ve Huzurevi', // TODO: çeviri
+      'The beach, the pools, the tennis courts, the open buffet and poolside entertainment — all within walking distance.',
+    tennisTitle: 'Aftek Tennis Club',
+    tennisLead: 'Four clay courts, the only federated club in the region.',
+    nursingTitle: 'Healthy Living and Care Home',
     nursingLead:
-      'Kazdağları’nın temiz havasında, büyüklerimiz için yıl boyu tatil konforunda profesyonel bakım.', // TODO: çeviri
-    reviewsTitle: 'Misafirlerimiz ne diyor', // TODO: çeviri
-    newsTitle: 'Haberler', // TODO: çeviri
-    contactTitle: 'Bize ulaşın', // TODO: çeviri
-    contactLead: 'Müsaitlik ve konaklama seçenekleri için telefonla ulaşabilirsiniz.', // TODO: çeviri
+      'Professional care for our elders all year round, in the clean air of Mount Ida and with the comfort of a holiday.',
+    reviewsTitle: 'What our guests say',
+    newsTitle: 'News',
+    contactTitle: 'Get in touch',
+    contactLead: 'Call us for availability and accommodation options.',
   },
 
   rooms: {
-    pageTitle: 'Odalar ve apart daireler', // TODO: çeviri
+    pageTitle: 'Rooms and apartments',
     pageLead:
-      'Tesisteki bütün yapılar iki katlıdır ve tüm odalar klimalıdır. Her oda tipinin kendi görselleri ve donanımı aşağıda.', // TODO: çeviri
-    galleryTitle: 'Oda görselleri', // TODO: çeviri
-    featuresTitle: 'Oda özellikleri', // TODO: çeviri
-    capacity: 'Kapasite', // TODO: çeviri
-    size: 'Büyüklük', // TODO: çeviri
-    count: 'Adet', // TODO: çeviri
-    people: 'kişi', // TODO: çeviri
-    unit: 'oda', // TODO: çeviri
-    unitApart: 'daire', // TODO: çeviri
-    note: 'Oda sayıları ve metrekareler işletmeden teyit edilmeyi bekliyor.', // TODO: çeviri
+      'Every building on the property has two storeys and every room is air conditioned. Photographs and features for each room type are below.',
+    galleryTitle: 'Room photographs',
+    featuresTitle: 'Room features',
+    capacity: 'Capacity',
+    size: 'Size',
+    count: 'Number',
+    people: 'guests',
+    unit: 'rooms',
+    unitApart: 'apartments',
+    note: 'Room counts and floor areas are still to be confirmed by the property.',
 
     standart: {
-      title: 'Standart Oda', // TODO: çeviri
-      summary: '2 kişi · 25 m² · balkonlu veya balkonsuz', // TODO: çeviri
+      title: 'Standard Room',
+      summary: '2 guests · 25 m² · with or without balcony',
       body:
-        '25 adet standart odanın her biri sizi samimi ve keyifli bir ortama davet edecek şekilde döşenmiştir. Odalar balkonlu ve balkonsuz seçeneklerle sunulur, iki kişi konaklayabilir. Rahat bir uyku için özenle hazırlanmış yataklar, günün ve yolculuğun yorgunluğunu alır.', // TODO: çeviri
+        'Each of the 25 standard rooms is furnished to feel warm and welcoming. Rooms are offered with or without a balcony and sleep two guests. Carefully prepared beds make for restful sleep and take away the tiredness of the day and the journey.',
     },
     suit: {
-      title: 'Suit Oda', // TODO: çeviri
-      summary: '4 kişi · 65 m² · aile odası, 1+1 ve 2+1', // TODO: çeviri
+      title: 'Suite Room',
+      summary: '4 guests · 65 m² · family room, 1+1 and 2+1',
       body:
-        '1+1 ve 2+1 şeklinde tasarlanan aile odalarımızın her birinin geniş balkonu var. İki katlı yapılarda, doğa ve deniz manzaralı konumlarıyla ferah odalarda yetişkin yatak odası, çocuk yatak odası, banyo ve geniş bir balkon bulunuyor.', // TODO: çeviri
+        'Our family rooms, designed as 1+1 and 2+1 layouts, each have a large balcony. Set in two-storey buildings with views of nature and the sea, these airy rooms have an adult bedroom, a children’s bedroom, a bathroom and a generous balcony.',
     },
     grandSuit: {
-      title: 'Grand Suit Oda', // TODO: çeviri
-      summary: '6 kişi · 90 m² · 2 oda + 1 salon', // TODO: çeviri
+      title: 'Grand Suite',
+      summary: '6 guests · 90 m² · 2 bedrooms + living room',
       body:
-        '16 adet Grand Suit oda; 2 oda, 1 salon ve balkonuyla birlikte 90 m²’dir. Salonunda oturma grubu ve ek yataklar bulunan suitlerde 4 yetişkin + 2 çocuk konaklayabilir. Geniş terası, tesisin çardaklı bahçesinden yararlanma olanağı sunar. Küçük çocuklu aileler için alt kat suitler önerilir.', // TODO: çeviri
+        'The 16 Grand Suites measure 90 m² including two bedrooms, a living room and a balcony. With a seating area and extra beds in the living room, each suite accommodates 4 adults and 2 children. The large terrace also gives access to the property’s shaded garden pergolas. Ground-floor suites are especially recommended for families with small children.',
     },
     apart: {
-      title: 'Apart Daire', // TODO: çeviri
-      summary: '6–8 kişi · 90–140 m² · bağımsız giriş', // TODO: çeviri
+      title: 'Apartment',
+      summary: '6–8 guests · 90–140 m² · private entrance',
       body:
-        'Bağımsız giriş ve bağımsız geniş balkona sahip 25 apart daire, iki katlı yapılarda bulunuyor. Tüm apartlarda tam donanımlı mutfak, çamaşır makinesi, bulaşık makinesi, buzdolabı ve tüm odalarda klima var; pencereler yemyeşil yürüyüş bahçelerine ve denize bakıyor. Kapıdan çıktığınız anda havuz, plaj, tenis kortları, restoran ve Mono Afrodit yürüme mesafesinde.', // TODO: çeviri
+        'The 25 apartments, each with a private entrance and a large private balcony, are located in two-storey buildings. Every apartment has a fully equipped kitchen, washing machine, dishwasher, refrigerator and air conditioning in all rooms; the windows look out over green walking gardens and the sea. Step outside and the pool, the beach, the tennis courts, the restaurant and Mono Afrodit are all within walking distance.',
     },
     nursing: {
-      title: 'Huzurevi Odaları', // TODO: çeviri
-      summary: '1–3 kişi · 35 m² · 20 oda', // TODO: çeviri
+      title: 'Care Home Rooms',
+      summary: '1–3 guests · 35 m² · 20 rooms',
       body:
-        'Huzurevi ve yaşlı bakımevi bölümünde 20 adet 35 m² standart oda bulunuyor. Odalar isteğe göre 1, 2 veya 3 kişilik kullanılabiliyor. Tüm odalarda banyo, tuvalet, klima, televizyon, mini buzdolabı, elbise ve ayakkabı dolabı ile ihtiyaca uygun karyola veya hasta yatağı standart olarak sunuluyor.', // TODO: çeviri
+        'The care home has 20 standard rooms of 35 m². Rooms can be used as single, double or triple occupancy as needed. Every room comes with a bathroom and toilet, air conditioning, a television, a mini fridge, a wardrobe and shoe cabinet, and either a standard or a medical bed according to the resident’s needs.',
     },
   },
 
   roomFeatures: {
-    tv: 'Televizyon', // TODO: çeviri
-    ac: 'Klima', // TODO: çeviri
-    fridge: 'Mini buzdolabı', // TODO: çeviri
-    phone: 'Telefon', // TODO: çeviri
-    balcony: 'Bağımsız balkon', // TODO: çeviri
-    minibar: 'Mini bar', // TODO: çeviri
-    hairdryer: 'Saç kurutma makinesi', // TODO: çeviri
-    view: 'Deniz veya doğa manzarası', // TODO: çeviri
-    family: 'Aile konaklamasına uygun', // TODO: çeviri
-    livingRoom: 'Ayrı salon ve oturma grubu', // TODO: çeviri
-    safe: 'Kişisel kasa', // TODO: çeviri
-    roomService: 'Oda servisi', // TODO: çeviri
-    kitchen: 'Tam donanımlı mutfak', // TODO: çeviri
-    privateEntrance: 'Bağımsız giriş', // TODO: çeviri
-    yearRound: 'Yıl boyu konaklamaya uygun', // TODO: çeviri
-    laundry: 'Çamaşır ve bulaşık makinesi', // TODO: çeviri
-    bathroom: 'Banyo ve tuvalet', // TODO: çeviri
-    wardrobe: 'Elbise ve ayakkabı dolabı', // TODO: çeviri
-    careBed: 'Karyola veya hasta yatağı', // TODO: çeviri
+    tv: 'Television',
+    ac: 'Air conditioning',
+    fridge: 'Mini fridge',
+    phone: 'Telephone',
+    balcony: 'Private balcony',
+    minibar: 'Mini bar',
+    hairdryer: 'Hairdryer',
+    view: 'Sea or nature view',
+    family: 'Suitable for families',
+    livingRoom: 'Separate living room with seating area',
+    safe: 'In-room safe',
+    roomService: 'Room service',
+    kitchen: 'Fully equipped kitchen',
+    privateEntrance: 'Private entrance',
+    yearRound: 'Suitable for year-round stays',
+    laundry: 'Washing machine and dishwasher',
+    bathroom: 'Bathroom and toilet',
+    wardrobe: 'Wardrobe and shoe cabinet',
+    careBed: 'Standard or medical bed',
   },
 
   amenities: {
-    pageTitle: 'Olanaklar', // TODO: çeviri
+    pageTitle: 'Facilities',
     pageLead:
-      'Plajdan havuzlara, mutfaktan havuz başı eğlenceye kadar tesiste sunulanlar. Hepsi tek bir bahçenin içinde, yürüme mesafesinde.', // TODO: çeviri
+      'From the beach to the pools, from the kitchen to poolside entertainment — everything the property offers, all within one garden and within walking distance.',
     conceptTodo:
-      'Pansiyon konsepti ile giriş ve çıkış saatleri işletmeden teyit edilmeyi bekliyor.', // TODO: çeviri
+      'The board basis and the check-in and check-out times are still to be confirmed by the property.',
 
-    tennis: { title: 'Tenis Kulübü', body: '4 toprak kort ile bölgenin tek federe kulübü.' },
-    parking: { title: 'Ücretsiz Otopark', body: 'Misafirler için güvenli ve ücretsiz otopark alanı.' },
-    slide: { title: 'Su Kaydırağı', body: 'Minik misafirleri kahkaha ve serinlik bekliyor.' },
-    beach: { title: 'Mavi Bayraklı Plaj', body: 'Tertemiz denizin keyfini çıkarabileceğiniz ödüllü plaj.' },
-    pool: { title: 'Yarı Olimpik Havuz', body: 'Konforlu bir yüzme deneyimi.' },
-    buffet: { title: 'Açık Büfe', body: 'Sabahları taptaze kahvaltı, akşamları Ege lezzetleri.' },
+    tennis: { title: 'Tennis Club', body: 'Four clay courts — the only federated club in the region.' },
+    parking: { title: 'Free Parking', body: 'Safe, free parking for our guests.' },
+    slide: { title: 'Water Slide', body: 'Laughter and cool water await our youngest guests.' },
+    beach: { title: 'Blue Flag Beach', body: 'An award-winning beach where you can enjoy crystal-clear water.' },
+    pool: { title: 'Semi-Olympic Pool', body: 'A comfortable swimming experience.' },
+    buffet: { title: 'Open Buffet', body: 'Fresh breakfasts in the morning, Aegean flavours in the evening.' },
   },
 
   amenityGroups: {
     beach: {
-      title: 'Plaj', // TODO: çeviri
+      title: 'Beach',
       body:
-        'Mavi bayraklı özel plaj; şezlong ve şemsiyeler, plaj cafe. Denize yürüme mesafesi bir iki dakika.', // TODO: çeviri
-      blueFlag: 'Mavi bayraklı özel plaj', // TODO: çeviri
-      sunbeds: 'Şezlong ve şemsiye', // TODO: çeviri
-      beachCafe: 'Plaj cafe', // TODO: çeviri
-      sandBags: 'Kum torbalarıyla kolay deniz girişi', // TODO: çeviri
+        'A private Blue Flag beach with sunbeds, umbrellas and a beach café. The sea is a one- or two-minute walk away.',
+      blueFlag: 'Private Blue Flag beach',
+      sunbeds: 'Sunbeds and umbrellas',
+      beachCafe: 'Beach café',
+      sandBags: 'Easy access to the water over sandbags',
     },
     pools: {
-      title: 'Havuzlar', // TODO: çeviri
-      body: 'Yarı olimpik açık havuz, kapalı havuz, çocuk havuzu, su kaydırağı ve bayanlara özel havuz.', // TODO: çeviri
-      semiOlympic: 'Yarı olimpik açık havuz', // TODO: çeviri
-      indoor: 'Kapalı havuz', // TODO: çeviri
-      kids: 'Çocuk havuzu', // TODO: çeviri
-      slide: 'Su kaydırağı', // TODO: çeviri
-      womenOnly: 'Bayanlara özel havuz', // TODO: çeviri
+      title: 'Pools',
+      body: 'A semi-Olympic outdoor pool, an indoor pool, a children’s pool, a water slide and a women-only pool.',
+      semiOlympic: 'Semi-Olympic outdoor pool',
+      indoor: 'Indoor pool',
+      kids: 'Children’s pool',
+      slide: 'Water slide',
+      womenOnly: 'Women-only pool',
     },
     wellness: {
-      title: 'Sağlık Kulübü', // TODO: çeviri
-      body: 'Fitness ücretsiz; masaj, sauna, Türk hamamı ve jakuzi ücretlidir.', // TODO: çeviri
-      fitness: 'Fitness (ücretsiz)', // TODO: çeviri
-      massage: 'Masaj (ücretli)', // TODO: çeviri
-      sauna: 'Sauna (ücretli)', // TODO: çeviri
-      hamam: 'Türk hamamı (ücretli)', // TODO: çeviri
-      jacuzzi: 'Jakuzi (ücretli)', // TODO: çeviri
+      title: 'Health Club',
+      body: 'The fitness room is free of charge; massage, sauna, Turkish bath and jacuzzi are charged separately.',
+      fitness: 'Fitness room (free)',
+      massage: 'Massage (paid)',
+      sauna: 'Sauna (paid)',
+      hamam: 'Turkish bath (paid)',
+      jacuzzi: 'Jacuzzi (paid)',
     },
     kitchen: {
-      title: 'Mutfak', // TODO: çeviri
+      title: 'Kitchen',
       body:
-        'Açık büfe yemekler çoğunlukla tesisin kendi bahçesindeki organik sebze ve meyveden hazırlanıyor. Kendi zeytin ve zeytinyağı üretimi, taş fırın ve Kazdağları’nın endemik otlarıyla Ege–Akdeniz mutfağı.', // TODO: çeviri
-      openBuffet: 'Açık büfe kahvaltı ve akşam yemeği', // TODO: çeviri
-      organicGarden: 'Kendi bahçesinde organik sebze ve meyve', // TODO: çeviri
-      oliveOil: 'Kendi zeytin ve zeytinyağı üretimi', // TODO: çeviri
-      stoneOven: 'Taş fırın', // TODO: çeviri
-      herbs: 'Kazdağları’nın endemik otları', // TODO: çeviri
-      terraceDinner: 'Manzaralı terasta akşam yemeği ve canlı müzik', // TODO: çeviri
+        'Open buffet meals are prepared largely from organic vegetables and fruit grown in the property’s own garden. With its own olive and olive oil production, a stone oven and the endemic herbs of Mount Ida, the kitchen serves Aegean and Mediterranean cuisine.',
+      openBuffet: 'Open buffet breakfast and dinner',
+      organicGarden: 'Organic vegetables and fruit from our own garden',
+      oliveOil: 'Our own olive and olive oil production',
+      stoneOven: 'Stone oven',
+      herbs: 'Endemic herbs of Mount Ida',
+      terraceDinner: 'Dinner with a view on the terrace, with live music',
     },
     mono: {
-      title: 'Mono Afrodit', // TODO: çeviri
+      title: 'Mono Afrodit',
       body:
-        '2022’de Kazdağları’nda başlayan house müzik parti serisi. Havuz başı disko, DJ setleri ve kendi YouTube kanalı.', // TODO: çeviri
-      houseMusic: 'House müzik parti serisi', // TODO: çeviri
-      poolsideDisco: 'Havuz başı disko', // TODO: çeviri
-      youtube: 'Kendi YouTube kanalı', // TODO: çeviri
+        'A house music party series that began on Mount Ida in 2022. Poolside disco, DJ sets and its own YouTube channel.',
+      houseMusic: 'House music party series',
+      poolsideDisco: 'Poolside disco',
+      youtube: 'Its own YouTube channel',
     },
     other: {
-      title: 'Diğer', // TODO: çeviri
-      body: 'Tesiste günlük hayatı kolaylaştıran hizmetler.', // TODO: çeviri
-      parking: 'Ücretsiz otopark', // TODO: çeviri
-      pets: 'Evcil hayvan kabul (koşullu)', // TODO: çeviri
-      wifi: 'Resepsiyonda kablosuz internet', // TODO: çeviri
-      transfer: 'Havalimanı transferi (talep üzerine)', // TODO: çeviri
+      title: 'Other',
+      body: 'Services that make everyday life on the property easier.',
+      parking: 'Free parking',
+      pets: 'Pets welcome (conditions apply)',
+      wifi: 'Wireless internet at reception',
+      transfer: 'Airport transfer (on request)',
     },
   },
 
   tennis: {
-    pageTitle: 'Aftek Tenis Kulübü', // TODO: çeviri
-    pageLead: 'Bölgenin tek federe tenis kulübü, tesisin içinde.', // TODO: çeviri
-    courtsTitle: 'Kortlar', // TODO: çeviri
+    pageTitle: 'Aftek Tennis Club',
+    pageLead: 'The only federated tennis club in the region, on the property itself.',
+    courtsTitle: 'The courts',
     courtsBody:
-      '4 toprak kort yıl boyu hizmette. Kortlar konaklama alanlarına yürüme mesafesinde; misafirler dilediği zaman maç yapabilir.', // TODO: çeviri
-    clubTitle: 'Federe kulüp', // TODO: çeviri
+      'Four clay courts are in use all year round. The courts are within walking distance of the accommodation, and guests can play whenever they like.',
+    clubTitle: 'A federated club',
     clubBody:
-      'Aftek, bölgenin tek federe tenis kulübüdür. Kulüp bünyesinde ligler ve I-Kort turnuvaları düzenleniyor.', // TODO: çeviri
-    discountTitle: 'Turnuva indirimi', // TODO: çeviri
+      'Aftek is the only federated tennis club in the region. The club hosts leagues and I-Kort tournaments.',
+    discountTitle: 'Tournament discount',
     discountBody:
-      'Resmî turnuvalara katılan sporculara konaklamada %40’a varan indirim uygulanıyor.', // TODO: çeviri
-    contactTitle: 'Kort ve turnuva bilgisi', // TODO: çeviri
-    contactBody: 'Kort rezervasyonu ve turnuva takvimi için ofisi arayabilirsiniz.', // TODO: çeviri
-    instagram: 'Instagram: @afroditteniskulubu', // TODO: çeviri
+      'Players taking part in official tournaments receive up to 40% off their accommodation.',
+    contactTitle: 'Court bookings and tournaments',
+    contactBody: 'Call the office for court reservations and the tournament calendar.',
+    instagram: 'Instagram: @afroditteniskulubu',
   },
 
   nursing: {
-    pageTitle: 'Huzurevi ve Yaşlı Bakımevi', // TODO: çeviri
+    pageTitle: 'Care Home and Assisted Living',
     pageLead:
-      'Club Afrodit’in ayrı bir dalı: Kazdağları’nın temiz havasında, tatil konforunda profesyonel bakım.', // TODO: çeviri
+      'A separate branch of Club Afrodit: professional care in the clean air of Mount Ida, with the comfort of a holiday.',
     introBody:
-      'İşlev bozuklukları ve kayıplarıyla birlikte ileri yaşlarda kişinin kendi kendine yetememesi, günlük yaşam becerilerini ve öz bakımını gerçekleştirememesi durumu ortaya çıkar. Aile içi bakım bir süre sonra hem bakan hem de bakılan için güç ve yıpratıcı olur, profesyonel bakım ihtiyacı doğar.', // TODO: çeviri
+      'As impairments and losses accumulate in later life, people may no longer be able to manage on their own, to carry out everyday tasks or to look after themselves. Care within the family eventually becomes difficult and exhausting for both the carer and the person being cared for, and the need for professional care arises.',
     introBody2:
-      'Profesyonel bakım; barınma, yemek ve temizlik gibi temel ihtiyaçların ötesinde tıbbi bakım ve destek, duygusal, ruhsal ve fiziksel rehabilitasyon, sosyal ve kültürel etkinlikler, sağlıklı beslenme, tansiyon, şeker, nabız ve ateş gibi değerlerin periyodik kontrolü, ilaç ve planlanmış tedavi takibi gibi çok yönlü bir hizmettir. Club Afrodit Huzurevi ve Yaşlı Bakımevi, tüm bunları alanında uzman bir ekiple ve multidisipliner bir yaklaşımla sunar.', // TODO: çeviri
+      'Professional care goes well beyond basic needs such as shelter, meals and cleaning: it includes medical care and support, emotional, psychological and physical rehabilitation, social and cultural activities, healthy nutrition, regular monitoring of blood pressure, blood sugar, pulse and temperature, and the tracking of medication and planned treatment. Club Afrodit Care Home provides all of this with an experienced, specialist team and a multidisciplinary approach.',
 
-    servicesTitle: 'Hizmetler', // TODO: çeviri
+    servicesTitle: 'Services',
     services: {
-      personal: 'Kişisel bakım', // TODO: çeviri
-      cleaning: 'Temizlik, çamaşır, ütü', // TODO: çeviri
-      medical: 'Tıbbi bakım ve destek', // TODO: çeviri
-      physio: 'Fizik tedavi ve rehabilitasyon', // TODO: çeviri
-      activities: 'Bireysel ve toplu psiko-sosyal, kültürel, zihinsel ve fiziksel aktiviteler', // TODO: çeviri
-      nutrition: 'Diyetisyen kontrollü beslenme', // TODO: çeviri
-      transport: 'Ulaşım desteği', // TODO: çeviri
+      personal: 'Personal care',
+      cleaning: 'Cleaning, laundry and ironing',
+      medical: 'Medical care and support',
+      physio: 'Physiotherapy and rehabilitation',
+      activities: 'Individual and group psychosocial, cultural, cognitive and physical activities',
+      nutrition: 'Nutrition supervised by a dietitian',
+      transport: 'Transport support',
     },
 
-    whoTitle: 'Kimler yararlanabilir', // TODO: çeviri
+    whoTitle: 'Who can benefit',
     who: {
-      alzheimer: 'Alzheimer', // TODO: çeviri
-      parkinson: 'Parkinson', // TODO: çeviri
-      copd: 'KOAH (kronik akciğer hastalıkları)', // TODO: çeviri
-      stroke: 'İnme ve felç', // TODO: çeviri
-      postOp: 'Ameliyat sonrası bakım', // TODO: çeviri
-      ms: 'MS', // TODO: çeviri
-      ageRelated: 'Yaşlılığa bağlı özel bakım durumu', // TODO: çeviri
+      alzheimer: 'Alzheimer’s',
+      parkinson: 'Parkinson’s',
+      copd: 'COPD (chronic lung disease)',
+      stroke: 'Stroke and paralysis',
+      postOp: 'Post-operative care',
+      ms: 'MS',
+      ageRelated: 'Age-related special care needs',
     },
 
-    teamTitle: 'Ekip', // TODO: çeviri
+    teamTitle: 'The team',
     team: {
-      nurse: 'Hemşire', // TODO: çeviri
-      doctor: 'Doktor', // TODO: çeviri
-      physio: 'Fizyoterapist', // TODO: çeviri
-      socialWorker: 'Sosyal hizmet uzmanı', // TODO: çeviri
-      caregiver: 'Profesyonel bakım personeli', // TODO: çeviri
-      support: 'Destek hizmet personeli', // TODO: çeviri
+      nurse: 'Nurse',
+      doctor: 'Doctor',
+      physio: 'Physiotherapist',
+      socialWorker: 'Social worker',
+      caregiver: 'Professional care staff',
+      support: 'Support staff',
     },
 
-    roomsTitle: 'Odalar', // TODO: çeviri
-    contactTitle: 'Bilgi ve başvuru', // TODO: çeviri
-    contactBody: 'Yerleşim koşulları ve başvuru için huzurevi hattını arayabilirsiniz.', // TODO: çeviri
+    roomsTitle: 'Rooms',
+    contactTitle: 'Information and applications',
+    contactBody: 'Call the care home line for admission conditions and applications.',
   },
 
   news: {
-    pageTitle: 'Haberler', // TODO: çeviri
-    pageLead: 'Tesisten haberler ve Kazdağları’ndan hikâyeler.', // TODO: çeviri
+    pageTitle: 'News',
+    pageLead: 'News from the property and stories from Mount Ida.',
 
     afroditStory: {
-      title: 'Afrodit ve güzellik yarışmasının hikâyesi', // TODO: çeviri
+      title: 'The story of Aphrodite and the beauty contest',
       summary:
-        'Efsaneye göre dünyanın ilk güzellik yarışması İda Dağı’nda, yani bugün Kazdağları dediğimiz yerde yapıldı.', // TODO: çeviri
+        'According to legend, the world’s first beauty contest took place on Mount Ida — the range we know today as Kazdağları.',
       body1:
-        'Paris daha çocukken İda Dağı’na kaderiyle baş başa bırakılarak terk edilir. Dişi bir ayı tarafından emzirilen çocuğu, daha sonra İda Dağı’nda çobanlık yapan Agelaos bularak eve getirir.', // TODO: çeviri
+        'Paris was abandoned on Mount Ida as a child and left to his fate. Suckled by a she-bear, he was later found by Agelaos, a shepherd on the mountain, who took him home.',
       body2:
-        'Paris İda Dağı’ndaki mutlu yaşamını sürdürürken Olimpos’ta bütün tanrılar şölen yapmaktadır. Kavga tanrıçası Eris, üzerinde “En Güzele” yazan elmayı masanın ortasına atar. Zeus’un karısı Hera “En güzeliniz benim” diyerek altın elmayı almak ister. Afrodit itiraz ederek “Benden güzel kimse olamaz” derken, akıl ve zekâ tanrıçası Athena da işe karışır ve Zeus’tan hakemlik yapmasını ister.', // TODO: çeviri
+        'While Paris was living happily on Mount Ida, the gods were holding a feast on Olympus. Eris, goddess of discord, threw an apple inscribed “To the fairest” into the middle of the table. Hera, wife of Zeus, claimed the golden apple, saying she was the fairest of them all. Aphrodite objected, insisting that no one could be more beautiful than she; and Athena, goddess of wisdom, joined the dispute and asked Zeus to judge.',
       body3:
-        'En güzeli seçmekte zorlanan Zeus, seçimi İda Dağı’nda çobanlık yapan Paris’in yapacağını söyleyerek üç tanrıçayı ona gönderir. Ağaç altında otururken üç güzelin yanına gelip niyetlerini açıklamasıyla önce şaşıran Paris; Hera’nın Asya kralı olma, Athena’nın akıl ve başarı verme vaadine aldırmaz. Afrodit’in, kendisini güzel seçtiği takdirde dünyanın en güzel kadınına kavuşacağını söylemesi üzerine altın elmayı Afrodit’e uzatır. Böylece bütün tanrılar Afrodit’i en güzel tanrıça kabul eder.', // TODO: çeviri
+        'Unable to choose, Zeus declared that Paris, the shepherd on Mount Ida, would decide, and sent the three goddesses to him. Sitting under a tree, Paris was at first astonished when the three appeared and stated their case. He was unmoved by Hera’s promise to make him king of Asia and by Athena’s offer of wisdom and success. But when Aphrodite told him that, if he chose her, he would win the most beautiful woman in the world, he handed her the golden apple. And so all the gods accepted Aphrodite as the fairest goddess.',
       body4:
-        'Efsaneye göre dünyanın ilk güzellik yarışması böylece İda Dağı’nda yapılmış olur.', // TODO: çeviri
+        'According to the legend, the world’s first beauty contest was thus held on Mount Ida.',
     },
 
     seasonStart: {
-      title: 'Club Afrodit’te tatil sezonu başladı', // TODO: çeviri
+      title: 'The holiday season has begun at Club Afrodit',
       summary:
-        'Kazdağları’nın eteklerinde yer alan Club Afrodit, yenilenen odaları ve ferah apart daireleriyle yaz sezonuna kapılarını açtı.', // TODO: çeviri
+        'Set at the foot of Mount Ida, Club Afrodit has opened for the summer season with renovated rooms and spacious apartments.',
       body1:
-        'Kazdağları’nın eteklerinde, doğayla iç içe eşsiz bir konumda yer alan Club Afrodit, yaz sezonuna kapılarını açtı. Misafirlerine sadece bir konaklama değil, aynı zamanda ruhlarını ve bedenlerini yenileyebilecekleri huzurlu bir kaçış sunuyor.', // TODO: çeviri
+        'Club Afrodit, in its unique setting surrounded by nature at the foot of Mount Ida, has opened its doors for the summer season. It offers guests not merely a place to stay, but a peaceful escape in which to restore both body and mind.',
       body2:
-        'Tesis, konfor için baştan aşağı yenilenen odaları ve ferah apart daireleriyle evin sıcaklığını aratmayan bir deneyim sunuyor. Modern tasarımı ve doğanın dinginliğini birleştiren bu yaşam alanları, tatilin her anını keyifli kılmak için özenle hazırlandı.', // TODO: çeviri
+        'With rooms renovated from top to bottom and airy apartments, the property offers an experience as comfortable as home. These living spaces, combining modern design with the calm of nature, have been prepared with care to make every moment of your holiday enjoyable.',
       body3:
-        'Su kaydıraklı yarı olimpik havuz serinlemek ve eğlenmek isteyenleri bekliyor. Kazdağları’nın bol oksijenli havası güne zinde başlamak için ideal bir ortam sağlıyor. Ege’nin lezzetlerini sunan restoran seçenekleri ve organik bahçeden gelen taptaze ürünlerle hazırlanan yemekler, sağlıklı ve lezzetli bir tatil vaadini gerçeğe dönüştürüyor.', // TODO: çeviri
+        'The semi-Olympic pool with its water slide awaits everyone looking to cool off and have fun. The oxygen-rich air of Mount Ida is ideal for starting the day refreshed. Restaurant options serving the flavours of the Aegean, and dishes prepared with produce fresh from our organic garden, turn the promise of a healthy and delicious holiday into reality.',
       body4:
-        'Doğanın kalbinde huzurlu, eğlence ve lezzet dolu bir tatil hayal ediyorsanız erken rezervasyon için ofisimizi arayabilirsiniz.', // TODO: çeviri
+        'If you are dreaming of a peaceful holiday full of fun and good food in the heart of nature, call our office about early booking.',
     },
 
     mono: {
-      title: 'Mono Afrodit kulübü yazı renklendiriyor', // TODO: çeviri
+      title: 'The Mono Afrodit club brings colour to the summer',
       summary:
-        '2022’de Kazdağları’nda filizlenen video parti serisi, house müziğin birleştirici gücüyle Altınoluk’taki evinde büyümeye devam ediyor.', // TODO: çeviri
+        'The video party series that began on Mount Ida in 2022 keeps growing at its home in Altınoluk, carried by the unifying power of house music.',
       body1:
-        'Tatil eğlencemizi Mono Afrodit Video Channel’a taşıdık. Şehrin ilk ve tek video parti serisi olarak 2022’de Kazdağları’nda filizlenen bu macera, house müziğin birleştirici gücüyle Altınoluk’taki evi Club Afrodit’te samimi ve özgün bir topluluk oluşturdu.', // TODO: çeviri
+        'We have taken our holiday entertainment to the Mono Afrodit Video Channel. Sprouting on Mount Ida in 2022 as the region’s first and only video party series, this adventure has built a warm and original community at its home in Altınoluk, Club Afrodit, through the unifying power of house music.',
       body2:
-        'En güzel anlarımızı, enerjik parti kayıtlarımızı, DJ setlerini, röportajları ve daha fazlasını kanalımızda keşfedebilirsiniz. Mono Afrodit, bir YouTube kanalı olmanın ötesinde, müziğin ve eğlencenin paylaşıldığı, özel etkinliklerle büyüyen bir platform.', // TODO: çeviri
-      body3: 'En yeni videolar ve canlı yayınlar için kanalı takip edebilirsiniz.', // TODO: çeviri
+        'On our channel you can discover our finest moments, energetic party recordings, DJ sets, interviews and more. Mono Afrodit is more than a YouTube channel: it is a platform for sharing music and celebration, growing through special events.',
+      body3: 'Follow the channel for our newest videos and live streams.',
     },
   },
 
   contact: {
-    pageTitle: 'İletişim', // TODO: çeviri
-    pageLead: 'Rezervasyon, müsaitlik ve tüm sorularınız için bize ulaşın.', // TODO: çeviri
-    addressTitle: 'Adres', // TODO: çeviri
-    phoneTitle: 'Telefon', // TODO: çeviri
-    officeLabel: 'Rezervasyon / idari ofis', // TODO: çeviri
-    mobileLabel: 'Cep / WhatsApp', // TODO: çeviri
-    nursingLabel: 'Huzurevi', // TODO: çeviri
-    emailTitle: 'E-posta', // TODO: çeviri
-    socialTitle: 'Sosyal medya', // TODO: çeviri
-    mapTitle: 'Konum', // TODO: çeviri
-    mapAlt: 'Club Afrodit Tatil Köyü haritası', // TODO: çeviri
-    distancesTitle: 'Mesafeler', // TODO: çeviri
-    hoursTodo: 'Giriş ve çıkış saatleri işletmeden teyit edilmeyi bekliyor.', // TODO: çeviri
+    pageTitle: 'Contact',
+    pageLead: 'Get in touch for reservations, availability and any questions you may have.',
+    addressTitle: 'Address',
+    phoneTitle: 'Telephone',
+    officeLabel: 'Reservations / administration',
+    mobileLabel: 'Mobile / WhatsApp',
+    nursingLabel: 'Care home',
+    emailTitle: 'Email',
+    socialTitle: 'Social media',
+    mapTitle: 'Location',
+    mapAlt: 'Map of Club Afrodit Holiday Village',
+    distancesTitle: 'Distances',
+    hoursTodo: 'Check-in and check-out times are still to be confirmed by the property.',
   },
 
   distances: {
-    altinoluk: 'Altınoluk merkez', // TODO: çeviri
-    akcay: 'Akçay', // TODO: çeviri
-    edremit: 'Edremit', // TODO: çeviri
-    airport: 'Edremit / Körfez Havalimanı', // TODO: çeviri
-    sahindere: 'Şahindere Kanyonu', // TODO: çeviri
-    tahtakuslar: 'Tahtakuşlar Etnografya Galerisi', // TODO: çeviri
+    altinoluk: 'Altınoluk town centre',
+    akcay: 'Akçay',
+    edremit: 'Edremit',
+    airport: 'Edremit / Körfez Airport',
+    sahindere: 'Şahindere Canyon',
+    tahtakuslar: 'Tahtakuşlar Ethnography Gallery',
   },
 
   reviews: {
-    title: 'Misafir yorumları', // TODO: çeviri
-    lead: 'Konaklayan misafirlerimizin kendi ifadeleriyle.', // TODO: çeviri
+    title: 'Guest reviews',
+    lead: 'In the words of guests who have stayed with us. Reviews are shown in their original Turkish.',
   },
 
   notFound: {
-    title: 'Sayfa bulunamadı', // TODO: çeviri
-    body: 'Aradığınız sayfa taşınmış veya adresi değişmiş olabilir.', // TODO: çeviri
+    title: 'Page not found',
+    body: 'The page you are looking for may have moved or changed address.',
   },
 
   footer: {
-    lead: 'Kazdağları’nın temiz havasında, denize sıfır bir tatil köyü.', // TODO: çeviri
-    contactTitle: 'İletişim', // TODO: çeviri
-    linksTitle: 'Sayfalar', // TODO: çeviri
-    followTitle: 'Takip edin', // TODO: çeviri
-    rights: 'Tüm hakları saklıdır.', // TODO: çeviri
+    lead: 'A beachfront holiday village in the clean air of Mount Ida.',
+    contactTitle: 'Contact',
+    linksTitle: 'Pages',
+    followTitle: 'Follow us',
+    rights: 'All rights reserved.',
   },
 
   common: {
-    imageAlt: 'Club Afrodit', // TODO: çeviri
-    loading: 'Yükleniyor…', // TODO: çeviri
-    error: 'İçerik yüklenemedi.', // TODO: çeviri
+    imageAlt: 'Club Afrodit',
+    loading: 'Loading…',
+    error: 'The content could not be loaded.',
   },
 }

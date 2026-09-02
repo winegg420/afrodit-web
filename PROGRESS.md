@@ -102,3 +102,34 @@ vurgu rengini kullanıyor — tatil bölümünden ayrışsın diye.
 - Oda sayısı ve metrekare teyidi.
 - Sağlık kulübü fotoğrafı yok (Placeholder duruyor).
 - Kalıcı renk paleti seçimi.
+
+## 2026-09-02 — İngilizce ve Almanca çeviriler
+
+Kullanıcı EN ve DE dillerinin gerçekten çevrilmesini istedi.
+`en.ts` ve `de.ts` baştan sona çevrildi, tüm `// TODO: çeviri`
+işaretleri kalktı (grep ile doğrulandı: 0 kaldı).
+
+Çeviri kararları:
+- Kazdağları → "Mount Ida" (EN) / "Ida-Gebirge" (DE). Mitolojik hikâyede
+  ise "Mount Ida" / "Ida-Berg" — Afrodit efsanesiyle bağı korumak için.
+- Marka ve yer adları çevrilmedi: Club Afrodit, Mono Afrodit, Aftek,
+  Altınoluk, Akçay, Edremit, Şahindere, Tahtakuşlar.
+- Huzurevi → "Care Home / Assisted Living" (EN),
+  "Senioren- und Pflegeresidenz" (DE). Menüde EN "Assisted Living",
+  DE "Gesundes Leben" — hedef kitleye uygun, tıbbi olmayan ton.
+- Misafir yorumları çevrilmedi; misafirlerin kendi ifadesi olduğu için
+  Türkçe orijinal kaldı. `reviews.lead` metnine bunu belirten bir cümle
+  eklendi (EN ve DE).
+- `TODO` notları (pansiyon konsepti, giriş/çıkış saati, oda sayıları)
+  üç dilde de duruyor — bunlar hâlâ işletmeden teyit bekliyor.
+
+Sayfa yolları (`/odalar`, `/olanaklar`, `/iletisim` …) üç dilde de aynı
+bırakıldı. Dil başına ayrı slug ileride istenirse `SLUGS` yapısını
+dile göre çoğaltmak yeterli.
+
+### Doğrulama
+- `npm run build` hatasız. TypeScript `Dict` tipi sayesinde EN/DE'de
+  eksik veya fazla anahtar olmadığı derleyici tarafından garanti edildi.
+- `npx oxlint src` uyarısız.
+- Tarayıcıda /en ve /de sayfaları kontrol edildi, metinler çevrilmiş
+  geliyor, konsolda hata yok.
