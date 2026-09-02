@@ -1,0 +1,74 @@
+/*
+ * Club Afrodit — tasarım değişkenleri
+ * ÖNEMLİ: Renkler SADECE bu dosyada tanımlanır.
+ * Bileşenlerin içine sabit hex kodu yazma, her yerde var(--...) kullan.
+ *
+ * TODO: Bu palet GEÇİCİDİR. Fotoğraflar toplandıktan sonra kalıcı palet
+ * seçilecek ve yalnızca bu dosya değiştirilecek.
+ */
+
+:root {
+  /* --- Renk: zemin --- */
+  --color-bg: #fbfaf7;          /* kırık beyaz ana zemin */
+  --color-bg-alt: #f2f0eb;      /* ikinci düzey zemin, bölüm ayrımı */
+  --color-bg-deep: #26262a;     /* koyu zemin (footer vb.) */
+  --color-surface: #ffffff;     /* kart / yüzey */
+
+  /* --- Renk: metin --- */
+  --color-text: #26262a;        /* koyu gri ana metin */
+  --color-text-soft: #5c5c63;   /* ikincil metin */
+  --color-text-faint: #8a8a90;  /* etiket, dipnot */
+  --color-text-invert: #f4f3ef; /* koyu zemin üstü metin */
+
+  /* --- Renk: vurgu (tek, sakin) --- */
+  --color-accent: #7a8a7f;
+  --color-accent-strong: #5f6d64;
+  --color-accent-soft: #e6eae6;
+
+  /* --- Renk: çizgi ve durum --- */
+  --color-line: #e0ddd6;
+  --color-line-strong: #c9c5bb;
+  --color-focus: #2f6f8f;
+  --color-error: #9b3d34;
+
+  /* --- Tipografi --- */
+  --font-display: "Georgia", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: clamp(1.6rem, 1.2rem + 1.6vw, 2.3rem);
+  --text-3xl: clamp(2rem, 1.4rem + 3vw, 3.4rem);
+
+  --leading-tight: 1.18;
+  --leading-normal: 1.62;
+
+  /* --- Ölçü / boşluk --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --content-width: 68rem;
+  --content-narrow: 42rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  --border-thin: 1px solid var(--color-line);
+
+  --shadow-soft: 0 1px 2px rgba(38, 38, 42, 0.06),
+                 0 8px 24px rgba(38, 38, 42, 0.05);
+
+  --header-height: 4.5rem;
+  --transition: 160ms ease;
+}
