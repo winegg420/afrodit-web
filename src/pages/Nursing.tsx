@@ -3,6 +3,7 @@ import Photo from '../components/Photo'
 import Gallery from '../components/Gallery'
 import PageHead from '../components/PageHead'
 import { useI18n } from '../i18n'
+import { altsFor } from '../i18n/photoAlts'
 import { nursingRoom } from '../content/rooms'
 import { facility } from '../content/facility'
 
@@ -17,7 +18,7 @@ const teamPhotos: Record<string, string> = {
 }
 
 export default function Nursing() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const services = Object.entries(t.nursing.services)
   const who = Object.entries(t.nursing.who)
   const team = Object.entries(t.nursing.team)
@@ -87,6 +88,7 @@ export default function Nursing() {
         <Gallery
           images={nursingRoom.gallery}
           altPrefix={t.rooms.nursing.title}
+          alts={altsFor(lang, nursingRoom.gallery)}
           label={`${t.rooms.nursing.title} — ${t.rooms.galleryTitle}`}
         />
       </Section>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useI18n } from '../i18n'
+import { resolveImage } from '../lib/image'
 
 type PageHeadProps = {
   title: string
@@ -11,6 +12,7 @@ type PageHeadProps = {
 /** Sayfa başlığı bandı. Belge başlığını da günceller. */
 export default function PageHead({ title, lead, image = null }: PageHeadProps) {
   const { t } = useI18n()
+  const head = resolveImage(image)
 
   useEffect(() => {
     document.title = `${title} — ${t.brand.name}`
@@ -19,14 +21,21 @@ export default function PageHead({ title, lead, image = null }: PageHeadProps) {
   return (
     <section className={`page-head${image ? ' page-head--image' : ''}`}>
       {image && (
-        <img
-          className="page-head__image"
-          src={image}
-          alt=""
-          aria-hidden="true"
-          fetchPriority="high"
-          decoding="async"
-        />
+        <picture className="photo-picture">
+          {head && <source type="image/webp" srcSet={head.webpSrcSet} sizes="100vw" />}
+          <img
+            className="page-head__image"
+            src={image}
+            srcSet={head?.jpgSrcSet}
+            sizes="100vw"
+            width={head?.width}
+            height={head?.height}
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
       )}
       <div className="container page-head__content">
         <h1 className="page-head__title">{title}</h1>

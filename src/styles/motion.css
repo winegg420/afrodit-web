@@ -394,3 +394,5 @@
   color: var(--color-text);
   border-color: var(--color-text-invert);
 }
+.photo-picture { display: block; }
+.photo-picture .photo { width: 100%; }

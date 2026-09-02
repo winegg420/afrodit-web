@@ -25,3 +25,10 @@ dist-ssr
 
 # prerender ara ciktisi
 dist-ssr
+
+# uretilen gorsel surumleri (build:images yeniden uretir)
+public/img/**/*.webp
+public/img/**/*-640.jpg
+public/img/**/*-1024.jpg
+public/img/**/*-1920.jpg
+src/generated

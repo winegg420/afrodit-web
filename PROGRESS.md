@@ -393,3 +393,65 @@ olduğu için gözle güçlükle seçiliyor. TODO olarak bırakıldı.
 - 1440 ve 1920 px'te tüm sayfalar tarandı: `yasli-bakim/1.jpg` dışında
   doğal genişliğinden büyük gösterilen görsel yok
 - Tam ekran görüntüleyicide görseller 1:1 (800 px doğal → 800 px ekranda)
+
+## 2026-09-02 — Arama motoru ve performans paketi
+
+Yedi maddenin hepsi hem `npm run dev` hem de prerender çıktısında eksikti;
+ölçülerek doğrulandı (hreflang 0, og:title 0, ld+json 0, sitemap yok,
+15 görselin 13'ünde width yok, webp yok).
+
+### 1. hreflang ve canonical
+`src/config.ts` tek yapılandırma noktası: `SITE_URL`. Alan adı kesinleşince
+yalnızca burası değişecek; canonical, hreflang, Open Graph, sitemap ve
+robots hepsi buradan okuyor (`VITE_SITE_URL` ile geçici olarak değişebilir).
+Her sayfa kendi canonical'ını, üç dil karşılığını ve x-default olarak
+Türkçe sürümü bildiriyor.
+
+### 2. Paylaşım etiketleri
+Her sayfada og:type, og:site_name, og:locale, og:title, og:description,
+og:url, og:image (+width/height/alt) ve twitter:card=summary_large_image.
+Görsel o sayfanın kendi ana fotoğrafı; olmayanlarda slayt-1.jpg. Hepsi
+`seo.ts` içindeki tek listeden türüyor.
+
+### 3. Yapılandırılmış veri
+Anasayfalara schema.org LodgingBusiness JSON-LD: ad, açıklama, adres,
+koordinat (haritadan), telefon, e-posta, fotoğraflar, sosyal medya
+hesapları ve 27 olanak (amenityFeature).
+Fiyat, yıldız, puan ve giriş/çıkış saati alanları BİLEREK yok — teyit
+bekliyor.
+
+### 4. Görsel ölçüleri
+`scripts/images.mjs` her dosyanın gerçek ölçüsünü okuyup
+`src/generated/images.ts` manifestine yazıyor; `Photo`, `Hero`, `PageHead`,
+`Lightbox` ve `Logo` ölçüleri oradan alıyor. Elle girilen ölçü yok.
+Tüm sayfalarda width özniteliği olmayan `<img>` sayısı 0.
+
+### 5. sitemap.xml ve robots.txt
+Prerender 21 sayfalık sitemap üretiyor; her girdide üç dil + x-default
+xhtml:link alternatifleri var. robots.txt site haritasını bildiriyor.
+
+### 6. Görsel ağırlığı
+sharp ile derleme adımı: her JPEG/PNG için WebP, 900 px'ten geniş olanlar
+için 640/1024/1920 sürümleri (asla büyütme yok). Orijinaller duruyor.
+`<picture>` + `srcset` + `sizes`; WebP desteklemeyen tarayıcı JPEG'e düşüyor.
+Açılış görselinin preload'ı da duyarlı yazıldı (`imagesrcset` +
+`type="image/webp"`) — aksi halde tarayıcı hem tam boy JPEG'i hem küçük
+WebP'yi indiriyordu.
+
+### 7. Alt metinleri
+`src/i18n/photoAlts.ts`: 43 galeri fotoğrafının her biri açılıp bakıldı,
+ne gösterdikleri üç dilde yazıldı. Fotoğrafta olmayan hiçbir şey tarif
+edilmedi.
+
+### Ölçümler
+- public/img: 18 MB → 27 MB (orijinaller 17,6 MB + 5,9 MB WebP + 3,0 MB
+  ölçekli JPEG). Ziyaretçi bunların hepsini değil, kendine uygun olanı iner.
+- Anasayfa, 390 px genişlik, tüm görseller yüklendiğinde:
+  görseller 3.750 KB → **399 KB** (%89 azalma).
+  Sayfa toplamı (HTML + CSS + JS dahil) 4.158 KB → **807 KB**.
+- İlk ekranda inen görseller: 823 KB → **47 KB**.
+
+### Doğrulama
+`npm run build` hatasız, `npx oxlint src` uyarısız, 21 HTML,
+hreflang 4, og:title 1, ld+json 1, sitemap 21 url, width'siz img 0,
+JS kapalı: 4.535 karakter metin ve 24 reveal öğesinin hepsi görünür.

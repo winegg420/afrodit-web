@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Logo from './Logo'
 import { useI18n, useLangPath } from '../i18n'
 import { SLUGS } from '../routes'
 import { facility } from '../content/facility'
@@ -12,7 +13,7 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container site-footer__grid">
         <div className="site-footer__brand">
-          <img src="/img/logo-footer.png" alt={t.brand.name} width={148} height={49} />
+          <Logo src="/img/logo-footer.png" alt={t.brand.name} height={49} />
           <p>{t.footer.lead}</p>
         </div>
 

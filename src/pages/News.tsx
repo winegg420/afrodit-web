@@ -3,13 +3,14 @@ import Photo from '../components/Photo'
 import Gallery from '../components/Gallery'
 import PageHead from '../components/PageHead'
 import { useI18n } from '../i18n'
+import { altsFor } from '../i18n/photoAlts'
 import type { Dict } from '../i18n'
 import { news } from '../content/news'
 
 type NewsCopy = { title: string; summary: string } & Record<string, string>
 
 export default function News() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
 
   return (
     <>
@@ -33,7 +34,12 @@ export default function News() {
               ))}
             </article>
 
-            <Gallery images={item.gallery} altPrefix={copy.title} label={copy.title} />
+            <Gallery
+              images={item.gallery}
+              altPrefix={copy.title}
+              label={copy.title}
+              alts={altsFor(lang, item.gallery)}
+            />
           </Section>
         )
       })}

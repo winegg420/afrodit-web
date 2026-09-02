@@ -4,8 +4,11 @@
  * `vite build` (istemci) bittikten sonra çalışır:
  *   1. dist/index.html şablonunu okur
  *   2. dist-ssr/entry-server.js içindeki render() ile her yolu HTML'e çevirir
- *   3. dist/<dil>/<sayfa>/index.html olarak yazar
- *   4. şablon olarak kullanılan dist/index.html'i siler
+ *   3. Her sayfaya kendi <head> etiketlerini yazar: başlık, açıklama,
+ *      canonical, hreflang, Open Graph, Twitter kartı, JSON-LD
+ *   4. dist/<dil>/<sayfa>/index.html olarak yazar
+ *   5. sitemap.xml ve robots.txt üretir
+ *   6. şablon olarak kullanılan dist/index.html'i siler
  *
  * Böylece arama motoru ve JavaScript'siz istemci sayfayı hazır görür.
  */
@@ -28,6 +31,57 @@ function escapeHtml(value) {
     .replace(/"/g, '&quot;')
 }
 
+/** JSON-LD gövdesi </script> ile erken kapanmasın. */
+function escapeJsonLd(value) {
+  return String(value).replace(/</g, '\\u003c')
+}
+
+/** Sayfaya özel <head> etiketleri. */
+function headTags(page) {
+  const lines = [
+    `<meta name="description" content="${escapeHtml(page.description)}" />`,
+    `<link rel="canonical" href="${escapeHtml(page.canonical)}" />`,
+  ]
+
+  for (const alt of page.alternates) {
+    lines.push(
+      `<link rel="alternate" hreflang="${alt.lang}" href="${escapeHtml(alt.url)}" />`,
+    )
+  }
+
+  const xDefault = page.alternates.find((alt) => alt.lang === 'tr')
+  if (xDefault) {
+    lines.push(
+      `<link rel="alternate" hreflang="x-default" href="${escapeHtml(xDefault.url)}" />`,
+    )
+  }
+
+  lines.push(
+    `<meta property="og:type" content="website" />`,
+    `<meta property="og:site_name" content="Club Afrodit" />`,
+    `<meta property="og:locale" content="${page.lang}" />`,
+    `<meta property="og:title" content="${escapeHtml(page.title)}" />`,
+    `<meta property="og:description" content="${escapeHtml(page.description)}" />`,
+    `<meta property="og:url" content="${escapeHtml(page.canonical)}" />`,
+    `<meta property="og:image" content="${escapeHtml(page.ogImage)}" />`,
+    `<meta property="og:image:width" content="${page.ogImageWidth}" />`,
+    `<meta property="og:image:height" content="${page.ogImageHeight}" />`,
+    `<meta property="og:image:alt" content="${escapeHtml(page.title)}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:title" content="${escapeHtml(page.title)}" />`,
+    `<meta name="twitter:description" content="${escapeHtml(page.description)}" />`,
+    `<meta name="twitter:image" content="${escapeHtml(page.ogImage)}" />`,
+  )
+
+  if (page.jsonLd) {
+    lines.push(
+      `<script type="application/ld+json">${escapeJsonLd(page.jsonLd)}</script>`,
+    )
+  }
+
+  return lines.map((line) => `    ${line}`).join('\n')
+}
+
 async function main() {
   if (!existsSync(templatePath)) {
     throw new Error('dist/index.html bulunamadı. Önce `vite build` çalışmalı.')
@@ -37,7 +91,7 @@ async function main() {
   }
 
   const template = await readFile(templatePath, 'utf8')
-  const { render, allPages } = await import(pathToFileURL(ssrEntry).href)
+  const { render, allPages, sitemapXml, robotsTxt } = await import(pathToFileURL(ssrEntry).href)
   const pages = allPages()
 
   let written = 0
@@ -49,18 +103,21 @@ async function main() {
 
       // Şablondaki preload satırı sayfaya göre ayarlanır: ilk ekran görseli
       // olan sayfalarda kalır (href güncellenir), diğerlerinde silinir.
-      const preload = page.preloadImage
-        ? `<link rel="preload" as="image" href="${escapeHtml(page.preloadImage)}" />`
-        : ''
+      // Preload, srcset ile aynı adayı seçsin diye duyarlı yazılıyor; aksi
+      // halde tarayıcı hem tam boy JPEG'i hem de küçük WebP'yi indirir.
+      // type="image/webp" sayesinde WebP desteklemeyen tarayıcı bu satırı
+      // atlar ve boşuna indirme yapmaz.
+      const preload = !page.preloadImage
+        ? ''
+        : page.preloadSrcSet
+          ? `<link rel="preload" as="image" type="image/webp" imagesrcset="${escapeHtml(page.preloadSrcSet)}" imagesizes="${escapeHtml(page.preloadSizes ?? '100vw')}" fetchpriority="high" />`
+          : `<link rel="preload" as="image" href="${escapeHtml(page.preloadImage)}" />`
 
       const html = template
         .replace('<html lang="tr">', `<html lang="${page.lang}">`)
         .replace(/<title>.*?<\/title>/s, `<title>${escapeHtml(page.title)}</title>`)
         .replace(/^\s*<link rel="preload" as="image"[^>]*>\n/m, preload ? `    ${preload}\n` : '')
-        .replace(
-          '</head>',
-          `  <meta name="description" content="${escapeHtml(page.description)}" />\n  </head>`,
-        )
+        .replace('</head>', `${headTags(page)}\n  </head>`)
         .replace('<div id="root"></div>', `<div id="root">${body}</div>`)
         // React `fetchPriority` yazıyor; HTML'de öznitelik adları küçük harf
         // okunur ama araçlarla aranabilsin diye çıktıda küçültülüyor.
@@ -82,12 +139,15 @@ async function main() {
     return
   }
 
+  await writeFile(join(distDir, 'sitemap.xml'), sitemapXml(pages), 'utf8')
+  await writeFile(join(distDir, 'robots.txt'), robotsTxt(), 'utf8')
+
   // Şablon olarak kullanılan kök index.html'e artık gerek yok.
   // Kök adres yönlendirmesi public/_redirects dosyasıyla yapılıyor.
   await rm(templatePath)
   await rm(join(root, 'dist-ssr'), { recursive: true, force: true })
 
-  console.log(`Prerender tamam: ${written} sayfa yazıldı.`)
+  console.log(`Prerender tamam: ${written} sayfa, sitemap.xml ve robots.txt yazıldı.`)
 }
 
 main().catch((error) => {

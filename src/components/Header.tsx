@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import LanguageSwitcher from './LanguageSwitcher'
+import Logo from './Logo'
 import { useI18n, useLangPath } from '../i18n'
 import { SLUGS } from '../routes'
 import { facility } from '../content/facility'
@@ -24,7 +25,7 @@ export default function Header() {
     <header className="site-header">
       <div className="site-header__bar container">
         <NavLink to={path()} className="site-header__brand" end>
-          <img src="/img/logo.png" alt={t.brand.name} width={132} height={44} />
+          <Logo src="/img/logo.png" alt={t.brand.name} height={44} />
         </NavLink>
 
         <button

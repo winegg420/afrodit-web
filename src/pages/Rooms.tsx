@@ -5,6 +5,7 @@ import Icon from '../components/Icon'
 import Reveal from '../components/Reveal'
 import PageHead from '../components/PageHead'
 import { useI18n } from '../i18n'
+import { altsFor } from '../i18n/photoAlts'
 import type { Dict } from '../i18n'
 import { rooms } from '../content/rooms'
 import { facility } from '../content/facility'
@@ -12,7 +13,7 @@ import { facility } from '../content/facility'
 type RoomCopy = { title: string; summary: string; body: string; body2?: string }
 
 export default function Rooms() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
 
   return (
     <>
@@ -94,6 +95,7 @@ export default function Rooms() {
                   images={[room.cover, ...room.gallery]}
                   alt={copy.title}
                   ratio="3/2"
+                  sizes="(max-width: 52rem) 100vw, 45vw"
                 />
               </Reveal>
             </article>
@@ -101,6 +103,7 @@ export default function Rooms() {
             <Gallery
               images={room.gallery}
               altPrefix={copy.title}
+              alts={altsFor(lang, room.gallery)}
               label={`${copy.title} — ${t.rooms.galleryTitle}`}
             />
           </Section>

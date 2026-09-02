@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build && npm run build:ssr && node scripts/prerender.mjs",
+    "dev": "npm run build:images && vite",
+    "build": "npm run build:images && tsc -b && vite build && npm run build:ssr && node scripts/prerender.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
-    "build:spa": "tsc -b && vite build"
+    "build:spa": "tsc -b && vite build",
+    "build:images": "node scripts/images.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
@@ -22,6 +23,7 @@
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.1.0",
     "oxlint": "^1.79.0",
+    "sharp": "^0.35.4",
     "typescript": "~6.0.2",
     "vite": "^8.2.2"
   }

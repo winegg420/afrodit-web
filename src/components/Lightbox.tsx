@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { useI18n } from '../i18n'
+import { resolveImage } from '../lib/image'
 
 type LightboxProps = {
   images: string[]
   index: number
   altPrefix: string
+  /** Her fotoğrafın ne gösterdiğini anlatan alt metinler */
+  alts?: string[]
   onIndexChange: (index: number) => void
   onClose: () => void
 }
@@ -14,6 +17,7 @@ export default function Lightbox({
   images,
   index,
   altPrefix,
+  alts,
   onIndexChange,
   onClose,
 }: LightboxProps) {
@@ -71,6 +75,7 @@ export default function Lightbox({
     [go, onClose],
   )
 
+  const current = resolveImage(images[index])
   const many = images.length > 1
 
   return (
@@ -107,7 +112,15 @@ export default function Lightbox({
 
       <figure className="lightbox__figure">
         {/* Tam ekranda görsel gecikmesiz yüklenir; şeritteki küçük hâlleri lazy. */}
-        <img src={images[index]} alt={`${altPrefix} — ${index + 1}`} decoding="async" />
+        <img
+          src={images[index]}
+          srcSet={current?.jpgSrcSet}
+          sizes="(max-width: 76rem) 100vw, 76rem"
+          width={current?.width}
+          height={current?.height}
+          alt={alts?.[index] ?? `${altPrefix} — ${index + 1}`}
+          decoding="async"
+        />
         <figcaption className="lightbox__caption">
           {altPrefix} · {index + 1}/{images.length}
         </figcaption>

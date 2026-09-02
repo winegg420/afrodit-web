@@ -9,10 +9,20 @@ type PhotoZoomProps = {
   alt: string
   ratio?: string
   className?: string
+  sizes?: string
+  /** Her fotoğrafın ne gösterdiğini anlatan alt metinler */
+  alts?: string[]
 }
 
 /** Tek bir görsel; tıklanınca tam ekran açılır. Kaynak yoksa Photo yer tutucuya düşer. */
-export default function PhotoZoom({ images, alt, ratio = '4/3', className }: PhotoZoomProps) {
+export default function PhotoZoom({
+  images,
+  alt,
+  ratio = '4/3',
+  className,
+  sizes,
+  alts,
+}: PhotoZoomProps) {
   const { t } = useI18n()
   const [open, setOpen] = useState<number | null>(null)
   const cover = images[0] ?? null
@@ -27,7 +37,7 @@ export default function PhotoZoom({ images, alt, ratio = '4/3', className }: Pho
         onClick={() => setOpen(0)}
         aria-label={`${alt}. ${t.actions.openPhoto}`}
       >
-        <Photo src={cover} alt={alt} ratio={ratio} />
+        <Photo src={cover} alt={alts?.[0] ?? alt} ratio={ratio} sizes={sizes} />
       </button>
 
       {open !== null && (
@@ -35,6 +45,7 @@ export default function PhotoZoom({ images, alt, ratio = '4/3', className }: Pho
           images={images}
           index={open}
           altPrefix={alt}
+          alts={alts}
           onIndexChange={setOpen}
           onClose={() => setOpen(null)}
         />

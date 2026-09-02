@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useI18n } from '../i18n'
 import { facility } from '../content/facility'
+import { resolveImage } from '../lib/image'
 
 /**
  * Kademeli giriş yalnızca oturumun ilk açılışında oynasın diye modül
  * düzeyinde tutuluyor; sayfalar arasında gezinince tekrarlanmaz.
  */
 let introPlayed = false
+
+/** Açılış görseli. seo.ts bu dosyayı <head> içinde preload ediyor. */
+const HERO_SRC = '/img/slayt-1.jpg'
 
 type HeroProps = {
   /** Aşağı okunun kaydıracağı bölümün id'si */
@@ -16,6 +20,7 @@ type HeroProps = {
 export default function Hero({ nextSectionId }: HeroProps) {
   const { t } = useI18n()
   const [intro, setIntro] = useState(() => !introPlayed)
+  const hero = resolveImage(HERO_SRC)
 
   useEffect(() => {
     introPlayed = true
@@ -38,14 +43,21 @@ export default function Hero({ nextSectionId }: HeroProps) {
   return (
     <section className={`hero${intro ? ' hero--intro' : ''}`}>
       <div className="hero__frame">
-        <img
-          className="hero__image"
-          src="/img/slayt-1.jpg"
-          alt={t.brand.name}
-          fetchPriority="high"
-          loading="eager"
-          decoding="async"
-        />
+        <picture className="photo-picture">
+          {hero && <source type="image/webp" srcSet={hero.webpSrcSet} sizes="100vw" />}
+          <img
+            className="hero__image"
+            src={HERO_SRC}
+            srcSet={hero?.jpgSrcSet}
+            sizes="100vw"
+            width={hero?.width}
+            height={hero?.height}
+            alt={t.brand.name}
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
       </div>
       <div className="hero__scrim" />
 
