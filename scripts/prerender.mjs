@@ -100,7 +100,7 @@ async function main() {
   }
 
   const template = await readFile(templatePath, 'utf8')
-  const { render, allPages, notFoundPage, sitemapXml, robotsTxt } = await import(
+  const { render, allPages, notFoundPage, sitemapXml, robotsTxt, redirectsTxt } = await import(
     pathToFileURL(ssrEntry).href
   )
   const pages = allPages()
@@ -168,13 +168,14 @@ async function main() {
 
   await writeFile(join(distDir, 'sitemap.xml'), sitemapXml(pages), 'utf8')
   await writeFile(join(distDir, 'robots.txt'), robotsTxt(), 'utf8')
+  await writeFile(join(distDir, '_redirects'), redirectsTxt(), 'utf8')
 
   // Şablon olarak kullanılan kök index.html'e artık gerek yok.
   // Kök adres yönlendirmesi public/_redirects dosyasıyla yapılıyor.
   await rm(templatePath)
   await rm(join(root, 'dist-ssr'), { recursive: true, force: true })
 
-  console.log(`Prerender tamam: ${written} sayfa + 404.html, sitemap.xml ve robots.txt yazıldı.`)
+  console.log(`Prerender tamam: ${written} sayfa + 404.html, sitemap.xml, robots.txt ve _redirects yazıldı.`)
 }
 
 main().catch((error) => {

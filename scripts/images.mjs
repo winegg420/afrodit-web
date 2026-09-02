@@ -6,17 +6,35 @@
  *   - 640 / 1024 / 1920 piksel genişliğinde sürümler üretir (asla büyütmez)
  *   - src/generated/images.ts içine ölçü ve sürüm listesini yazar
  *
- * Orijinal dosyalara dokunulmaz. Çıktı dosyası kaynaktan yeniyse atlanır,
- * böylece tekrarlanan derlemeler hızlı olur.
+ * Orijinal dosyalara dokunulmaz.
+ *
+ * ATLAMA KURALI: kaynak dosyanın içerik özeti (sha256) önbellekte tutuluyor.
+ * Özet değişmediyse ve beklenen çıktıların hepsi yerindeyse yeniden
+ * üretilmiyor. Dosya tarihine bakılmıyor — kaynak değişip tarihi korunduğunda
+ * (kopyalama, geri yükleme, git checkout) bayat çıktı kalıyordu.
+ *
+ * DOĞRULAMA: üretim bitince her sürümün gerçek genişliği adındaki sayıyla
+ * karşılaştırılıyor. Uymayan varsa derleme hatayla duruyor; bayat veya
+ * yanlış boyutlu dosya sessizce geçemez.
  */
-import { readdirSync, statSync, existsSync, mkdirSync, writeFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
+import {
+  readdirSync,
+  statSync,
+  existsSync,
+  mkdirSync,
+  writeFileSync,
+  readFileSync,
+} from 'node:fs'
 import { dirname, extname, join, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const imgDir = join(root, 'public', 'img')
-const outFile = join(root, 'src', 'generated', 'images.ts')
+const outDir = join(root, 'src', 'generated')
+const outFile = join(outDir, 'images.ts')
+const cacheFile = join(outDir, 'images.cache.json')
 
 /** Üretilecek genişlikler. Kaynaktan büyük olanlar atlanır. */
 const WIDTHS = [640, 1024, 1920]
@@ -45,10 +63,18 @@ function webPath(absolute) {
   return '/' + absolute.slice(join(root, 'public').length + 1).split(sep).join('/')
 }
 
-/** Kaynak dosya çıktıdan yeniyse yeniden üretilmeli. */
-function stale(source, target) {
-  if (!existsSync(target)) return true
-  return statSync(source).mtimeMs > statSync(target).mtimeMs
+function ozet(dosya) {
+  return createHash('sha256').update(readFileSync(dosya)).digest('hex')
+}
+
+function onbellegiOku() {
+  if (!existsSync(cacheFile)) return {}
+  try {
+    return JSON.parse(readFileSync(cacheFile, 'utf8'))
+  } catch {
+    // Bozuk önbellek: her şeyi yeniden üret.
+    return {}
+  }
 }
 
 async function main() {
@@ -60,59 +86,97 @@ async function main() {
     (p) => ['.jpg', '.jpeg', '.png'].includes(extname(p).toLowerCase()) && !URETILEN.test(p),
   )
 
+  const onbellek = onbellegiOku()
+  const yeniOnbellek = {}
+
   /** @type {Record<string, {w:number,h:number,webp:string|null,variants:Array<{w:number,jpg:string,webp:string}>}>} */
   const manifest = {}
+  /** Doğrulanacak sürümler: [dosya yolu, beklenen genişlik] */
+  const dogrulanacak = []
   let uretilen = 0
 
   for (const file of files) {
-    const image = sharp(file, { failOn: 'none' })
-    const meta = await image.metadata()
+    const meta = await sharp(file, { failOn: 'none' }).metadata()
     if (!meta.width || !meta.height) continue
 
     const ext = extname(file)
     const base = file.slice(0, -ext.length)
-    const entry = { w: meta.width, h: meta.height, webp: null, variants: [] }
+    const anahtar = webPath(file)
+    const kaynakOzeti = ozet(file)
 
-    // Tam boy WebP
-    const webpFull = `${base}.webp`
-    if (stale(file, webpFull)) {
-      await sharp(file).webp({ quality: 78, effort: 5 }).toFile(webpFull)
-      uretilen += 1
-    }
-    entry.webp = webPath(webpFull)
-
-    // Ölçekli sürümler — yalnızca yeterince büyük görseller için
+    // Bu kaynaktan çıkması gereken dosyalar
+    const beklenen = [{ yol: `${base}.webp`, genislik: meta.width }]
     if (meta.width >= MIN_FOR_VARIANTS) {
       for (const w of WIDTHS) {
         if (w >= meta.width) continue
-
-        const jpgOut = `${base}-${w}.jpg`
-        const webpOut = `${base}-${w}.webp`
-
-        if (stale(file, jpgOut)) {
-          await sharp(file).resize({ width: w }).jpeg({ quality: 80, mozjpeg: true }).toFile(jpgOut)
-          uretilen += 1
-        }
-        if (stale(file, webpOut)) {
-          await sharp(file).resize({ width: w }).webp({ quality: 74, effort: 5 }).toFile(webpOut)
-          uretilen += 1
-        }
-
-        entry.variants.push({
-          w,
-          jpg: webPath(jpgOut),
-          webp: webPath(webpOut),
-        })
+        beklenen.push({ yol: `${base}-${w}.jpg`, genislik: w })
+        beklenen.push({ yol: `${base}-${w}.webp`, genislik: w })
       }
     }
 
-    // En son tam boy da bir seçenek olarak listeye girsin
-    entry.variants.push({ w: meta.width, jpg: webPath(file), webp: entry.webp })
+    const ozetAyni = onbellek[anahtar] === kaynakOzeti
+    const hepsiYerinde = beklenen.every((b) => existsSync(b.yol))
+    const uretmeliyiz = !ozetAyni || !hepsiYerinde
 
-    manifest[webPath(file)] = entry
+    if (uretmeliyiz) {
+      await sharp(file).webp({ quality: 78, effort: 5 }).toFile(`${base}.webp`)
+      uretilen += 1
+
+      if (meta.width >= MIN_FOR_VARIANTS) {
+        for (const w of WIDTHS) {
+          if (w >= meta.width) continue
+          await sharp(file)
+            .resize({ width: w })
+            .jpeg({ quality: 80, mozjpeg: true })
+            .toFile(`${base}-${w}.jpg`)
+          await sharp(file)
+            .resize({ width: w })
+            .webp({ quality: 74, effort: 5 })
+            .toFile(`${base}-${w}.webp`)
+          uretilen += 2
+        }
+      }
+    }
+
+    dogrulanacak.push(...beklenen)
+    yeniOnbellek[anahtar] = kaynakOzeti
+
+    const entry = { w: meta.width, h: meta.height, webp: webPath(`${base}.webp`), variants: [] }
+    if (meta.width >= MIN_FOR_VARIANTS) {
+      for (const w of WIDTHS) {
+        if (w >= meta.width) continue
+        entry.variants.push({
+          w,
+          jpg: webPath(`${base}-${w}.jpg`),
+          webp: webPath(`${base}-${w}.webp`),
+        })
+      }
+    }
+    entry.variants.push({ w: meta.width, jpg: anahtar, webp: entry.webp })
+    manifest[anahtar] = entry
   }
 
-  mkdirSync(dirname(outFile), { recursive: true })
+  // --- Doğrulama: her sürümün gerçek genişliği adındaki sayıya eşit mi ---
+  const uyusmazliklar = []
+  for (const { yol, genislik } of dogrulanacak) {
+    if (!existsSync(yol)) {
+      uyusmazliklar.push(`${webPath(yol)} — dosya yok`)
+      continue
+    }
+    const { width } = await sharp(yol).metadata()
+    if (width !== genislik) {
+      uyusmazliklar.push(`${webPath(yol)} — adında ${genislik}, gerçekte ${width}`)
+    }
+  }
+
+  if (uyusmazliklar.length > 0) {
+    console.error(`\nGörsel doğrulaması düştü — ${uyusmazliklar.length} uyuşmazlık:\n`)
+    for (const satir of uyusmazliklar) console.error(`  - ${satir}`)
+    console.error('\nÖnbelleği silip yeniden deneyin: src/generated/images.cache.json\n')
+    process.exit(1)
+  }
+
+  mkdirSync(outDir, { recursive: true })
 
   const body = `/* OTOMATİK ÜRETİLDİ — elle düzenleme. Kaynak: scripts/images.mjs */
 
@@ -123,8 +187,11 @@ export const images: Record<string, ImageInfo> = ${JSON.stringify(manifest, null
 `
 
   writeFileSync(outFile, body, 'utf8')
+  writeFileSync(cacheFile, JSON.stringify(yeniOnbellek, null, 2), 'utf8')
+
   console.log(
-    `Görseller hazır: ${files.length} kaynak, ${uretilen} yeni dosya üretildi, manifest ${Object.keys(manifest).length} kayıt.`,
+    `Görseller hazır: ${files.length} kaynak, ${uretilen} dosya üretildi, ` +
+      `${dogrulanacak.length} sürüm doğrulandı (0 uyuşmazlık), manifest ${Object.keys(manifest).length} kayıt.`,
   )
 }
 

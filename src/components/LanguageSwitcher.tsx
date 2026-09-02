@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LANGS, dictionaries, pathWithLang, useI18n } from '../i18n'
+import { LANGS, dictionaries, useI18n } from '../i18n'
+import { pathWithLang } from '../lib/paths'
 
 /** Sayfada kalarak dili değiştirir. */
 export default function LanguageSwitcher() {
@@ -12,7 +13,7 @@ export default function LanguageSwitcher() {
         {LANGS.map((code) => (
           <li key={code}>
             <Link
-              to={`${pathWithLang(pathname, code)}${search}${hash}`}
+              to={`${pathWithLang(pathname, hash, code)}${search}`}
               className={`lang__item${code === lang ? ' lang__item--active' : ''}`}
               lang={code}
               hrefLang={code}

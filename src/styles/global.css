@@ -79,6 +79,9 @@ a:hover { text-decoration-color: var(--color-accent); }
 
 .skip-link {
   position: absolute;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
   left: var(--space-4);
   top: -4rem;
   z-index: 100;

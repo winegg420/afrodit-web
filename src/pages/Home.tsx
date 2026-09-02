@@ -4,9 +4,9 @@ import Photo from '../components/Photo'
 import Hero from '../components/Hero'
 import Reveal from '../components/Reveal'
 import RoomCard from '../components/RoomCard'
-import { useI18n, useLangPath } from '../i18n'
+import { useI18n } from '../i18n'
+import { useSectionPath } from '../hooks/useSectionPath'
 import type { Dict } from '../i18n'
-import { SLUGS } from '../routes'
 import { rooms } from '../content/rooms'
 import { amenityGroups } from '../content/amenities'
 import { reviews } from '../content/reviews'
@@ -17,8 +17,8 @@ import { facility } from '../content/facility'
 const HOME_AMENITIES = ['beach', 'pools', 'kitchen'] as const
 
 export default function Home() {
-  const { t } = useI18n()
-  const path = useLangPath()
+  const { t, lang } = useI18n()
+  const path = useSectionPath()
 
   const blocks = HOME_AMENITIES.map((id) =>
     amenityGroups.find((group) => group.id === id),
@@ -35,7 +35,7 @@ export default function Home() {
               <h2 className="section__title">{t.home.introTitle}</h2>
             </Reveal>
             <p>{t.home.introBody}</p>
-            <Link className="link-more" to={path(SLUGS.amenities)}>
+            <Link className="link-more" to={path('amenities')}>
               {t.actions.allAmenities}
             </Link>
           </div>
@@ -57,11 +57,11 @@ export default function Home() {
         <ul className="cards cards--4">
           {rooms.map((room, i) => (
             <Reveal as="li" key={room.id} index={i}>
-              <RoomCard room={room} to={`${path(SLUGS.rooms)}#${room.slug}`} />
+              <RoomCard room={room} to={`${path('rooms')}#${room.slug[lang]}`} />
             </Reveal>
           ))}
         </ul>
-        <Link className="link-more" to={path(SLUGS.rooms)}>
+        <Link className="link-more" to={path('rooms')}>
           {t.actions.allRooms}
         </Link>
       </Section>
@@ -90,7 +90,7 @@ export default function Home() {
             </div>
           )
         })}
-        <Link className="link-more" to={path(SLUGS.amenities)}>
+        <Link className="link-more" to={path('amenities')}>
           {t.actions.allAmenities}
         </Link>
       </Section>
@@ -103,7 +103,7 @@ export default function Home() {
             </Reveal>
             <p>{t.home.tennisLead}</p>
             <p>{t.tennis.discountBody}</p>
-            <Link className="link-more" to={path(SLUGS.tennis)}>
+            <Link className="link-more" to={path('tennis')}>
               {t.nav.tennis}
             </Link>
           </div>
@@ -120,7 +120,7 @@ export default function Home() {
               <h2 className="section__title">{t.home.nursingTitle}</h2>
             </Reveal>
             <p>{t.home.nursingLead}</p>
-            <Link className="link-more" to={path(SLUGS.nursing)}>
+            <Link className="link-more" to={path('nursing')}>
               {t.nav.nursing}
             </Link>
           </div>
@@ -153,7 +153,7 @@ export default function Home() {
             return (
               <Reveal as="li" key={item.id} index={i}>
                 <article className="card">
-                  <Link className="card__link" to={`${path(SLUGS.news)}#${item.slug}`}>
+                  <Link className="card__link" to={`${path('news')}#${item.slug[lang]}`}>
                     <Photo src={item.cover} alt={copy.title} ratio="3/2" />
                     <span className="card__body">
                       <span className="card__title">{copy.title}</span>
@@ -165,7 +165,7 @@ export default function Home() {
             )
           })}
         </ul>
-        <Link className="link-more" to={path(SLUGS.news)}>
+        <Link className="link-more" to={path('news')}>
           {t.actions.allNews}
         </Link>
       </Section>
@@ -193,7 +193,7 @@ export default function Home() {
             </a>
           </li>
         </ul>
-        <Link className="link-more" to={path(SLUGS.contact)}>
+        <Link className="link-more" to={path('contact')}>
           {t.nav.contact}
         </Link>
       </Section>

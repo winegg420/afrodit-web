@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
-import { useI18n, useLangPath } from '../i18n'
-import { SLUGS } from '../routes'
+import { useI18n } from '../i18n'
+import { useSectionPath } from '../hooks/useSectionPath'
 import { facility } from '../content/facility'
 
 export default function Footer() {
   const { t } = useI18n()
-  const path = useLangPath()
+  const path = useSectionPath()
   const { address } = facility
 
   return (
@@ -44,12 +44,12 @@ export default function Footer() {
           <h2 className="site-footer__title">{t.footer.linksTitle}</h2>
           <ul className="site-footer__links">
             <li><Link to={path()}>{t.nav.home}</Link></li>
-            <li><Link to={path(SLUGS.rooms)}>{t.nav.rooms}</Link></li>
-            <li><Link to={path(SLUGS.amenities)}>{t.nav.amenities}</Link></li>
-            <li><Link to={path(SLUGS.tennis)}>{t.nav.tennis}</Link></li>
-            <li><Link to={path(SLUGS.nursing)}>{t.nav.nursing}</Link></li>
-            <li><Link to={path(SLUGS.news)}>{t.nav.news}</Link></li>
-            <li><Link to={path(SLUGS.contact)}>{t.nav.contact}</Link></li>
+            <li><Link to={path('rooms')}>{t.nav.rooms}</Link></li>
+            <li><Link to={path('amenities')}>{t.nav.amenities}</Link></li>
+            <li><Link to={path('tennis')}>{t.nav.tennis}</Link></li>
+            <li><Link to={path('nursing')}>{t.nav.nursing}</Link></li>
+            <li><Link to={path('news')}>{t.nav.news}</Link></li>
+            <li><Link to={path('contact')}>{t.nav.contact}</Link></li>
           </ul>
         </div>
 

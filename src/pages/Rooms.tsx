@@ -27,7 +27,7 @@ export default function Rooms() {
         const unit = room.id === 'apart' ? t.rooms.unitApart : t.rooms.unit
 
         return (
-          <Section key={room.id} id={room.slug} tone={index % 2 === 1 ? 'alt' : 'default'}>
+          <Section key={room.id} id={room.slug[lang]} tone={index % 2 === 1 ? 'alt' : 'default'}>
             <article className="room">
               <div className="room__intro">
                 <h2 className="section__title">{copy.title}</h2>

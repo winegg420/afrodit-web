@@ -363,29 +363,29 @@
 /* ---------- Dokunma hedefleri ----------
    Parmakla basılan her öğe en az 44×44 piksel olmalı. */
 .site-header__brand {
-  min-height: 44px;
+  min-height: 48px;
   padding-block: var(--space-1);
 }
 
 .site-header__toggle {
-  min-height: 44px;
+  min-height: 48px;
   padding-inline: var(--space-4);
 }
 
 .link-more {
   padding-block: var(--space-3);
-  min-height: 44px;
+  min-height: 48px;
 }
 
 .lang__item {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 48px;
+  min-height: 48px;
 }
 
-.site-nav__link { min-height: 44px; display: flex; align-items: center; }
+.site-nav__link { min-height: 48px; display: flex; align-items: center; }
 
 .site-footer__links a,
 .site-footer__address a,
@@ -408,9 +408,9 @@
 .link-more,
 .site-footer__links a,
 .site-footer__address a,
-.contact-address a { min-width: 44px; }
+.contact-address a { min-width: 48px; }
 
-.site-footer__map { padding-block: var(--space-3); min-height: 44px; }
+.site-footer__map { padding-block: var(--space-3); min-height: 48px; }
 
 /* İletişim sayfası ve liste bağlantıları — hepsi 44 pikselden büyük */
 .contact-grid a,
@@ -418,8 +418,8 @@
 .specs a {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  min-width: 44px;
+  min-height: 48px;
+  min-width: 48px;
   padding-block: var(--space-2);
 }
 
@@ -439,7 +439,7 @@
 }
 
 /* Dokunmatik tabletlerde de menü bağlantıları 44 pikselden dar olmasın */
-.site-nav__link { min-width: 44px; }
+.site-nav__link { min-width: 48px; }
 
 @media (min-width: 75rem) {
   .site-nav__link { justify-content: center; }

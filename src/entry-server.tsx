@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import { useRoutes } from 'react-router-dom'
 import { routes } from './routes'
-import { allPages, notFoundPage, sitemapXml, robotsTxt } from './seo'
+import { allPages, notFoundPage, redirectsTxt, sitemapXml, robotsTxt } from './seo'
 
 function Router() {
   return useRoutes(routes)
@@ -20,4 +20,4 @@ export function render(url: string): string {
   )
 }
 
-export { allPages, notFoundPage, sitemapXml, robotsTxt }
+export { allPages, notFoundPage, redirectsTxt, sitemapXml, robotsTxt }

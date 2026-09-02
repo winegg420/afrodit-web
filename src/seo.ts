@@ -1,6 +1,7 @@
 import { dictionaries, DEFAULT_LANG, LANGS } from './i18n'
 import type { Lang } from './i18n'
-import { SLUGS } from './routes'
+import { SECTION_KEYS, eskiYeniSluglar, sectionPath } from './lib/paths'
+import type { SectionKey } from './lib/paths'
 import { absoluteUrl } from './config'
 import { facility } from './content/facility'
 import { amenityGroups } from './content/amenities'
@@ -34,12 +35,12 @@ export type PageMeta = {
 /** Sayfa başına paylaşım görseli. Sayfanın kendi ana fotoğrafı, yoksa açılış görseli. */
 const OG_IMAGES: Record<string, { src: string; w: number; h: number }> = {
   home: { src: '/img/slayt-1.jpg', w: 1920, h: 1080 },
-  [SLUGS.rooms]: { src: '/img/slayt-1.jpg', w: 1920, h: 1080 },
-  [SLUGS.amenities]: { src: '/img/yorum.jpg', w: 1920, h: 1080 },
-  [SLUGS.tennis]: { src: '/img/slayt-1.jpg', w: 1920, h: 1080 },
-  [SLUGS.nursing]: { src: '/img/yasli-bakim/1.jpg', w: 1200, h: 1082 },
-  [SLUGS.news]: { src: '/img/haber1a.jpg', w: 1493, h: 696 },
-  [SLUGS.contact]: { src: '/img/video.jpg', w: 1920, h: 1080 },
+  rooms: { src: '/img/slayt-1.jpg', w: 1920, h: 1080 },
+  amenities: { src: '/img/yorum.jpg', w: 1920, h: 1080 },
+  tennis: { src: '/img/slayt-1.jpg', w: 1920, h: 1080 },
+  nursing: { src: '/img/yasli-bakim/1.jpg', w: 1200, h: 1082 },
+  news: { src: '/img/haber1a.jpg', w: 1493, h: 696 },
+  contact: { src: '/img/video.jpg', w: 1920, h: 1080 },
 }
 
 /**
@@ -108,40 +109,51 @@ function lodgingBusiness(lang: Lang): string {
 export function allPages(): PageMeta[] {
   const pages: PageMeta[] = []
 
-  const sectionsFor = (lang: Lang) => {
+  // Bölüm anahtarı -> o dildeki başlık ve açıklama. Adres parçası
+  // SLUGS'tan geliyor, yani her dil kendi adresini kullanıyor.
+  const bolumler = (lang: Lang) => {
     const t = dictionaries[lang]
+    const metin: Record<SectionKey, { title: string; description: string }> = {
+      rooms: { title: t.rooms.pageTitle, description: t.rooms.pageLead },
+      amenities: { title: t.amenities.pageTitle, description: t.amenities.pageLead },
+      tennis: { title: t.tennis.pageTitle, description: t.tennis.pageLead },
+      nursing: { title: t.nursing.pageTitle, description: t.nursing.pageLead },
+      news: { title: t.news.pageTitle, description: t.news.pageLead },
+      contact: { title: t.contact.pageTitle, description: t.contact.pageLead },
+    }
+
     return [
-      { slug: '', title: `${t.brand.name} — ${t.brand.tagline}`, description: t.home.heroLead },
-      { slug: SLUGS.rooms, title: t.rooms.pageTitle, description: t.rooms.pageLead },
-      { slug: SLUGS.amenities, title: t.amenities.pageTitle, description: t.amenities.pageLead },
-      { slug: SLUGS.tennis, title: t.tennis.pageTitle, description: t.tennis.pageLead },
-      { slug: SLUGS.nursing, title: t.nursing.pageTitle, description: t.nursing.pageLead },
-      { slug: SLUGS.news, title: t.news.pageTitle, description: t.news.pageLead },
-      { slug: SLUGS.contact, title: t.contact.pageTitle, description: t.contact.pageLead },
+      {
+        key: null,
+        title: `${t.brand.name} — ${t.brand.tagline}`,
+        description: t.home.heroLead,
+      },
+      ...SECTION_KEYS.map((key) => ({ key, ...metin[key] })),
     ]
   }
 
   for (const lang of LANGS) {
     const t = dictionaries[lang]
 
-    for (const section of sectionsFor(lang)) {
-      const path = section.slug ? `/${lang}/${section.slug}` : `/${lang}`
-      const og = OG_IMAGES[section.slug || 'home']
+    for (const section of bolumler(lang)) {
+      const path = sectionPath(lang, section.key ?? undefined)
+      const og = OG_IMAGES[section.key ?? 'home']
 
       pages.push({
         path,
         lang,
-        title: section.slug ? `${section.title} — ${t.brand.name}` : section.title,
+        title: section.key ? `${section.title} — ${t.brand.name}` : section.title,
         description: section.description,
         canonical: absoluteUrl(path),
+        // Her dilin karşılığı kendi adres parçasıyla
         alternates: LANGS.map((code) => ({
           lang: code,
-          url: absoluteUrl(section.slug ? `/${code}/${section.slug}` : `/${code}`),
+          url: absoluteUrl(sectionPath(code, section.key ?? undefined)),
         })),
         ogImage: absoluteUrl(og.src),
         ogImageWidth: og.w,
         ogImageHeight: og.h,
-        ...(section.slug
+        ...(section.key
           ? {}
           : {
               // Anasayfanın en üstündeki görsel; geç gelmesin diye önden yüklenir.
@@ -219,4 +231,39 @@ Allow: /
 
 Sitemap: ${absoluteUrl('/sitemap.xml')}
 `
+}
+
+/**
+ * Cloudflare Pages yönlendirmeleri.
+ *
+ * Adres parçaları dile çevrildiği için eski Türkçe adresler (/en/odalar,
+ * /de/odalar gibi) kırılmasın diye kalıcı (301) yönlendirme yazılıyor.
+ * `public/_redirects` yerine burada üretiliyor ki dil tablosu tek yerde
+ * kalsın ve slug değişince yönlendirmeler kendiliğinden güncellensin.
+ */
+export function redirectsTxt(): string {
+  const satirlar: string[] = [
+    '# OTOMATİK ÜRETİLDİ — kaynak: src/seo.ts (redirectsTxt)',
+    '',
+    '# Kök adres varsayılan dile gitsin (dist/index.html üretilmiyor).',
+    '/  /tr  302',
+    '',
+    '# Adres parçaları dile çevrildi; eski Türkçe adresler kalıcı olarak',
+    '# yeni adreslere yönleniyor.',
+  ]
+
+  for (const lang of LANGS) {
+    for (const [eski, yeni] of eskiYeniSluglar(lang)) {
+      satirlar.push(`/${lang}/${eski}  /${lang}/${yeni}  301`)
+    }
+  }
+
+  satirlar.push(
+    '',
+    '# Bilinmeyen adresler için dist/404.html üretiliyor; Cloudflare Pages',
+    '# eşleşmeyen her yolda onu 404 durumuyla sunar, ek kurala gerek yok.',
+    '',
+  )
+
+  return satirlar.join('\n')
 }

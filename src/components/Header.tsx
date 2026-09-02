@@ -2,23 +2,23 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import LanguageSwitcher from './LanguageSwitcher'
 import Logo from './Logo'
-import { useI18n, useLangPath } from '../i18n'
-import { SLUGS } from '../routes'
+import { useI18n } from '../i18n'
+import { useSectionPath } from '../hooks/useSectionPath'
 import { facility } from '../content/facility'
 
 export default function Header() {
   const { t } = useI18n()
-  const path = useLangPath()
+  const path = useSectionPath()
   const [open, setOpen] = useState(false)
 
   const links = [
     { to: path(), label: t.nav.home, end: true },
-    { to: path(SLUGS.rooms), label: t.nav.rooms },
-    { to: path(SLUGS.amenities), label: t.nav.amenities },
-    { to: path(SLUGS.tennis), label: t.nav.tennis },
-    { to: path(SLUGS.nursing), label: t.nav.nursing },
-    { to: path(SLUGS.news), label: t.nav.news },
-    { to: path(SLUGS.contact), label: t.nav.contact },
+    { to: path('rooms'), label: t.nav.rooms },
+    { to: path('amenities'), label: t.nav.amenities },
+    { to: path('tennis'), label: t.nav.tennis },
+    { to: path('nursing'), label: t.nav.nursing },
+    { to: path('news'), label: t.nav.news },
+    { to: path('contact'), label: t.nav.contact },
   ]
 
   return (

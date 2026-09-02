@@ -52,26 +52,12 @@ export function rememberLang(lang: Lang): void {
   }
 }
 
-/** Aynı sayfada kalarak dili değiştiren yol üretir: /tr/odalar -> /en/odalar */
-export function pathWithLang(pathname: string, lang: Lang): string {
-  const parts = pathname.split('/').filter(Boolean)
-  if (isLang(parts[0])) parts[0] = lang
-  else parts.unshift(lang)
-  return '/' + parts.join('/')
-}
-
 type I18nValue = { lang: Lang; t: Dict }
 
 export const I18nContext = createContext<I18nValue>({ lang: DEFAULT_LANG, t: tr })
 
 export function useI18n(): I18nValue {
   return useContext(I18nContext)
-}
-
-/** Dile göre önek eklenmiş yol üretir: path('odalar') -> /tr/odalar */
-export function useLangPath(): (path?: string) => string {
-  const { lang } = useI18n()
-  return (path = '') => `/${lang}${path ? `/${path.replace(/^\//, '')}` : ''}`
 }
 
 export type { Dict }

@@ -652,3 +652,65 @@ dosyalar ve manifest silinip sıfırdan üretildi.
 Doğrulandı: ikinci kez çalıştırıldığında "0 yeni dosya", sürümün sürümü
 dosya sayısı 0, manifest tam 73 kayıt (sahte kayıt yok).
 `npm run check` → TAMAM.
+
+## 2026-09-02 — Üç düzeltme: görsel doğrulama, çevrilmiş adresler, dokunma hedefleri
+
+### 1. Görsel üretimi — hash + genişlik doğrulaması
+Eski atlama koşulu dosya tarihine bakıyordu (`mtime`). Kaynak değişip
+tarihi korunduğunda (kopyalama, geri yükleme, git checkout) bayat çıktı
+sessizce kalıyordu.
+
+Yeni davranış:
+- Kaynak dosyanın **sha256 özeti** `src/generated/images.cache.json`
+  içinde tutuluyor. Özet değişmişse veya beklenen çıktılardan biri
+  eksikse o kaynağın tüm sürümleri yeniden üretiliyor.
+- Üretim bitince **her sürümün gerçek genişliği adındaki sayıyla
+  karşılaştırılıyor**. Uyuşmazlık varsa derleme hata koduyla duruyor.
+
+Sahte bir bozuk dosya (`haber1a-1024.webp` 768 px yapıldı) ile denendi:
+betik yakaladı, "adında 1024, gerçekte 768" diyerek 1 koduyla çıktı.
+
+NOT: kullanıcının bildirdiği bozuk dosyaları ölçtüğümde 0 uyuşmazlık
+çıktı — bir önceki turda tüm üretilmiş dosyalar silinip sıfırdan
+üretildiği için. Tarif edilen zayıflık yine de gerçekti ve kapatıldı.
+
+### 2. Adresler çevrildi
+Menüde "Zimmer" yazıp adreste `/de/odalar` göstermek tutarsızdı.
+
+- `src/lib/paths.ts` yeni: `SLUGS` her dil için ayrı
+  (tr odalar/olanaklar/tenis/saglikli-yasam/haberler/iletisim,
+  en rooms/facilities/tennis/assisted-living/news/contact,
+  de zimmer/anlage/tennis/gesundes-leben/aktuelles/kontakt).
+- Router artık dil başına ayrı adres ağacı kuruyor; `Layout` dili
+  `useParams` yerine prop olarak alıyor, `LangGuard` gereksizleşti.
+- Bölüm çapaları da çevrildi: oda ve haber `slug` alanları artık
+  `Record<Lang, string>`. `#standart-oda` → `#standard-room` →
+  `#standardzimmer`.
+- Dil değiştirici hem yolu hem çapayı çeviriyor
+  (`/de/zimmer#grand-suite` → `/en/rooms#grand-suite`).
+- `dist/_redirects` artık `src/seo.ts` içinde üretiliyor: eski Türkçe
+  adreslerden yenilerine 12 kalıcı (301) yönlendirme. Slug değişirse
+  yönlendirmeler kendiliğinden güncellenir.
+- sitemap, hreflang ve canonical yeni adresleri gösteriyor.
+
+### 3. Dokunma hedefleri
+360 px'te 44 px altında öğe **bulunamadı** — kapalı/açık menü, galeri
+açık, TR/EN/DE, 404 dahil 10 sayfa tarandı. En küçük öğeler tam 44 px'te
+duruyordu; alt piksel yuvarlamasıyla 43,98 ölçülebilir. Bu yüzden taban
+44'ten **48 px**'e çıkarıldı (görsel boyut değişmedi, yalnız dolgu).
+Şimdi en küçük öğe 48×48.
+
+### Doğrulama
+- `npm run check` → TAMAM (altı ölçüt)
+- 141 sürümün gerçek genişliği adıyla karşılaştırıldı → **0 uyuşmazlık**
+- 21 yeni adres → hepsi 200
+- `dist/de/zimmer/index.html` hreflang: tr /tr/odalar, en /en/rooms,
+  de /de/zimmer, x-default /tr/odalar
+- 360/390/768 px × 7 sayfa → 0 taşma, **0 küçük dokunma hedefi**
+- JS kapalı (/de/zimmer): 3.394 karakter metin, 4 reveal öğesinin hepsi
+  görünür, menü ve çapalar Almanca
+
+### Ölçemediğim
+`_redirects` dosyasının gerçekten yönlendirme yapması ancak Cloudflare
+Pages'e dağıtımdan sonra doğrulanabilir; `vite preview` bu dosyayı
+işlemiyor. Dosyanın içeriği ve 12 kuralın doğruluğu kontrol edildi.

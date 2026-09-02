@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
-import { Outlet, useLocation, useParams } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
-import { DEFAULT_LANG, I18nContext, dictionaries, isLang, rememberLang } from '../i18n'
+import { I18nContext, dictionaries, rememberLang } from '../i18n'
+import type { Lang } from '../i18n'
 import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
 
-export default function Layout() {
-  const { lang: raw } = useParams()
-  const lang = isLang(raw) ? raw : DEFAULT_LANG
+export default function Layout({ lang }: { lang: Lang }) {
   const t = dictionaries[lang]
   const { pathname, hash } = useLocation()
 

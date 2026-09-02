@@ -32,7 +32,7 @@ aynı sürümü şart koşuyor.
 | Komut | Ne yapar |
 |---|---|
 | `npm run dev` | Geliştirme sunucusu. Önce görselleri hazırlar, sonra Vite'ı açar. Dosyayı kaydettiğinde tarayıcı kendiliğinden yenilenir. |
-| `npm run build` | Yayına hazır çıktıyı `dist/` klasörüne üretir. Görseller → TypeScript denetimi → Vite derlemesi → sunucu derlemesi → prerender. Sonunda 21 HTML sayfası, `sitemap.xml` ve `robots.txt` oluşur. |
+| `npm run build` | Yayına hazır çıktıyı `dist/` klasörüne üretir. Görseller → TypeScript denetimi → Vite derlemesi → sunucu derlemesi → prerender. Sonunda 21 HTML sayfası, `404.html`, `sitemap.xml`, `robots.txt` ve `_redirects` oluşur. |
 | `npm run build:images` | Yalnız görsel adımı. Her fotoğrafın WebP karşılığını ve küçük boylarını üretir, ölçülerini `src/generated/images.ts` dosyasına yazar. Yeni fotoğraf eklediğinde bunu çalıştır. |
 | `npm run preview` | `dist/` klasörünü yerel sunucuda açar — yayındaki hâlini görmek için. `npm run build`'den sonra çalıştır. |
 | `npm run lint` | Kod denetimi (oxlint). |
@@ -76,12 +76,11 @@ metinler, üç dilde.
 ### Renkler
 **`src/styles/tokens.css`** — sitedeki bütün renkler burada, CSS değişkeni
 olarak. Bileşenlerin içinde sabit renk kodu yok.
-Huzurevi bölümünün kendi sakin tonu ayrı: `src/styles/motion.css` içindeki
+Huzurevi bölümünün kendi sakin tonu ayrı: `src/styles/layout.css` içindeki
 `.tone-calm` kuralı.
 
-Hazır iki palet önerisi `design/` klasöründe duruyor
-(`palet-a-toprak.css`, `palet-b-ege.css`). Birini seçmek için dosyanın
-içeriğini `tokens.css` üzerine kopyalamak yeterli.
+Seçilen palet: **Toprak Kort** (`design/palet-a-toprak.css`).
+Seçilmeyen öneri `design/palet-b-ege.css` içinde duruyor.
 
 ### Fotoğraf eklemek/değiştirmek
 1. Dosyayı `public/img/` altına koy.
@@ -94,6 +93,13 @@ içeriğini `tokens.css` üzerine kopyalamak yeterli.
 > Görseller en az **1400 piksel** genişliğinde olmalı; daha küçükleri sayfada
 > gerilip bulanıklaşıyor. Kod bunları yapay olarak büyütmez.
 
+### Adres parçaları (slug)
+**`src/lib/paths.ts`** — her dilin adres parçaları burada
+(`/tr/odalar`, `/en/rooms`, `/de/zimmer`). Bir slug değiştirilirse
+yönlendirmeler, sitemap, hreflang ve canonical kendiliğinden güncellenir.
+Eski adresten yenisine 301 yönlendirme `src/seo.ts` içindeki
+`redirectsTxt` ile üretilip `dist/_redirects` dosyasına yazılır.
+
 ### Yayın adresi (alan adı)
 **`src/config.ts`** — tek satır. `canonical`, `hreflang`, Open Graph,
 `sitemap.xml` ve `robots.txt` hepsi buradan okuyor.
@@ -105,12 +111,12 @@ içeriğini `tokens.css` üzerine kopyalamak yeterli.
 ```
 public/
   img/                  fotoğraflar (orijinaller + üretilen WebP/küçük boylar)
-  _redirects            Cloudflare Pages yönlendirmeleri (kök adres -> /tr)
 
 src/
   main.tsx              giriş noktası
   App.tsx               router sarmalayıcı
-  routes.tsx            sayfa yolları (SLUGS burada)
+  routes.tsx            dil başına adres ağacı
+  lib/paths.ts          adres parçaları (SLUGS) ve dil çevirisi
   config.ts             SITE_URL — yayın adresi
   seo.ts                sayfa başlıkları, hreflang, Open Graph, JSON-LD, sitemap
   entry-server.tsx      prerender için sunucu tarafı giriş
@@ -136,15 +142,15 @@ src/
     layout.css          bileşen ve bölüm stilleri
     motion.css          hareket, kartlar, galeri, .tone-calm
   lib/image.ts          görsel manifestinden srcset üretir
-  hooks/                useRevealOnScroll
+  hooks/                useRevealOnScroll, useSectionPath
   generated/            OTOMATİK ÜRETİLİR — elle düzenleme
 
 scripts/
   images.mjs            WebP + küçük boy üretimi, ölçü manifesti
-  prerender.mjs         21 sayfa + sitemap.xml + robots.txt
+  prerender.mjs         21 sayfa + 404.html + sitemap.xml + robots.txt + _redirects
   check.mjs             npm run check
 
-design/                 renk paleti önerileri (uygulanmadı, seçim bekliyor)
+design/                 renk paleti önerileri (A uygulandı)
 LAUNCH.md               yayın öncesi kontrol listesi
 ISLETME-SORULARI.md     işletmeye iletilecek bilgi listesi
 PROGRESS.md             proje günlüğü — ne yapıldı, neden

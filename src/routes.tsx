@@ -1,6 +1,10 @@
+import type { ReactElement } from 'react'
 import type { RouteObject } from 'react-router-dom'
 import Layout from './components/Layout'
-import { LangGuard, RootRedirect } from './components/RouteGuards'
+import { RootRedirect } from './components/RouteGuards'
+import { LANGS } from './i18n'
+import { SECTION_KEYS, SLUGS } from './lib/paths'
+import type { SectionKey } from './lib/paths'
 import Home from './pages/Home'
 import Rooms from './pages/Rooms'
 import Amenities from './pages/Amenities'
@@ -10,36 +14,35 @@ import News from './pages/News'
 import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 
-/** Sayfa yolları — üç dilde de aynı. */
-export const SLUGS = {
-  rooms: 'odalar',
-  amenities: 'olanaklar',
-  tennis: 'tenis',
-  nursing: 'saglikli-yasam',
-  news: 'haberler',
-  contact: 'iletisim',
-} as const
+const SAYFALAR: Record<SectionKey, ReactElement> = {
+  rooms: <Rooms />,
+  amenities: <Amenities />,
+  tennis: <Tennis />,
+  nursing: <Nursing />,
+  news: <News />,
+  contact: <Contact />,
+}
 
+/**
+ * Her dilin kendi adres ağacı var; adres parçaları o dilde
+ * (/tr/odalar, /en/rooms, /de/zimmer). Bu yüzden tek bir `/:lang`
+ * dalı yerine dil başına bir dal kuruluyor.
+ */
 export const routes: RouteObject[] = [
   { path: '/', element: <RootRedirect /> },
-  {
-    path: '/:lang',
-    element: <LangGuard />,
+
+  ...LANGS.map((lang) => ({
+    path: `/${lang}`,
+    element: <Layout lang={lang} />,
     children: [
-      {
-        element: <Layout />,
-        children: [
-          { index: true, element: <Home /> },
-          { path: SLUGS.rooms, element: <Rooms /> },
-          { path: SLUGS.amenities, element: <Amenities /> },
-          { path: SLUGS.tennis, element: <Tennis /> },
-          { path: SLUGS.nursing, element: <Nursing /> },
-          { path: SLUGS.news, element: <News /> },
-          { path: SLUGS.contact, element: <Contact /> },
-          { path: '*', element: <NotFound /> },
-        ],
-      },
+      { index: true, element: <Home /> },
+      ...SECTION_KEYS.map((key) => ({
+        path: SLUGS[lang][key],
+        element: SAYFALAR[key],
+      })),
+      { path: '*', element: <NotFound /> },
     ],
-  },
+  })),
+
   { path: '*', element: <RootRedirect /> },
 ]

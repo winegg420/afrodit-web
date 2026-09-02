@@ -6,9 +6,12 @@
  * `id`, `capacity`, `size` alanları ileride rezervasyon motoruna bağlanacak.
  */
 
+import type { Lang } from '../i18n'
+
 export type Room = {
   id: string
-  slug: string
+  /** Bölüm çapası — her dilde kendi dilinde */
+  slug: Record<Lang, string>
   /** kişi sayısı (min–max) */
   capacity: { min: number; max: number }
   /** m² (min–max) */
@@ -28,7 +31,7 @@ export type Room = {
 export const rooms: Room[] = [
   {
     id: 'standart',
-    slug: 'standart-oda',
+    slug: { tr: 'standart-oda', en: 'standard-room', de: 'standardzimmer' },
     capacity: { min: 1, max: 2 },
     size: { min: 25, max: 25 },
     count: 25,
@@ -44,7 +47,7 @@ export const rooms: Room[] = [
   },
   {
     id: 'suit',
-    slug: 'suit-oda',
+    slug: { tr: 'suit-oda', en: 'suite-room', de: 'suite' },
     capacity: { min: 2, max: 4 },
     size: { min: 65, max: 65 },
     count: null,
@@ -61,7 +64,7 @@ export const rooms: Room[] = [
   },
   {
     id: 'grandSuit',
-    slug: 'grand-suit-oda',
+    slug: { tr: 'grand-suit-oda', en: 'grand-suite', de: 'grand-suite' },
     capacity: { min: 4, max: 6 },
     size: { min: 90, max: 90 },
     count: 16,
@@ -83,7 +86,7 @@ export const rooms: Room[] = [
   },
   {
     id: 'apart',
-    slug: 'apart-daireler',
+    slug: { tr: 'apart-daireler', en: 'apartments', de: 'apartments' },
     capacity: { min: 6, max: 8 },
     size: { min: 90, max: 140 },
     count: 25,
@@ -100,7 +103,7 @@ export const rooms: Room[] = [
 /** Huzurevi bölümünün odaları — tatil envanterinden ayrı tutulur. */
 export const nursingRoom: Room = {
   id: 'nursing',
-  slug: 'huzurevi-odalari',
+  slug: { tr: 'huzurevi-odalari', en: 'care-home-rooms', de: 'zimmer-der-residenz' },
   capacity: { min: 1, max: 3 },
   size: { min: 35, max: 35 },
   count: 20,

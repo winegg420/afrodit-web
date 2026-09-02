@@ -1,5 +1,0 @@
-# Kök adres varsayılan dile gitsin (prerender'da dist/index.html üretilmiyor).
-/  /tr  302
-
-# Bilinmeyen adresler için dist/404.html üretiliyor; Cloudflare Pages
-# eşleşmeyen her yolda onu 404 durumuyla sunar, ek kurala gerek yok.

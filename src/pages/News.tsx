@@ -24,7 +24,7 @@ export default function News() {
           .map((key) => copy[key])
 
         return (
-          <Section key={item.id} id={item.slug} tone={index % 2 === 1 ? 'alt' : 'default'}>
+          <Section key={item.id} id={item.slug[lang]} tone={index % 2 === 1 ? 'alt' : 'default'}>
             <article className="article">
               <h2 className="section__title">{copy.title}</h2>
               <Photo src={item.cover} alt={copy.title} ratio="16/9" />
