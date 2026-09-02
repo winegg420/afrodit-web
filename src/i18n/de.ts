@@ -43,6 +43,12 @@ export const de: Dict = {
     viewMap: 'Auf der Karte ansehen',
     watchVideo: 'Unseren YouTube-Kanal ansehen',
     backHome: 'Zurück zur Startseite',
+    scrollDown: 'Nach unten scrollen',
+    openPhoto: 'Foto vergrößern',
+    closePhoto: 'Schließen',
+    prevPhoto: 'Vorheriges Foto',
+    nextPhoto: 'Nächstes Foto',
+    photoCounter: 'Foto',
   },
 
   home: {

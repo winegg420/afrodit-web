@@ -3,6 +3,10 @@ import { createRoot, hydrateRoot } from 'react-dom/client'
 import './styles/global.css'
 import App from './App.tsx'
 
+// JavaScript çalışıyor işareti. Gizleyen animasyon kuralları yalnızca
+// bu sınıf varken geçerli; böylece JS'siz sayfada içerik görünür kalır.
+document.documentElement.classList.add('js')
+
 const rootEl = document.getElementById('root')
 
 if (!rootEl) {

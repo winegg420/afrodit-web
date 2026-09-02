@@ -1,6 +1,8 @@
 import Section from '../components/Section'
 import Gallery from '../components/Gallery'
-import Photo from '../components/Photo'
+import PhotoZoom from '../components/PhotoZoom'
+import Icon from '../components/Icon'
+import Reveal from '../components/Reveal'
 import PageHead from '../components/PageHead'
 import { useI18n } from '../i18n'
 import type { Dict } from '../i18n'
@@ -69,10 +71,11 @@ export default function Rooms() {
                 </dl>
 
                 <h3 className="room__subtitle">{t.rooms.featuresTitle}</h3>
-                <ul className="tags">
+                <ul className="features">
                   {room.features.map((key) => (
-                    <li className="tag" key={key}>
-                      {t.roomFeatures[key as keyof Dict['roomFeatures']]}
+                    <li className="features__item" key={key}>
+                      <Icon name={key} />
+                      <span>{t.roomFeatures[key as keyof Dict['roomFeatures']]}</span>
                     </li>
                   ))}
                 </ul>
@@ -87,9 +90,13 @@ export default function Rooms() {
                 </a>
               </div>
 
-              <div className="room__media">
-                <Photo src={room.cover} alt={copy.title} ratio="3/2" />
-              </div>
+              <Reveal className="room__media">
+                <PhotoZoom
+                  images={[room.cover, ...room.gallery]}
+                  alt={copy.title}
+                  ratio="3/2"
+                />
+              </Reveal>
             </article>
 
             <Gallery

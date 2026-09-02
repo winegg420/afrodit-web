@@ -41,6 +41,12 @@ export const tr = {
     viewMap: 'Haritada görün',
     watchVideo: 'YouTube kanalını izleyin',
     backHome: 'Anasayfaya dönün',
+    scrollDown: 'Aşağı kaydırın',
+    openPhoto: 'Fotoğrafı büyüt',
+    closePhoto: 'Kapatın',
+    prevPhoto: 'Önceki fotoğraf',
+    nextPhoto: 'Sonraki fotoğraf',
+    photoCounter: 'Fotoğraf',
   },
 
   home: {

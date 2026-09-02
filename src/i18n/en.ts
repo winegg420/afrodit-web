@@ -43,6 +43,12 @@ export const en: Dict = {
     viewMap: 'View on the map',
     watchVideo: 'Watch our YouTube channel',
     backHome: 'Back to home',
+    scrollDown: 'Scroll down',
+    openPhoto: 'Enlarge photograph',
+    closePhoto: 'Close',
+    prevPhoto: 'Previous photograph',
+    nextPhoto: 'Next photograph',
+    photoCounter: 'Photograph',
   },
 
   home: {

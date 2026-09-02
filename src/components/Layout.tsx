@@ -3,6 +3,7 @@ import { Outlet, useLocation, useParams } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
 import { DEFAULT_LANG, I18nContext, dictionaries, isLang, rememberLang } from '../i18n'
+import { useRevealOnScroll } from '../hooks/useRevealOnScroll'
 
 export default function Layout() {
   const { lang: raw } = useParams()
@@ -14,6 +15,8 @@ export default function Layout() {
     document.documentElement.lang = t.meta.htmlLang
     rememberLang(lang)
   }, [lang, t.meta.htmlLang])
+
+  useRevealOnScroll(pathname)
 
   // Sayfa değişince başa dön
   useEffect(() => {

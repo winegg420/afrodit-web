@@ -212,3 +212,83 @@ Galeri şeridi kendi kutusunda yatay kayıyor — bu kasıtlı, sayfayı taşır
 - Sağlık kulübü fotoğrafı yok (Placeholder duruyor)
 - Kalıcı renk paleti
 - SSS bölümü (gerçek cevaplarla sıfırdan yazılacak)
+
+## 2026-09-02 — İş Paketi 3: Görsel zenginleştirme
+
+### Üç kuralın nasıl uygulandığı
+1. **JS'siz görünürlük.** Gizleyen tek CSS kuralı `.js .reveal`; `js` sınıfını
+   yalnızca `main.tsx` ekliyor. Derlenmiş CSS'te `opacity:0` içeren başka
+   seçici yok (grep ile doğrulandı). Ayrıca iki güvenlik ağı kondu:
+   gözlemci 2,5 sn içinde hiç tetiklenmezse hook her şeyi açıyor; hero giriş
+   sınıfı 1 sn sonra kaldırılıyor (animasyon hiç çalışmazsa metin gizli
+   kalmasın diye). Işıklı kutudan giriş animasyonu tamamen kaldırıldı —
+   `animation-fill-mode: both` kısıtlanmış sekmede modalı görünmez bırakıyordu.
+2. **prefers-reduced-motion.** `motion.css` sonunda tek blok; reveal, hero
+   yakınlaşması, kademeli giriş, aşağı oku ve kart geçişlerini kapatıyor.
+   `global.css`'teki genel blok da duruyor. Hook da matchMedia'ya bakıp
+   hareket kapalıysa her şeyi doğrudan açıyor.
+3. **Cesaret tek yerde.** Açılış çarpıcı; diğer bölümlerde yalnızca 16 px'lik
+   sade belirme var.
+
+### İŞ 1 — Anasayfa açılışı
+Yeni `Hero.tsx`. Arka plan 20 sn'de %100→%108 (alternate, sonsuz).
+Kademeli giriş: etiket 0 ms, başlık 120, açıklama 240, butonlar 360 —
+her biri 460 ms, toplam 820 ms içinde biter; modül düzeyinde bayrakla
+yalnızca ilk açılışta oynar. Okunabilirlik için düz örtü yerine iki katmanlı
+geçiş (alttan yukarı + soldan sağa). Aşağı oku yavaşça inip çıkıyor,
+tıklanınca `#giris` bölümüne yumuşak kaydırıyor (hareket kapalıysa anında).
+Slayt/video yok.
+
+### İŞ 2 — Kaydırınca belirme
+`useRevealOnScroll` + `Reveal` bileşeni. IntersectionObserver, kaydırma
+olayı dinlenmiyor. 16 px aşağıdan, 500 ms, bir kere (`unobserve`).
+Yalnızca bölüm başlıkları ve büyük görsellerde; menü, alt bilgi, paragraf
+ve liste maddelerinde yok. Kart gruplarında 60 ms aralıkla sırayla.
+
+### İŞ 3 — Fotoğraf galerisi
+`Lightbox.tsx` (118 satır, hazır paket yok). Ok tuşları, ESC, boşluğa
+tıklama, mobilde kaydırma (40 px eşik), odak tuzağı, kapanınca odağın
+tıklanan fotoğrafa dönmesi, arka planda kaydırma kilidi. Şeritteki küçük
+görseller `loading="lazy"`; tam ekranda görsel gecikmesiz yükleniyor.
+`Gallery` ve `PhotoZoom` bileşenleri onu kullanıyor.
+NOT: elimizde tek çözünürlük var. "Küçük hâl" CSS ile küçültülmüş aynı
+dosya; ayrı yüksek çözünürlüklü sürüm üretilmedi.
+
+### İŞ 4 — Kartlar ve bölümler
+`RoomCard`: fotoğraf üstte, altında ad, kapasite/metrekare/adet küçük
+etiketler (chip) halinde. Üzerine gelince fotoğraf %4 yakınlaşıyor, kart
+2 px kalkıyor; gölge yok.
+Oda özellikleri artık ikonlu liste (`Icon.tsx`, 20 ince çizgi ikonu,
+tanımsız anahtar onay işaretine düşüyor).
+Anasayfadaki olanaklar bölümü ikon listesinden çıkarıldı; plaj, havuzlar
+ve mutfak için dönüşümlü sağ-sol fotoğraflı bloklara çevrildi.
+Hiyerarşi: odalar bölümü `section--major` ile en büyük başlık ve en geniş
+boşluğa sahip.
+
+### Yol boyunca çıkan ve düzeltilen sorunlar
+- `.btn--ghost` rengi `.btn--on-dark`ı eziyordu (global.css sırası); açılıştaki
+  telefon butonunun yazısı görünmüyordu. Özgüllük artırılarak düzeltildi.
+- Masaüstü menüsü iki satıra düşüyordu. Menü eşiği 992 px'ten **1200 px**e
+  çıkarıldı; 7 madde + 3 dil + rezervasyon butonu ancak orada rahat sığıyor.
+  1200 px altında hamburger kullanılıyor.
+
+### Doğrulama
+1. `npm run build` hatasız, `npx oxlint src` uyarısız.
+2. `find dist -name "*.html" | wc -l` → **21**
+3. JavaScript kapalı test (sandbox'ta allow-scripts olmadan iframe):
+   4.604 karakter görünür metin, 24 reveal öğesinin **hepsi opacity 1**,
+   hero başlığı görünür.
+4. `prefers-reduced-motion` OS ayarı bu ortamdan açılamadı; kuralların
+   derlenmiş CSS'te bulunduğu ve reveal/hero/kart geçişlerini kapsadığı
+   doğrulandı. **Gerçek cihazda ayrıca test edilmeli.**
+5. Yatay kaydırma: 360/390/414/768/1024/1199/1200/1280/1440/1920 px ×
+   TR-EN-DE sayfaları — hiçbirinde yok.
+6. Galeri sadece klavyeyle: Enter açtı, odak kapatma düğmesine geçti,
+   → ve ← fotoğraf değiştirdi (1/5→3/5→2/5), üç Tab odağı kutunun içinde
+   döndürdü, ESC kapattı, odak tıklanan fotoğrafa döndü, kaydırma kilidi açıldı.
+
+### TODO kalanlar
+- Hareket azaltma ayarının gerçek cihazda testi
+- Görsellerin ayrı küçük/büyük sürümleri (şu an tek çözünürlük)
+- Önceki paketlerden gelen içerik TODO'ları (tenis bilinmeyenleri, ruhsat
+  teyidi, pansiyon konsepti, fiyatlar, kalıcı renk paleti)

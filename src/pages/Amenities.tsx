@@ -1,5 +1,6 @@
 import Section from '../components/Section'
-import Photo from '../components/Photo'
+import PhotoZoom from '../components/PhotoZoom'
+import Reveal from '../components/Reveal'
 import Placeholder from '../components/Placeholder'
 import PageHead from '../components/PageHead'
 import { useI18n } from '../i18n'
@@ -26,7 +27,9 @@ export default function Amenities() {
           <Section key={group.id} id={group.id} tone={index % 2 === 1 ? 'alt' : 'default'}>
             <div className={`split${index % 2 === 1 ? ' split--reverse' : ''}`}>
               <div className="split__text">
-                <h2 className="section__title">{copy.title}</h2>
+                <Reveal>
+                  <h2 className="section__title">{copy.title}</h2>
+                </Reveal>
                 <p>{copy.body}</p>
                 <ul className="checklist">
                   {group.items.map((key) => (
@@ -34,13 +37,13 @@ export default function Amenities() {
                   ))}
                 </ul>
               </div>
-              <div className="split__media">
+              <Reveal className="split__media">
                 {group.image ? (
-                  <Photo src={group.image} alt={copy.title} ratio="4/3" />
+                  <PhotoZoom images={[group.image]} alt={copy.title} ratio="4/3" />
                 ) : (
                   <Placeholder label={`${copy.title} — yatay`} ratio="4/3" />
                 )}
-              </div>
+              </Reveal>
             </div>
           </Section>
         )

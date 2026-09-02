@@ -51,7 +51,7 @@
   margin-top: var(--space-4);
 }
 
-@media (min-width: 62rem) {
+@media (min-width: 75rem) {
   .site-header__toggle { display: none; }
   .site-nav {
     display: flex;
@@ -80,50 +80,6 @@
 .btn--sm { padding: var(--space-2) var(--space-4); font-size: var(--text-xs); }
 .btn--on-dark { color: var(--color-text-invert); border-color: var(--color-text-invert); }
 .btn--on-dark:hover { background: var(--color-text-invert); color: var(--color-text); }
-
-/* ---------- Açılış görseli ---------- */
-.hero { position: relative; isolation: isolate; }
-
-.hero__image {
-  width: 100%;
-  height: clamp(22rem, 68vh, 40rem);
-  object-fit: cover;
-}
-
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(38, 38, 42, 0.72) 0%,
-    rgba(38, 38, 42, 0.28) 45%,
-    rgba(38, 38, 42, 0.1) 100%
-  );
-}
-
-.hero__content {
-  position: absolute;
-  inset-inline: 0;
-  bottom: var(--space-7);
-  color: var(--color-text-invert);
-}
-
-.hero__kicker {
-  margin-bottom: var(--space-2);
-  color: var(--color-text-invert);
-  font-size: var(--text-sm);
-  opacity: 0.85;
-}
-
-.hero__title { max-width: 20ch; color: var(--color-text-invert); }
-.hero__lead { margin-top: var(--space-3); max-width: 52ch; color: var(--color-text-invert); }
-
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-5);
-}
 
 /* ---------- Sayfa başlığı bandı ---------- */
 .page-head {
@@ -443,7 +399,7 @@
 .checklist a { display: inline-block; padding-block: var(--space-1); }
 
 /* Mobilde menü açıkken bağlantılar daha rahat aralıklı dursun */
-@media (max-width: 61.99rem) {
+@media (max-width: 74.99rem) {
   .site-nav--open .site-nav__list { gap: var(--space-2); }
   .site-nav__aside { flex-wrap: wrap; }
 }
@@ -473,7 +429,7 @@
 .site-header__brand img { flex: none; }
 .site-header__toggle { flex: 0 0 auto; }
 
-@media (max-width: 61.99rem) {
+@media (max-width: 74.99rem) {
   .site-nav--open {
     flex-basis: 100%;
     border-top: var(--border-thin);
@@ -485,6 +441,6 @@
 /* Dokunmatik tabletlerde de menü bağlantıları 44 pikselden dar olmasın */
 .site-nav__link { min-width: 44px; }
 
-@media (min-width: 62rem) {
+@media (min-width: 75rem) {
   .site-nav__link { justify-content: center; }
 }
