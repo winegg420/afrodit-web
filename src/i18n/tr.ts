@@ -81,11 +81,18 @@ export const tr = {
     unitApart: 'daire',
     note: 'Oda sayıları ve metrekareler işletmeden teyit edilmeyi bekliyor.',
 
+    /** Genel "N kişi" ifadesinin yetmediği oda tipleri için. */
+    capacityLabels: {
+      grandSuit: '4 yetişkin + 2 çocuk',
+    },
+
     standart: {
       title: 'Standart Oda',
       summary: '2 kişi · 25 m² · balkonlu veya balkonsuz',
       body:
         '25 adet standart odanın her biri sizi samimi ve keyifli bir ortama davet edecek şekilde döşenmiştir. Odalar balkonlu ve balkonsuz seçeneklerle sunulur, iki kişi konaklayabilir. Rahat bir uyku için özenle hazırlanmış yataklar, günün ve yolculuğun yorgunluğunu alır.',
+      body2:
+        'Oda, günü dinlenmiş başlamak için iyi bir üs: buradan Balıkesir’in doğal güzelliklerini keşfetmeye çıkabilir ya da doğrudan tesisin kendi etkinliklerine katılabilirsiniz.',
     },
     suit: {
       title: 'Suit Oda',
@@ -95,9 +102,11 @@ export const tr = {
     },
     grandSuit: {
       title: 'Grand Suit Oda',
-      summary: '6 kişi · 90 m² · 2 oda + 1 salon',
+      summary: '4 yetişkin + 2 çocuk · 90 m² · 2 oda + 1 salon + balkon',
       body:
-        '16 adet Grand Suit oda; 2 oda, 1 salon ve balkonuyla birlikte 90 m²’dir. Salonunda oturma grubu ve ek yataklar bulunan suitlerde 4 yetişkin + 2 çocuk konaklayabilir. Geniş terası, tesisin çardaklı bahçesinden yararlanma olanağı sunar. Küçük çocuklu aileler için alt kat suitler önerilir.',
+        '16 adet Grand Suit oda; 2 oda, 1 salon ve balkonuyla birlikte 90 m²’dir. Salonunda oturma grubu ve ek yataklar bulunur; böylece 4 yetişkin ve 2 çocuk rahatça konaklayabilir.',
+      body2:
+        'Geniş teras, tesisin çardaklı bahçesine açılıyor — oda sadece konaklama değil, gün boyu oturulacak bir alan da sunuyor. Küçük çocuklu ailelere alt kat suitleri öneriyoruz; çocuklar bahçeye doğrudan çıkabiliyor.',
     },
     apart: {
       title: 'Apart Daire',
@@ -114,6 +123,7 @@ export const tr = {
   },
 
   roomFeatures: {
+    internet: 'İnternet',
     tv: 'Televizyon',
     ac: 'Klima',
     fridge: 'Mini buzdolabı',
@@ -208,20 +218,55 @@ export const tr = {
   },
 
   tennis: {
-    pageTitle: 'Aftek Tenis Kulübü',
-    pageLead: 'Bölgenin tek federe tenis kulübü, tesisin içinde.',
+    pageTitle: 'Afrodit Tenis Kulübü',
+    pageLead:
+      'Edremit körfezinin tek federe tenis kulübü. Kazdağları eteğinde, denize yürüme mesafesinde dört toprak kort.',
+
     courtsTitle: 'Kortlar',
     courtsBody:
-      '4 toprak kort yıl boyu hizmette. Kortlar konaklama alanlarına yürüme mesafesinde; misafirler dilediği zaman maç yapabilir.',
-    clubTitle: 'Federe kulüp',
+      'Dört toprak kort, konaklama alanlarına yürüme mesafesinde. Misafirler gün içinde diledikleri zaman kortlara çıkabiliyor.',
+    courtsBody2:
+      'Toprak zemin, sert korta göre eklemleri daha az yorar. Top daha yavaş sektiği için raliler uzar — bu da hem tenise yeni başlayan hem de tecrübeli oyuncu için elverişli bir oyun sunar.',
+
+    clubTitle: 'Lig ve turnuvalar',
     clubBody:
-      'Aftek, bölgenin tek federe tenis kulübüdür. Kulüp bünyesinde ligler ve I-Kort turnuvaları düzenleniyor.',
-    discountTitle: 'Turnuva indirimi',
+      'Kulüp, lig maçlarına ve I-Kort turnuvalarına ev sahipliği yapıyor.',
+    clubBody2:
+      'Aftek federe bir kulüp; burada oynanan resmî maçlar federasyon kayıtlarına giriyor. Körfezde bunu sunan başka bir kulüp yok.',
+
+    discountTitle: 'Konaklama avantajı',
     discountBody:
-      'Resmî turnuvalara katılan sporculara konaklamada %40’a varan indirim uygulanıyor.',
+      'Resmî tenis turnuvalarına katılan oyunculara konaklamada %40’a varan indirim uygulanıyor.',
+    discountBody2:
+      'Kulüp ve tesis aynı yerde olduğu için oyuncu kortla odası arasında yol harcamıyor; maç arasında dönüp dinlenmek mümkün.',
+
+    audienceTitle: 'Kimler için',
+    audience: {
+      licensed: 'Turnuvaya gelen lisanslı oyuncular',
+      guest: 'Kortta vakit geçirmek isteyen tatilciler',
+      kids: 'Tenise yeni başlayan çocuklar',
+    },
+
+    unknownsTitle: 'Aramanız gereken konular',
+    unknownsLead:
+      'Aşağıdaki başlıklar mevsime ve programa göre değiştiği için sayfada yazılı değil. Güncel bilgi için bizi arayın.',
+    unknowns: {
+      lighting: 'Kortlarda aydınlatma ve gece oyunu',
+      fees: 'Kort kiralama ücretleri ve saatleri',
+      coaching: 'Antrenör ve ders imkânı',
+      equipment: 'Raket ve ekipman kiralama',
+      calendar: 'Lig ve turnuva takvimi',
+      membership: 'Kulüp üyeliği ve koşulları',
+      discountTerms: 'Turnuva indiriminin kapsamı ve koşulları',
+    },
+
     contactTitle: 'Kort ve turnuva bilgisi',
-    contactBody: 'Kort rezervasyonu ve turnuva takvimi için ofisi arayabilirsiniz.',
+    contactBody:
+      'Kort rezervasyonu, turnuva takvimi ve yukarıdaki başlıklar için ofisi arayabilirsiniz.',
     instagram: 'Instagram: @afroditteniskulubu',
+
+    todoNote:
+      'Aydınlatma, ücret, antrenör, ekipman kiralama, takvim, üyelik ve indirim koşulları işletmeden teyit edilmedi; bu yüzden sayfada rakam verilmiyor.',
   },
 
   nursing: {
@@ -257,8 +302,8 @@ export const tr = {
 
     teamTitle: 'Ekip',
     team: {
-      nurse: 'Hemşire',
       doctor: 'Doktor',
+      nurse: 'Hemşire',
       physio: 'Fizyoterapist',
       socialWorker: 'Sosyal hizmet uzmanı',
       caregiver: 'Profesyonel bakım personeli',
@@ -268,6 +313,9 @@ export const tr = {
     roomsTitle: 'Odalar',
     contactTitle: 'Bilgi ve başvuru',
     contactBody: 'Yerleşim koşulları ve başvuru için huzurevi hattını arayabilirsiniz.',
+
+    complianceTodo:
+      'Bu sayfadaki sağlık hizmeti bilgileri (hangi hastalık gruplarına bakıldığı, ekipte kimlerin bulunduğu) ruhsat kapsamıyla birebir uyumlu olmalı. Yayına almadan önce işletmeden teyit alınacak.',
   },
 
   news: {

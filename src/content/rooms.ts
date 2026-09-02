@@ -21,6 +21,8 @@ export type Room = {
   gallery: string[]
   /** i18n `roomFeatures.<key>` anahtarları */
   features: string[]
+  /** Genel "N kişi" ifadesi yetmiyorsa i18n `rooms.capacityLabels.<key>` */
+  capacityKey?: 'grandSuit'
 }
 
 export const rooms: Room[] = [
@@ -76,7 +78,8 @@ export const rooms: Room[] = [
       '/img/grand-suit-oda/9.jpg',
       '/img/grand-suit-oda/10.jpg',
     ],
-    features: ['livingRoom', 'ac', 'safe', 'fridge', 'phone', 'tv', 'roomService'],
+    capacityKey: 'grandSuit',
+    features: ['livingRoom', 'ac', 'internet', 'safe', 'fridge', 'phone', 'tv', 'roomService'],
   },
   {
     id: 'apart',

@@ -83,11 +83,18 @@ export const de: Dict = {
     unitApart: 'Apartments',
     note: 'Zimmeranzahl und Quadratmeterangaben sind vom Betrieb noch zu bestätigen.',
 
+    /** Für Zimmertypen, bei denen „N Personen“ nicht genau genug ist. */
+    capacityLabels: {
+      grandSuit: '4 Erwachsene + 2 Kinder',
+    },
+
     standart: {
       title: 'Standardzimmer',
       summary: '2 Personen · 25 m² · mit oder ohne Balkon',
       body:
         'Jedes der 25 Standardzimmer ist so eingerichtet, dass es einladend und behaglich wirkt. Die Zimmer werden mit oder ohne Balkon angeboten und bieten Platz für zwei Personen. Sorgfältig hergerichtete Betten sorgen für erholsamen Schlaf und nehmen die Müdigkeit des Tages und der Anreise.',
+      body2:
+        'Das Zimmer ist ein guter Ausgangspunkt für einen ausgeruhten Start in den Tag: Von hier aus können Sie die Naturschönheiten der Region Balıkesir erkunden oder einfach an den Aktivitäten der Anlage teilnehmen.',
     },
     suit: {
       title: 'Suite',
@@ -97,9 +104,11 @@ export const de: Dict = {
     },
     grandSuit: {
       title: 'Grand Suite',
-      summary: '6 Personen · 90 m² · 2 Zimmer + Wohnraum',
+      summary: '4 Erwachsene + 2 Kinder · 90 m² · 2 Zimmer + Wohnraum + Balkon',
       body:
-        'Die 16 Grand Suiten umfassen mit zwei Zimmern, einem Wohnraum und Balkon 90 m². Mit Sitzgruppe und Zusatzbetten im Wohnraum bieten die Suiten Platz für 4 Erwachsene und 2 Kinder. Die große Terrasse eröffnet zudem den Zugang zum Gartenpavillon der Anlage. Familien mit kleinen Kindern empfehlen wir besonders die Suiten im Erdgeschoss.',
+        'Die 16 Grand Suiten umfassen mit zwei Zimmern, einem Wohnraum und Balkon 90 m². Im Wohnraum stehen eine Sitzgruppe und Zusatzbetten, sodass 4 Erwachsene und 2 Kinder bequem unterkommen.',
+      body2:
+        'Die große Terrasse öffnet sich zum Gartenpavillon der Anlage — die Suite bietet damit nicht nur einen Schlafplatz, sondern auch einen Ort für den ganzen Tag. Familien mit kleinen Kindern empfehlen wir die Suiten im Erdgeschoss, von denen man direkt in den Garten gelangt.',
     },
     apart: {
       title: 'Apartment',
@@ -116,6 +125,7 @@ export const de: Dict = {
   },
 
   roomFeatures: {
+    internet: 'Internet',
     tv: 'Fernseher',
     ac: 'Klimaanlage',
     fridge: 'Minikühlschrank',
@@ -210,20 +220,54 @@ export const de: Dict = {
   },
 
   tennis: {
-    pageTitle: 'Aftek Tennisclub',
-    pageLead: 'Der einzige Verbandstennisclub der Region — direkt auf dem Gelände.',
+    pageTitle: 'Afrodit Tennisclub',
+    pageLead:
+      'Der einzige Verbandstennisclub im Golf von Edremit. Vier Sandplätze am Fuß des Ida-Gebirges, in Gehweite zum Meer.',
+
     courtsTitle: 'Die Plätze',
     courtsBody:
-      'Vier Sandplätze stehen das ganze Jahr über zur Verfügung. Die Plätze liegen fußläufig zu den Unterkünften; Gäste können jederzeit spielen.',
-    clubTitle: 'Verbandsclub',
-    clubBody:
-      'Aftek ist der einzige Verbandstennisclub der Region. Im Club werden Ligen und I-Kort-Turniere ausgetragen.',
-    discountTitle: 'Turnierrabatt',
+      'Vier Sandplätze, fußläufig zu den Unterkünften. Gäste können tagsüber jederzeit auf den Platz gehen.',
+    courtsBody2:
+      'Sand ist gelenkschonender als ein Hartplatz. Der Ball springt langsamer ab, wodurch die Ballwechsel länger werden — gutes Tennis für Anfänger wie für erfahrene Spieler.',
+
+    clubTitle: 'Liga und Turniere',
+    clubBody: 'Der Club richtet Ligaspiele und I-Kort-Turniere aus.',
+    clubBody2:
+      'Aftek ist ein Verbandsclub; hier gespielte offizielle Partien gehen in die Wertung des Verbands ein. Kein anderer Club im Golf bietet das.',
+
+    discountTitle: 'Vorteil bei der Unterkunft',
     discountBody:
-      'Teilnehmerinnen und Teilnehmer offizieller Turniere erhalten bis zu 40 % Rabatt auf die Unterkunft.',
-    contactTitle: 'Platzbuchung und Turniere',
-    contactBody: 'Für Platzreservierungen und den Turnierkalender rufen Sie bitte im Büro an.',
+      'Spielerinnen und Spieler, die an offiziellen Tennisturnieren teilnehmen, erhalten bis zu 40 % Rabatt auf die Unterkunft.',
+    discountBody2:
+      'Da Club und Anlage am selben Ort liegen, entfällt jeder Weg zwischen Platz und Zimmer; zwischen den Partien kann man zurückgehen und sich ausruhen.',
+
+    audienceTitle: 'Für wen',
+    audience: {
+      licensed: 'Lizenzierte Spieler, die zum Turnier anreisen',
+      guest: 'Urlaubsgäste, die einfach Zeit auf dem Platz verbringen möchten',
+      kids: 'Kinder, die mit dem Tennis beginnen',
+    },
+
+    unknownsTitle: 'Bitte fragen Sie uns dazu',
+    unknownsLead:
+      'Die folgenden Punkte hängen von Saison und Programm ab und stehen deshalb nicht auf dieser Seite. Rufen Sie uns für aktuelle Auskünfte an.',
+    unknowns: {
+      lighting: 'Platzbeleuchtung und Spiel am Abend',
+      fees: 'Platzmiete und Zeiten',
+      coaching: 'Trainer und Unterricht',
+      equipment: 'Schläger- und Ausrüstungsverleih',
+      calendar: 'Liga- und Turnierkalender',
+      membership: 'Clubmitgliedschaft und ihre Bedingungen',
+      discountTerms: 'Umfang und Bedingungen des Turnierrabatts',
+    },
+
+    contactTitle: 'Plätze und Turniere',
+    contactBody:
+      'Für Platzreservierungen, den Turnierkalender und alle oben genannten Punkte rufen Sie bitte im Büro an.',
     instagram: 'Instagram: @afroditteniskulubu',
+
+    todoNote:
+      'Beleuchtung, Preise, Trainer, Ausrüstungsverleih, Kalender, Mitgliedschaft und Rabattbedingungen sind vom Betrieb nicht bestätigt; deshalb werden auf dieser Seite keine Zahlen genannt.',
   },
 
   nursing: {
@@ -259,8 +303,8 @@ export const de: Dict = {
 
     teamTitle: 'Das Team',
     team: {
-      nurse: 'Pflegefachkraft',
       doctor: 'Arzt',
+      nurse: 'Pflegefachkraft',
       physio: 'Physiotherapeut',
       socialWorker: 'Sozialarbeiter',
       caregiver: 'Professionelles Pflegepersonal',
@@ -270,6 +314,9 @@ export const de: Dict = {
     roomsTitle: 'Zimmer',
     contactTitle: 'Information und Anmeldung',
     contactBody: 'Für Aufnahmebedingungen und Anmeldung rufen Sie bitte die Nummer der Residenz an.',
+
+    complianceTodo:
+      'Die Angaben zu Pflegeleistungen auf dieser Seite (welche Krankheitsbilder betreut werden, wer zum Team gehört) müssen exakt dem Umfang der Betriebserlaubnis entsprechen. Vor der Veröffentlichung mit dem Betrieb abzustimmen.',
   },
 
   news: {

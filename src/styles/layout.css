@@ -403,3 +403,88 @@
 .section, .page-head { scroll-margin-top: calc(var(--header-height) + var(--space-4)); }
 
 .map { background: var(--color-bg-alt); }
+
+/* ---------- Dokunma hedefleri ----------
+   Parmakla basılan her öğe en az 44×44 piksel olmalı. */
+.site-header__brand {
+  min-height: 44px;
+  padding-block: var(--space-1);
+}
+
+.site-header__toggle {
+  min-height: 44px;
+  padding-inline: var(--space-4);
+}
+
+.link-more {
+  padding-block: var(--space-3);
+  min-height: 44px;
+}
+
+.lang__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.site-nav__link { min-height: 44px; display: flex; align-items: center; }
+
+.site-footer__links a,
+.site-footer__address a,
+.site-footer__map,
+.contact-address a,
+.specs a {
+  display: inline-block;
+  padding-block: var(--space-2);
+}
+
+.checklist a { display: inline-block; padding-block: var(--space-1); }
+
+/* Mobilde menü açıkken bağlantılar daha rahat aralıklı dursun */
+@media (max-width: 61.99rem) {
+  .site-nav--open .site-nav__list { gap: var(--space-2); }
+  .site-nav__aside { flex-wrap: wrap; }
+}
+
+/* Kısa metinli bağlantılar da 44 piksel genişliğin altına düşmesin */
+.link-more,
+.site-footer__links a,
+.site-footer__address a,
+.contact-address a { min-width: 44px; }
+
+.site-footer__map { padding-block: var(--space-3); min-height: 44px; }
+
+/* İletişim sayfası ve liste bağlantıları — hepsi 44 pikselden büyük */
+.contact-grid a,
+.checklist a,
+.specs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding-block: var(--space-2);
+}
+
+/* Mobilde menü açıldığında kendi satırına insin; logo ezilmesin */
+.site-header__bar { flex-wrap: wrap; }
+.site-header__brand { flex: 0 0 auto; }
+.site-header__brand img { flex: none; }
+.site-header__toggle { flex: 0 0 auto; }
+
+@media (max-width: 61.99rem) {
+  .site-nav--open {
+    flex-basis: 100%;
+    border-top: var(--border-thin);
+    margin-top: var(--space-2);
+  }
+  .site-nav--open .site-nav__aside { justify-content: flex-start; }
+}
+
+/* Dokunmatik tabletlerde de menü bağlantıları 44 pikselden dar olmasın */
+.site-nav__link { min-width: 44px; }
+
+@media (min-width: 62rem) {
+  .site-nav__link { justify-content: center; }
+}

@@ -7,7 +7,7 @@ import type { Dict } from '../i18n'
 import { rooms } from '../content/rooms'
 import { facility } from '../content/facility'
 
-type RoomCopy = { title: string; summary: string; body: string }
+type RoomCopy = { title: string; summary: string; body: string; body2?: string }
 
 export default function Rooms() {
   const { t } = useI18n()
@@ -31,15 +31,22 @@ export default function Rooms() {
                 <h2 className="section__title">{copy.title}</h2>
                 <p className="room__summary">{copy.summary}</p>
                 <p>{copy.body}</p>
+                {copy.body2 && <p>{copy.body2}</p>}
 
                 <dl className="specs">
                   <div className="specs__row">
                     <dt>{t.rooms.capacity}</dt>
                     <dd>
-                      {room.capacity.min === room.capacity.max
-                        ? room.capacity.max
-                        : `${room.capacity.min}–${room.capacity.max}`}{' '}
-                      {t.rooms.people}
+                      {room.capacityKey ? (
+                        t.rooms.capacityLabels[room.capacityKey]
+                      ) : (
+                        <>
+                          {room.capacity.min === room.capacity.max
+                            ? room.capacity.max
+                            : `${room.capacity.min}–${room.capacity.max}`}{' '}
+                          {t.rooms.people}
+                        </>
+                      )}
                     </dd>
                   </div>
                   <div className="specs__row">

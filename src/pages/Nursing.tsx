@@ -107,6 +107,12 @@ export default function Nursing() {
           </li>
         </ul>
       </Section>
+
+      <Section narrow>
+        {/* TODO: Sağlık hizmeti iddiaları ruhsat kapsamıyla uyumlu olmalı.
+            Yayına almadan önce işletmeden teyit alınacak. */}
+        <p className="todo-note">{t.nursing.complianceTodo}</p>
+      </Section>
     </div>
   )
 }

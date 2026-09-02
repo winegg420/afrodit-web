@@ -1,0 +1,6 @@
+# Kök adres varsayılan dile gitsin (prerender'da dist/index.html üretilmiyor).
+/            /tr    302
+# Bulunamayan yollar ilgili dilin sayfasına düşsün.
+/tr/*        /tr/    404
+/en/*        /en/    404
+/de/*        /de/    404

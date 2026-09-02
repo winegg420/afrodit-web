@@ -83,11 +83,18 @@ export const en: Dict = {
     unitApart: 'apartments',
     note: 'Room counts and floor areas are still to be confirmed by the property.',
 
+    /** For room types where a plain “N guests” is not precise enough. */
+    capacityLabels: {
+      grandSuit: '4 adults + 2 children',
+    },
+
     standart: {
       title: 'Standard Room',
       summary: '2 guests · 25 m² · with or without balcony',
       body:
         'Each of the 25 standard rooms is furnished to feel warm and welcoming. Rooms are offered with or without a balcony and sleep two guests. Carefully prepared beds make for restful sleep and take away the tiredness of the day and the journey.',
+      body2:
+        'The room makes a good base for a well-rested start to the day: from here you can set out to explore the natural beauty of the Balıkesir region, or simply join the activities on the property itself.',
     },
     suit: {
       title: 'Suite Room',
@@ -97,9 +104,11 @@ export const en: Dict = {
     },
     grandSuit: {
       title: 'Grand Suite',
-      summary: '6 guests · 90 m² · 2 bedrooms + living room',
+      summary: '4 adults + 2 children · 90 m² · 2 bedrooms + living room + balcony',
       body:
-        'The 16 Grand Suites measure 90 m² including two bedrooms, a living room and a balcony. With a seating area and extra beds in the living room, each suite accommodates 4 adults and 2 children. The large terrace also gives access to the property’s shaded garden pergolas. Ground-floor suites are especially recommended for families with small children.',
+        'The 16 Grand Suites measure 90 m² including two bedrooms, a living room and a balcony. The living room has a seating area and extra beds, so 4 adults and 2 children stay comfortably.',
+      body2:
+        'The large terrace opens onto the property’s shaded garden pergolas — the suite offers not just a place to sleep but somewhere to spend the day. We recommend the ground-floor suites for families with small children, as they lead straight out into the garden.',
     },
     apart: {
       title: 'Apartment',
@@ -116,6 +125,7 @@ export const en: Dict = {
   },
 
   roomFeatures: {
+    internet: 'Internet',
     tv: 'Television',
     ac: 'Air conditioning',
     fridge: 'Mini fridge',
@@ -210,20 +220,54 @@ export const en: Dict = {
   },
 
   tennis: {
-    pageTitle: 'Aftek Tennis Club',
-    pageLead: 'The only federated tennis club in the region, on the property itself.',
+    pageTitle: 'Afrodit Tennis Club',
+    pageLead:
+      'The only federated tennis club in the Gulf of Edremit. Four clay courts at the foot of Mount Ida, within walking distance of the sea.',
+
     courtsTitle: 'The courts',
     courtsBody:
-      'Four clay courts are in use all year round. The courts are within walking distance of the accommodation, and guests can play whenever they like.',
-    clubTitle: 'A federated club',
-    clubBody:
-      'Aftek is the only federated tennis club in the region. The club hosts leagues and I-Kort tournaments.',
-    discountTitle: 'Tournament discount',
+      'Four clay courts, within walking distance of the accommodation. Guests can step onto the courts whenever they like during the day.',
+    courtsBody2:
+      'Clay is gentler on the joints than a hard court. The ball bounces more slowly, so rallies last longer — which makes for good tennis whether you are just starting out or have played for years.',
+
+    clubTitle: 'Leagues and tournaments',
+    clubBody: 'The club hosts league matches and I-Kort tournaments.',
+    clubBody2:
+      'Aftek is a federated club, so official matches played here enter the federation records. No other club in the gulf offers this.',
+
+    discountTitle: 'Staying here as a player',
     discountBody:
-      'Players taking part in official tournaments receive up to 40% off their accommodation.',
-    contactTitle: 'Court bookings and tournaments',
-    contactBody: 'Call the office for court reservations and the tournament calendar.',
+      'Players taking part in official tennis tournaments receive up to 40% off their accommodation.',
+    discountBody2:
+      'Because the club and the resort are on the same grounds, players lose no time travelling between court and room; you can go back and rest between matches.',
+
+    audienceTitle: 'Who it is for',
+    audience: {
+      licensed: 'Licensed players arriving for a tournament',
+      guest: 'Holidaymakers who simply want time on court',
+      kids: 'Children taking up tennis for the first time',
+    },
+
+    unknownsTitle: 'Worth calling us about',
+    unknownsLead:
+      'The topics below change with the season and the programme, so they are not published here. Call us for current information.',
+    unknowns: {
+      lighting: 'Court lighting and evening play',
+      fees: 'Court hire rates and hours',
+      coaching: 'Coaching and lessons',
+      equipment: 'Racket and equipment hire',
+      calendar: 'League and tournament calendar',
+      membership: 'Club membership and its conditions',
+      discountTerms: 'Scope and conditions of the tournament discount',
+    },
+
+    contactTitle: 'Courts and tournaments',
+    contactBody:
+      'Call the office for court reservations, the tournament calendar and any of the topics above.',
     instagram: 'Instagram: @afroditteniskulubu',
+
+    todoNote:
+      'Lighting, rates, coaching, equipment hire, calendar, membership and discount conditions have not been confirmed by the property, so no figures are quoted on this page.',
   },
 
   nursing: {
@@ -259,8 +303,8 @@ export const en: Dict = {
 
     teamTitle: 'The team',
     team: {
-      nurse: 'Nurse',
       doctor: 'Doctor',
+      nurse: 'Nurse',
       physio: 'Physiotherapist',
       socialWorker: 'Social worker',
       caregiver: 'Professional care staff',
@@ -270,6 +314,9 @@ export const en: Dict = {
     roomsTitle: 'Rooms',
     contactTitle: 'Information and applications',
     contactBody: 'Call the care home line for admission conditions and applications.',
+
+    complianceTodo:
+      'The health-care statements on this page (which conditions are cared for, who is on the team) must match the scope of the operating licence exactly. To be confirmed with the property before going live.',
   },
 
   news: {

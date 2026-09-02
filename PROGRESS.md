@@ -133,3 +133,82 @@ dile göre çoğaltmak yeterli.
 - `npx oxlint src` uyarısız.
 - Tarayıcıda /en ve /de sayfaları kontrol edildi, metinler çevrilmiş
   geliyor, konsolda hata yok.
+
+## 2026-09-02 — İş Paketi 2
+
+### İŞ 1 — Prerender
+`vite-react-ssg` KULLANILMADI: en güncel sürümü (0.9.2) react-router-dom
+v6 istiyor, projede v7 var. `--legacy-peer-deps` ile zorlamak yönlendirme
+katmanını kırma riski taşıyordu, router'ı v6'ya düşürmek de geri adım
+olurdu. `@prerenderer/rollup-plugin` alternatifi ise Chromium indiriyor
+(~200 MB) ve derlemeyi ağırlaştırıyor.
+
+Bunun yerine Vite'ın kendi SSR derlemesiyle kendi prerender adımımızı
+kurduk — yeni çalışma zamanı bağımlılığı yok, router'a dokunulmadı:
+- `src/entry-server.tsx` — StaticRouter + renderToString
+- `src/seo.ts` — 21 sayfanın yolu, başlığı ve açıklaması i18n'den üretilir
+- `scripts/prerender.mjs` — dist/index.html'i şablon alıp 21 dosya yazar
+- `npm run build` = tsc + vite build + SSR derleme + prerender
+- `src/main.tsx` artık hazır HTML varsa hydrateRoot, yoksa createRoot
+
+Her sayfa kendi `<title>`, `<meta description>` ve doğru `<html lang>`
+değeriyle çıkıyor. Şablon olarak kullanılan `dist/index.html` siliniyor
+(istenen çıktı tam 21 dosya); kök adres için `public/_redirects` eklendi.
+
+Kabul testleri: 21 HTML ✓ · `grep -c "Grand Suit" dist/tr/odalar` = 1 ✓ ·
+`npm run dev` çalışıyor ✓ · preview'da gezinme ve dil değiştirme bozulmadı,
+konsolda hydration hatası yok ✓
+
+### İŞ 2 — Eksik içerik
+- Grand Suit: kapasite artık "6 kişi" değil "4 yetişkin + 2 çocuk"
+  (`rooms.capacityKey` + `i18n rooms.capacityLabels`). Teras/çardaklı bahçe
+  ve alt kat önerisi ayrı paragrafa alındı. Özelliklere İnternet, Kişisel
+  kasa ve Oda servisi eklendi.
+- Standart Oda: konumu anlatan cümle eklendi (kendi ifademizle).
+- Sağlıklı Yaşam: içerik zaten ilk turda aktarılmıştı. Bu turda ekip
+  sıralaması Doktor ile başlayacak şekilde düzeltildi ve ruhsat uyumu
+  TODO notu eklendi (`nursing.complianceTodo`).
+- ALINMADI: faks numarası, suit/apart sayfalarına yanlış kopyalanmış
+  "25 adet otel odamız..." cümlesi, cevapsız SSS bölümü.
+
+### İŞ 3 — Tenis sayfası
+1.100 → 2.447 karakter. Bölümler: kortlar (toprak zeminin oyuna etkisi),
+lig ve turnuvalar (federe kulüp = federasyon kaydı), konaklama avantajı
+(%40 indirim + kort-oda mesafesi), kimler için, "aramanız gereken
+konular" listesi, iletişim + Instagram.
+Uydurulmayanlar listeye alındı ve TODO notu konuldu: aydınlatma, kort
+ücreti/saatleri, antrenör, ekipman kiralama, takvim, üyelik, indirimin
+tam koşulları.
+
+### İŞ 4 — Mobil test
+Chrome pencereyi 360 px'e küçültmediği için test, sayfayı 360/390/768 px
+genişlikte bir iframe'e yükleyip iframe içinden ölçerek yapıldı (medya
+sorguları iframe genişliğine göre çalışıyor).
+
+Bulunan ve düzeltilen sorunlar:
+1. Menü açıldığında düzen bozuluyordu — logo eziliyor, menü yana kayıyordu.
+   `.site-header__bar`a `flex-wrap` ve açık menüye `flex-basis:100%`.
+2. Dokunma hedefleri 44 px altındaydı: hamburger (42), logo (38),
+   "devamını oku" bağlantıları (24), footer ve iletişim bağlantıları
+   (20–36), dil değiştirici. Hepsine min-height/min-width 44 px verildi.
+3. Masaüstü menüsünde kısa başlıklar (Tenis, News) 33–41 px genişlikteydi;
+   `min-width: 44px` eklendi, 992 px'de taşma yaratmadığı doğrulandı.
+
+Sorun bulunmayanlar: yatay kaydırma (5 genişlik × 9 sayfa, hepsinde
+`scrollWidth <= innerWidth`), anasayfa başlığının taşması, kart ve olanak
+kutularının dizilimi (360/390'da tek, 768'de iki sütun), fotoğraf taşması,
+telefon/WhatsApp/e-posta bağlantıları (tel:, wa.me, mailto: doğru).
+Galeri şeridi kendi kutusunda yatay kayıyor — bu kasıtlı, sayfayı taşırmıyor.
+
+### Doğrulama
+`npm run build` hatasız (21 sayfa prerender), `npx oxlint src` uyarısız,
+`npm run dev` çalışıyor.
+
+### TODO kalanlar
+- Tenis: aydınlatma, ücret, antrenör, ekipman, takvim, üyelik, indirim koşulları
+- Huzurevi: ruhsat kapsamı teyidi
+- Pansiyon konsepti, giriş/çıkış saatleri, fiyatlar, kuruluş yılı
+- Oda sayısı ve metrekare teyidi
+- Sağlık kulübü fotoğrafı yok (Placeholder duruyor)
+- Kalıcı renk paleti
+- SSS bölümü (gerçek cevaplarla sıfırdan yazılacak)
